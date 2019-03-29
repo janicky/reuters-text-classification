@@ -1,4 +1,4 @@
-package model;
+package objects;
 
 public interface ClassificationObject {
     String getText();

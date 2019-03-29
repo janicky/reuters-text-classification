@@ -1,6 +1,6 @@
 package utils;
 
-import model.ClassificationObject;
+import objects.ClassificationObject;
 import org.jsoup.nodes.Document;
 
 public interface Parser {
