@@ -1,4 +1,4 @@
-public class Article {
+public class Article implements ClassificationObject {
     private String title;
     private String[] places;
     private String body;
@@ -19,5 +19,14 @@ public class Article {
 
     public String getBody() {
         return body;
+    }
+
+//    Interface implementation
+    public String getText() {
+        return getBody();
+    }
+
+    public String[] getLabels() {
+        return places;
     }
 }
