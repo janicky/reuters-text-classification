@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class OperationsTest {
 
     @Test
-    void cleanText() {
+    void normalizeText() {
         String text = "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.";
-        String cleanedText = Operations.cleanText(text);
-        assertEquals("Two things are infinite the universe and human stupidity and Im not sure about the universe", cleanedText);
+        String cleanedText = Operations.normalizeText(text);
+        assertEquals("two things are infinite the universe and human stupidity and im not sure about the universe", cleanedText);
     }
 
     @Test
