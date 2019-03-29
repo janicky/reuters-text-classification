@@ -1,3 +1,5 @@
+package model;
+
 public class Article implements ClassificationObject {
     private String title;
     private String[] places;
@@ -27,6 +29,6 @@ public class Article implements ClassificationObject {
     }
 
     public String[] getLabels() {
-        return places;
+        return getPlaces();
     }
 }
