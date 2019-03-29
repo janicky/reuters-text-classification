@@ -19,9 +19,10 @@ public class ArticleParser implements Parser {
         for (int e = 0; e < classificationObjects.length; e++) {
             Element element = elements.get(e);
 
+            Elements text = element.getElementsByTag("TEXT");
             Elements title = element.getElementsByTag("TITLE");
             Elements places = element.getElementsByTag("PLACES");
-            Elements body = element.getElementsByTag("BODY");
+
 
             Elements places_items = places.select("D");
             String[] places_names = new String[places_items.size()];
@@ -29,7 +30,7 @@ public class ArticleParser implements Parser {
                 places_names[i] = places_items.get(i).text();
             }
 
-            Article article = new Article(title.text(), places_names, body.text());
+            Article article = new Article(title.text(), places_names, text.text());
             classificationObjects[e] = article;
         }
 

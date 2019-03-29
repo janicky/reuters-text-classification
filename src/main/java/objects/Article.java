@@ -1,5 +1,7 @@
 package objects;
 
+import java.util.Arrays;
+
 public class Article implements ClassificationObject {
     private String title;
     private String[] places;
@@ -21,6 +23,17 @@ public class Article implements ClassificationObject {
 
     public String getBody() {
         return body;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("--------------\n");
+        sb.append("Title: " + title).append('\n');
+        sb.append("Places: " + Arrays.toString(places)).append('\n');
+        sb.append("Body: " + body).append('\n');
+
+        return sb.toString();
     }
 
 //    Interface implementation
