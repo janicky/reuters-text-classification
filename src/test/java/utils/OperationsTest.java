@@ -16,9 +16,9 @@ class OperationsTest {
     }
 
     @Test
-    void vectorizeText() {
+    void splitText() {
         String text = "With increasing distance, our knowledge fades, and fades rapidly.";
-        String[] vectorizedText = Operations.vectorizeText(text);
+        String[] vectorizedText = Operations.splitText(text);
         String[] expected = new String[] { "With", "increasing", "distance,", "our", "knowledge", "fades,", "and", "fades", "rapidly." };
 
         for (int i = 0; i < vectorizedText.length; i++) {
