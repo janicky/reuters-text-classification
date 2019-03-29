@@ -3,6 +3,7 @@ package objects;
 import utils.Parser;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,7 +12,10 @@ import org.jsoup.nodes.Element;
 
 public class ArticleParser implements Parser {
     public ClassificationObject[] parseFile(File file) throws IOException {
-        Document document = Jsoup.parse(file, "utf-8");
+        Scanner scanner = new Scanner(file).useDelimiter("\\A");
+        String content = scanner.hasNext() ? scanner.next() : "";
+        content = content.replace("BODY>", "CONTENT>");
+        Document document = Jsoup.parse(content);
         Elements elements = document.getElementsByTag("REUTERS");
 
         ClassificationObject[] classificationObjects = new ClassificationObject[elements.size()];
@@ -19,10 +23,9 @@ public class ArticleParser implements Parser {
         for (int e = 0; e < classificationObjects.length; e++) {
             Element element = elements.get(e);
 
-            Elements text = element.getElementsByTag("TEXT");
             Elements title = element.getElementsByTag("TITLE");
             Elements places = element.getElementsByTag("PLACES");
-
+            Elements body = element.getElementsByTag("CONTENT");
 
             Elements places_items = places.select("D");
             String[] places_names = new String[places_items.size()];
@@ -30,7 +33,7 @@ public class ArticleParser implements Parser {
                 places_names[i] = places_items.get(i).text();
             }
 
-            Article article = new Article(title.text(), places_names, text.text());
+            Article article = new Article(title.text(), places_names, body.text());
             classificationObjects[e] = article;
         }
 
