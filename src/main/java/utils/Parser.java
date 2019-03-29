@@ -1,8 +1,8 @@
 package utils;
 
 import objects.ClassificationObject;
-import org.jsoup.nodes.Document;
+import java.io.File;
 
 public interface Parser {
-    ClassificationObject[] parseDocument(Document document);
+    ClassificationObject[] parseFile(File file);
 }
