@@ -1,5 +1,7 @@
 package objects;
 
+import interfaces.ClassificationObject;
+
 import java.util.Arrays;
 
 public class Article implements ClassificationObject {

@@ -1,6 +1,7 @@
 package objects;
 
-import utils.Parser;
+import interfaces.ClassificationObject;
+import interfaces.Parser;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;

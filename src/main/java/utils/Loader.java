@@ -1,6 +1,6 @@
 package utils;
 
-import objects.ClassificationObject;
+import interfaces.ClassificationObject;
 
 import java.io.File;
 import java.io.IOException;
