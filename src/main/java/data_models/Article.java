@@ -1,4 +1,4 @@
-package objects;
+package data_models;
 
 import interfaces.ClassificationObject;
 
