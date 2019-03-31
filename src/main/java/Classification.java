@@ -2,12 +2,14 @@ import interfaces.ClassificationObject;
 
 public class Classification {
     private int truePositive = 0;
+    private int k;
     private ClassificationObject[] learningSet;
     private ClassificationObject[] testingSet;
 
     // splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
-    public Classification(ClassificationObject[] objects, double splitRatio) {
+    public Classification(ClassificationObject[] objects, double splitRatio, int k) {
         splitSets(objects, splitRatio);
+        this.k = k;
     }
 
     private void splitSets(ClassificationObject[] objects, double splitRatio) {
