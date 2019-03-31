@@ -20,6 +20,7 @@ class ExtractorTest {
         assertFalse(binary[1]);
         assertFalse(binary[2]);
         assertTrue(binary[3]);
+        System.out.println(Arrays.toString(binary));
     }
 
     @Test
