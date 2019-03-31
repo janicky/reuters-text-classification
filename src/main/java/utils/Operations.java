@@ -14,15 +14,16 @@ public class Operations {
 
     public static Map<String, Integer> wordsOccurrences(String[] dictionary, String[] text) {
         Map<String, Integer> map = new HashMap<>();
-        for (String word : text) {
-            for (String dict : dictionary) {
+        for (String dict : dictionary) {
+            boolean found = false;
+            for (String word : text) {
                 if (word.equals(dict)) {
-                    if (map.containsKey(word)) {
-                        map.put(word, map.get(word) + 1);
-                    } else {
-                        map.put(word, 1);
-                    }
+                    found = true;
+                    map.put(dict, (map.containsKey(dict) ? map.get(word) + 1 : 1));
                 }
+            }
+            if (!found) {
+                map.put(dict, 0);
             }
         }
         return map;
