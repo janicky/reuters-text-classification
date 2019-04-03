@@ -64,4 +64,27 @@ public class Extractor {
         output.put("count", text.length);
         return output;
     }
+
+    public static Map wordsDistractionExtraction(String[] dictionary, String[] text) {
+        Map<String, Double> output = new HashMap<>();
+        int start = -1, sum = 0, words = 0;
+
+        for (int i = 0; i < text.length; i++) {
+            for (String dict : dictionary) {
+                if (text[i].equals(dict)) {
+                    if (start != -1) {
+                        sum += i - start;
+                    }
+                    ++words;
+                    start = i;
+                    break;
+                }
+            }
+        }
+
+        double distraction = ((words - 1) > 0 ? (sum / (double) text.length) / (double)(words - 1) : text.length);
+        output.put("distraction", distraction);
+
+        return output;
+    }
 }

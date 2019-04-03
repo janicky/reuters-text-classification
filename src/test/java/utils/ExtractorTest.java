@@ -54,4 +54,10 @@ class ExtractorTest {
         Map<String, Integer> count = Extractor.wordsCountExtraction(dictionary, text);
         assertEquals(5, count.get("count").intValue());
     }
+
+    @Test
+    void wordsDistractionExtraction() {
+        Map<String, Double> distraction = Extractor.wordsDistractionExtraction(dictionary, text);
+        assertTrue(Math.abs(0.3 - distraction.get("distraction").doubleValue()) < 0.0001);
+    }
 }
