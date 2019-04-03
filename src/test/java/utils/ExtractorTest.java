@@ -9,7 +9,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtractorTest {
-    private final String[] text = new String[] { "machine", "learning", "based", "systems" };
+    private final String[] text = new String[] { "machine", "learning", "based", "systems", "learning" };
     private final String[] dictionary = new String[] { "learning", "artificial", "representation", "systems" };
 
     @Test
@@ -24,8 +24,18 @@ class ExtractorTest {
     }
 
     @Test
-    void densityExtraction() {
-        double[] density = Extractor.densityExtraction(dictionary, text);
-        System.out.println(Arrays.toString(density));
+    void keywordsOccurrencesExtraction() {
+        Map<String, Integer> occurrences = Extractor.occurrencesExtraction(dictionary, text);
+//        Assertions
+        assertEquals(2, occurrences.get("learning").intValue());
+        assertEquals(0, occurrences.get("artificial").intValue());
+        assertEquals(0, occurrences.get("representation").intValue());
+        assertEquals(1, occurrences.get("systems").intValue());
     }
+
+//    @Test
+//    void densityExtraction() {
+//        double[] density = Extractor.densityExtraction(dictionary, text);
+//        System.out.println(Arrays.toString(density));
+//    }
 }

@@ -20,17 +20,26 @@ public class Extractor {
         return output;
     }
 
-    public static double[] densityExtraction(String[] dictionary, String[] text) {
-        double[] output = new double[dictionary.length];
-        Map<String, Integer> occurrences = Operations.wordsOccurrences(dictionary, text);
+    public static Map occurrencesExtraction(String[] dictionary, String[] text) {
+        Map<String, Integer> output = new HashMap<>();
 
-        if (text.length > 0) {
-            for (int i = 0; i < dictionary.length; i++) {
-                output[i] = occurrences.get(dictionary[i]) / (double) text.length;
+        for (String dict : dictionary) {
+            int occurrences = 0;
+            for (String word : text) {
+                if (word.equals(dict)) {
+                    occurrences++;
+                }
             }
-        } else {
-            Arrays.fill(output, 0);
+            output.put(dict, occurrences);
         }
         return output;
     }
+
+//    public static Map densityExtraction(String[] dictionary, String[] text) {
+//        Map<String, Integer> output = new HashMap<>();
+//
+//        for (String dict : dictionary) {
+//
+//        }
+//    }
 }
