@@ -26,4 +26,12 @@ public class Classification {
             testingSet[i] = objects[learningSetSize + i];
         }
     }
+
+    public ClassificationObject[] getLearningSet() {
+        return learningSet;
+    }
+
+    public ClassificationObject[] getTestingSet() {
+        return testingSet;
+    }
 }
