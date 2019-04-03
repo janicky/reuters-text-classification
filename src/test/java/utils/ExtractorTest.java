@@ -41,4 +41,11 @@ class ExtractorTest {
         assertEquals(0, density.get("representation").intValue());
         assertEquals(20, density.get("systems").intValue());
     }
+
+    @Test
+    void distanceExtraction() {
+        Map<String, Integer> distance = Extractor.distanceExtraction(dictionary, text);
+        assertEquals(1, distance.get("learning").intValue());
+        assertEquals(3, distance.get("systems").intValue());
+    }
 }

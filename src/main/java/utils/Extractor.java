@@ -1,6 +1,5 @@
 package utils;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +41,20 @@ public class Extractor {
         for (String dict : dictionary) {
             double density = occurrences.get(dict).intValue() / (double)text.length;
             output.put(dict, (int) (density * 100));
+        }
+        return output;
+    }
+
+    public static Map distanceExtraction(String[] dictionary, String[] text) {
+        Map<String, Integer> output = new HashMap<>();
+
+        for (String dict : dictionary) {
+            for (int i = 0; i < text.length; i++) {
+                if (text[i].equals(dict)) {
+                    output.put(dict, i);
+                    break;
+                }
+            }
         }
         return output;
     }
