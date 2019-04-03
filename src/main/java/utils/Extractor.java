@@ -1,23 +1,22 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Extractor {
-    public static boolean[] binaryExtraction(String[] dictionary, String[] text) {
-        boolean[] output = new boolean[dictionary.length];
+    public static Map binaryExtraction(String[] dictionary, String[] text) {
+        Map<String, Integer> output = new HashMap<>();
 
-        for (int i = 0; i < dictionary.length; i++) {
+        for (String dict : dictionary) {
             boolean found = false;
             for (String word : text) {
-                if (word.equals(dictionary[i])) {
+                if (word.equals(dict)) {
                     found = true;
-                    break;
                 }
             }
-            output[i] = found;
+            output.put(dict, (found ? 1 : 0));
         }
-
         return output;
     }
 

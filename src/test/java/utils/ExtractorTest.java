@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,14 +14,13 @@ class ExtractorTest {
 
     @Test
     void binaryExtraction() {
-        boolean[] binary = Extractor.binaryExtraction(dictionary, text);
+        Map<String, Integer> binary = Extractor.binaryExtraction(dictionary, text);
 //        Assertions
-        assertEquals(4, binary.length);
-        assertTrue(binary[0]);
-        assertFalse(binary[1]);
-        assertFalse(binary[2]);
-        assertTrue(binary[3]);
-        System.out.println(Arrays.toString(binary));
+        assertEquals(4, binary.size());
+        assertEquals(1, binary.get("learning").intValue());
+        assertEquals(0, binary.get("artificial").intValue());
+        assertEquals(0, binary.get("representation").intValue());
+        assertEquals(1, binary.get("systems").intValue());
     }
 
     @Test

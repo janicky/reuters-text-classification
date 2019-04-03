@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClassificationTest {
 
-    private static final int OBJECTS = 20;
     private Classification classification;
     private ClassificationObject[] objects;
 
