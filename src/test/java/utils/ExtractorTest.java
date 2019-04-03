@@ -24,7 +24,7 @@ class ExtractorTest {
     }
 
     @Test
-    void keywordsOccurrencesExtraction() {
+    void occurrencesExtraction() {
         Map<String, Integer> occurrences = Extractor.occurrencesExtraction(dictionary, text);
 //        Assertions
         assertEquals(2, occurrences.get("learning").intValue());
@@ -33,9 +33,12 @@ class ExtractorTest {
         assertEquals(1, occurrences.get("systems").intValue());
     }
 
-//    @Test
-//    void densityExtraction() {
-//        double[] density = Extractor.densityExtraction(dictionary, text);
-//        System.out.println(Arrays.toString(density));
-//    }
+    @Test
+    void densityExtraction() {
+        Map<String, Integer> density = Extractor.densityExtraction(dictionary, text);
+        assertEquals(40, density.get("learning").intValue());
+        assertEquals(0, density.get("artificial").intValue());
+        assertEquals(0, density.get("representation").intValue());
+        assertEquals(20, density.get("systems").intValue());
+    }
 }

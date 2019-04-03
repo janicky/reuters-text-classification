@@ -35,11 +35,14 @@ public class Extractor {
         return output;
     }
 
-//    public static Map densityExtraction(String[] dictionary, String[] text) {
-//        Map<String, Integer> output = new HashMap<>();
-//
-//        for (String dict : dictionary) {
-//
-//        }
-//    }
+    public static Map densityExtraction(String[] dictionary, String[] text) {
+        Map<String, Integer> output = new HashMap<>();
+        Map<String, Integer> occurrences = occurrencesExtraction(dictionary, text);
+
+        for (String dict : dictionary) {
+            double density = occurrences.get(dict).intValue() / (double)text.length;
+            output.put(dict, (int) (density * 100));
+        }
+        return output;
+    }
 }
