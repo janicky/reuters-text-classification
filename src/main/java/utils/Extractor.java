@@ -58,4 +58,10 @@ public class Extractor {
         }
         return output;
     }
+
+    public static Map wordsCountExtraction(String[] dictionary, String[] text) {
+        Map<String, Integer> output = new HashMap<>();
+        output.put("count", text.length);
+        return output;
+    }
 }

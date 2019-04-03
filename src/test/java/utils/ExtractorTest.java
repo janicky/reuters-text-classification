@@ -48,4 +48,10 @@ class ExtractorTest {
         assertEquals(1, distance.get("learning").intValue());
         assertEquals(3, distance.get("systems").intValue());
     }
+
+    @Test
+    void wordsCountExtraction() {
+        Map<String, Integer> count = Extractor.wordsCountExtraction(dictionary, text);
+        assertEquals(5, count.get("count").intValue());
+    }
 }
