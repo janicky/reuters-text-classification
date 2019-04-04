@@ -29,7 +29,9 @@ public class Classification {
     }
 
     public void perform(Metric metric) {
+        for(ClassificationObject object : testingSet) {
 
+        }
     }
 
     public ClassificationObject[] getLearningSet() {
