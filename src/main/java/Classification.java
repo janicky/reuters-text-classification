@@ -1,11 +1,18 @@
 import interfaces.ClassificationObject;
+import metrics.Euclidean;
+import utils.Comparator;
 import utils.Metric;
+import utils.Operations;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class Classification {
     private int truePositive = 0;
     private int k;
     private ClassificationObject[] learningSet;
     private ClassificationObject[] testingSet;
+    private String[] dictionary;
 
     // splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
     public Classification(ClassificationObject[] objects, double splitRatio, int k) {
@@ -28,10 +35,30 @@ public class Classification {
         }
     }
 
-    public void perform(Metric metric) {
-        for(ClassificationObject object : testingSet) {
+    public void perform(Metric metric, String[] extractors) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        Comparator comparator = new Comparator(metric, extractors);
 
+        for(ClassificationObject testObject : testingSet) {
+            Map<ClassificationObject, Double> distances = new HashMap<>();
+
+            for (ClassificationObject learningObject : learningSet) {
+                String[] vectorized_1 = Operations.splitText(Operations.normalizeText(testObject.getText()));
+                String[] vectorized_2 = Operations.splitText(Operations.normalizeText(learningObject.getText()));
+                double distance = comparator.compare(vectorized_1, vectorized_2, dictionary);
+                distances.put(learningObject, distance);
+            }
+
+            TreeMap<ClassificationObject, Double> sorted = new TreeMap<>();
+            sorted.putAll(distances);
+
+            for (int i = sorted.size() - 1; i > sorted.size() - 1 - k; i--) {
+//                to do
+            }
         }
+    }
+
+    public void setDictionary(String[] dictionary) {
+        this.dictionary = dictionary;
     }
 
     public ClassificationObject[] getLearningSet() {
