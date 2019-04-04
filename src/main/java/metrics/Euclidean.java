@@ -1,8 +1,14 @@
 package metrics;
 
-public class Euclidean extends utils.Metric {
+import utils.Feature;
 
+public class Euclidean extends utils.Metric {
     public double calculate() {
-        return 0.0;
+        double sum = 0;
+        for (Feature feature : features) {
+            sum += feature.getDifference() * feature.getDifference();
+        }
+
+        return Math.sqrt(sum);
     }
 }
