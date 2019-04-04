@@ -1,9 +1,8 @@
 package metrics;
 
-import utils.Feature;
+public class Euclidean extends utils.Metric {
 
-import java.util.List;
-
-public class Euclidean {
-    List<Feature> features;
+    public double calculate() {
+        return 0.0;
+    }
 }

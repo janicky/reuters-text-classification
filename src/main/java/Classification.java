@@ -1,5 +1,5 @@
 import interfaces.ClassificationObject;
-import interfaces.Metric;
+import utils.Metric;
 
 public class Classification {
     private int truePositive = 0;
