@@ -1,4 +1,5 @@
 import interfaces.ClassificationObject;
+import interfaces.Metric;
 
 public class Classification {
     private int truePositive = 0;
@@ -25,6 +26,10 @@ public class Classification {
         for (int i = 0; i < testingSetSize; i++) {
             testingSet[i] = objects[learningSetSize + i];
         }
+    }
+
+    public void perform(Metric metric) {
+
     }
 
     public ClassificationObject[] getLearningSet() {
