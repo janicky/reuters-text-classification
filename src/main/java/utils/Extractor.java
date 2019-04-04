@@ -4,59 +4,57 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Extractor {
-    public static Map binaryExtraction(String[] dictionary, String[] text) {
-        Map<String, Integer> output = new HashMap<>();
+    public static double occurrencesCountExtraction(String[] dictionary, String[] text) {
+        int occurrences = 0;
 
         for (String dict : dictionary) {
-            boolean found = false;
             for (String word : text) {
                 if (word.equals(dict)) {
-                    found = true;
+                    occurrences++;
+                    break;
                 }
             }
-            output.put(dict, (found ? 1 : 0));
         }
-        return output;
+        return (double) occurrences;
     }
 
-    public static Map occurrencesExtraction(String[] dictionary, String[] text) {
-        Map<String, Integer> output = new HashMap<>();
+    public static double occurrencesSumExtraction(String[] dictionary, String[] text) {
+        int occurrences = 0;
 
         for (String dict : dictionary) {
-            int occurrences = 0;
             for (String word : text) {
                 if (word.equals(dict)) {
                     occurrences++;
                 }
             }
-            output.put(dict, occurrences);
         }
-        return output;
+        return (double) occurrences;
     }
 
-    public static Map densityExtraction(String[] dictionary, String[] text) {
-        Map<String, Integer> output = new HashMap<>();
-        Map<String, Integer> occurrences = occurrencesExtraction(dictionary, text);
-
-        for (String dict : dictionary) {
-            double density = occurrences.get(dict).intValue() / (double)text.length;
-            output.put(dict, (int) (density * 100));
+    public static double densityExtraction(String[] dictionary, String[] text) {
+        double occurrences = occurrencesSumExtraction(dictionary, text);
+        if (text.length == 0) {
+            return 0;
         }
-        return output;
+        return occurrences / (double) text.length;
     }
 
-    public static Map distanceExtraction(String[] dictionary, String[] text) {
-        Map<String, Integer> output = new HashMap<>();
-
+    public static double averageDistanceExtraction(String[] dictionary, String[] text) {
+        int sum = 0;
+        int occurrences = 0;
         for (String dict : dictionary) {
             for (int i = 0; i < text.length; i++) {
                 if (text[i].equals(dict)) {
-                    output.put(dict, i);
-                    break;
+                    sum += i;
+                    occurrences++;
                 }
             }
         }
-        return output;
+
+        if (occurrences == 0) {
+            return 0;
+        }
+        return sum / (double) occurrences;
     }
 
     public static Map wordsCountExtraction(String[] dictionary, String[] text) {
@@ -82,7 +80,7 @@ public class Extractor {
             }
         }
 
-        double distraction = ((words - 1) > 0 ? (sum / (double) text.length) / (double)(words - 1) : text.length);
+        double distraction = ((words - 1) > 0 ? (sum / (double) text.length) / (double)(words - 1) : 0);
         output.put("distraction", distraction);
 
         return output;

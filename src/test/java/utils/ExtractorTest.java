@@ -13,40 +13,29 @@ class ExtractorTest {
     private final String[] dictionary = new String[] { "learning", "artificial", "representation", "systems" };
 
     @Test
-    void binaryExtraction() {
-        Map<String, Integer> binary = Extractor.binaryExtraction(dictionary, text);
+    void occurrencesCountExtraction() {
+        double occurrences = Extractor.occurrencesCountExtraction(dictionary, text);
 //        Assertions
-        assertEquals(4, binary.size());
-        assertEquals(1, binary.get("learning").intValue());
-        assertEquals(0, binary.get("artificial").intValue());
-        assertEquals(0, binary.get("representation").intValue());
-        assertEquals(1, binary.get("systems").intValue());
+        assertEquals(2, (int)occurrences);
     }
 
     @Test
-    void occurrencesExtraction() {
-        Map<String, Integer> occurrences = Extractor.occurrencesExtraction(dictionary, text);
+    void occurrencesSumExtraction() {
+        double occurrences = Extractor.occurrencesSumExtraction(dictionary, text);
 //        Assertions
-        assertEquals(2, occurrences.get("learning").intValue());
-        assertEquals(0, occurrences.get("artificial").intValue());
-        assertEquals(0, occurrences.get("representation").intValue());
-        assertEquals(1, occurrences.get("systems").intValue());
+        assertEquals(3, (int)occurrences);
     }
 
     @Test
     void densityExtraction() {
-        Map<String, Integer> density = Extractor.densityExtraction(dictionary, text);
-        assertEquals(40, density.get("learning").intValue());
-        assertEquals(0, density.get("artificial").intValue());
-        assertEquals(0, density.get("representation").intValue());
-        assertEquals(20, density.get("systems").intValue());
+        double density = Extractor.densityExtraction(dictionary, text);
+        assertTrue(Math.abs(0.6 - density) < 0.0001);
     }
 
     @Test
-    void distanceExtraction() {
-        Map<String, Integer> distance = Extractor.distanceExtraction(dictionary, text);
-        assertEquals(1, distance.get("learning").intValue());
-        assertEquals(3, distance.get("systems").intValue());
+    void averageDistanceExtraction() {
+        double distance = Extractor.averageDistanceExtraction(dictionary, text);
+        assertTrue(Math.abs(2.6666666666666665 - distance) < 0.0001);
     }
 
     @Test
