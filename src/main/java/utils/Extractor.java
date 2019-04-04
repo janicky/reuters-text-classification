@@ -1,10 +1,7 @@
 package utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Extractor {
-    public static double occurrencesCountExtraction(String[] dictionary, String[] text) {
+    public static int occurrencesCountExtraction(String[] dictionary, String[] text) {
         int occurrences = 0;
 
         for (String dict : dictionary) {
@@ -15,10 +12,10 @@ public class Extractor {
                 }
             }
         }
-        return (double) occurrences;
+        return occurrences;
     }
 
-    public static double occurrencesSumExtraction(String[] dictionary, String[] text) {
+    public static int occurrencesSumExtraction(String[] dictionary, String[] text) {
         int occurrences = 0;
 
         for (String dict : dictionary) {
@@ -28,7 +25,7 @@ public class Extractor {
                 }
             }
         }
-        return (double) occurrences;
+        return occurrences;
     }
 
     public static double densityExtraction(String[] dictionary, String[] text) {
@@ -57,7 +54,7 @@ public class Extractor {
         return sum / (double) occurrences;
     }
 
-    public static double wordsCountExtraction(String[] dictionary, String[] text) {
+    public static int wordsCountExtraction(String[] dictionary, String[] text) {
         return text.length;
     }
 
