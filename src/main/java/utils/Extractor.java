@@ -57,14 +57,11 @@ public class Extractor {
         return sum / (double) occurrences;
     }
 
-    public static Map wordsCountExtraction(String[] dictionary, String[] text) {
-        Map<String, Integer> output = new HashMap<>();
-        output.put("count", text.length);
-        return output;
+    public static double wordsCountExtraction(String[] dictionary, String[] text) {
+        return text.length;
     }
 
-    public static Map wordsDistractionExtraction(String[] dictionary, String[] text) {
-        Map<String, Double> output = new HashMap<>();
+    public static double wordsDistractionExtraction(String[] dictionary, String[] text) {
         int start = -1, sum = 0, words = 0;
 
         for (int i = 0; i < text.length; i++) {
@@ -80,9 +77,6 @@ public class Extractor {
             }
         }
 
-        double distraction = ((words - 1) > 0 ? (sum / (double) text.length) / (double)(words - 1) : 0);
-        output.put("distraction", distraction);
-
-        return output;
+        return ((words - 1) > 0 ? (sum / (double) text.length) / (double)(words - 1) : 0);
     }
 }

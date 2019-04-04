@@ -40,13 +40,13 @@ class ExtractorTest {
 
     @Test
     void wordsCountExtraction() {
-        Map<String, Integer> count = Extractor.wordsCountExtraction(dictionary, text);
-        assertEquals(5, count.get("count").intValue());
+        double count = Extractor.wordsCountExtraction(dictionary, text);
+        assertTrue(Math.abs(5 - count) < 0.0001);
     }
 
     @Test
     void wordsDistractionExtraction() {
-        Map<String, Double> distraction = Extractor.wordsDistractionExtraction(dictionary, text);
-        assertTrue(Math.abs(0.3 - distraction.get("distraction").doubleValue()) < 0.0001);
+        double distraction = Extractor.wordsDistractionExtraction(dictionary, text);
+        assertTrue(Math.abs(0.3 - distraction) < 0.0001);
     }
 }
