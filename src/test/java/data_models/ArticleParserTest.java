@@ -3,14 +3,14 @@ package data_models;
 import interfaces.IClassificationObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import interfaces.Parser;
+import interfaces.IParser;
 
 import java.io.File;
 import java.io.IOException;
 
 class ArticleParserTest {
     private File file;
-    private Parser parser;
+    private IParser parser;
 
     @BeforeEach
     void initialize() {

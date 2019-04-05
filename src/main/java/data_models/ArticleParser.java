@@ -1,7 +1,7 @@
 package data_models;
 
 import interfaces.IClassificationObject;
-import interfaces.Parser;
+import interfaces.IParser;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
 
-public class ArticleParser implements Parser {
+public class ArticleParser implements IParser {
     public IClassificationObject[] parseFile(File file) throws IOException {
         Scanner scanner = new Scanner(file).useDelimiter("\\A");
         String content = scanner.hasNext() ? scanner.next() : "";
