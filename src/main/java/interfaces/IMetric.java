@@ -1,5 +1,5 @@
 package interfaces;
 
-public interface Metric {
+public interface IMetric {
     public double calculate();
 }
