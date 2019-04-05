@@ -38,6 +38,7 @@ public class Classification {
     public void perform(Metric metric, String[] extractors) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         Comparator comparator = new Comparator(metric, extractors);
         List<Group> groups = new ArrayList<>();
+        truePositive = 0;
 
         for(IClassificationObject testObject : testingSet) {
             SortedMap<IClassificationObject, Double> distances = new TreeMap<>(Collections.reverseOrder());
@@ -55,6 +56,10 @@ public class Classification {
                 groups.add(selectedGroup);
             }
             selectedGroup.addObject(testObject);
+
+            if (Operations.checkLabel(selectedLabel, testObject.getLabels())) {
+                truePositive++;
+            }
         }
     }
 
