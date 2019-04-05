@@ -41,12 +41,12 @@ class OperationsTest {
 
     @Test
     void selectObjects() {
-        SortedMap<IClassificationObject, Double> map = new TreeMap<>(Collections.reverseOrder());
+        Map<IClassificationObject, Double> map = new HashMap<>();
         map.put(new Article("TT1", new String[] { "P1", "P2" }, "TX1" ), 0.5);
         map.put(new Article("TT2", new String[] { "P3" }, "TX2" ), 15.2);
         map.put(new Article("TT3", new String[] { "P4" }, "TX3" ), 1.5);
         map.put(new Article("TT3", new String[] { "P4" }, "TX3" ), 0.4);
 
-        System.out.println(map.toString());
+        IClassificationObject[] selectedObjects = Operations.selectObjects(map, 2);
     }
 }

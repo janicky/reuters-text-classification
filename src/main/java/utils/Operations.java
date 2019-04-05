@@ -30,11 +30,15 @@ public class Operations {
         return map;
     }
 
-    public static IClassificationObject[] selectObjects(SortedMap<IClassificationObject, Double> objects, int k) {
+    public static IClassificationObject[] selectObjects(Map<IClassificationObject, Double> map, int k) {
+        Map sortedMap = Operations.sortByValues(map);
+        Set objects = sortedMap.entrySet();
+
         IClassificationObject[] selected = new IClassificationObject[k];
         int i = 0;
-        for (Map.Entry<IClassificationObject, Double> o : objects.entrySet()) {
-            selected[i++] = o.getKey();
+        for (Object o : objects) {
+            Map.Entry<IClassificationObject, Double> entry = (Map.Entry) o;
+            selected[i++] = entry.getKey();
             if (i >= k - 1) {
                 return selected;
             }

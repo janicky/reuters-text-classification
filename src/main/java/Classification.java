@@ -41,7 +41,7 @@ public class Classification {
         truePositive = 0;
 
         for(IClassificationObject testObject : testingSet) {
-            SortedMap<IClassificationObject, Double> distances = new TreeMap<>(Collections.reverseOrder());
+            Map<IClassificationObject, Double> distances = new HashMap<>();
 
             for (IClassificationObject learningObject : learningSet) {
                 double distance = comparator.compare(testObject.getVectorizedText(), learningObject.getVectorizedText(), dictionary);
