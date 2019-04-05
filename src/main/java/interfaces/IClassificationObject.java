@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface ClassificationObject {
+public interface IClassificationObject {
     String getText();
     String[] getLabels();
     String[] getVectorizedText();

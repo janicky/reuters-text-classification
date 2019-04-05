@@ -1,5 +1,5 @@
 import data_models.ArticleParser;
-import interfaces.ClassificationObject;
+import interfaces.IClassificationObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.Loader;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ClassificationTest {
 
     private Classification classification;
-    private ClassificationObject[] objects;
+    private IClassificationObject[] objects;
 
     @BeforeEach
     void initialize() throws IOException {

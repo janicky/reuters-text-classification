@@ -1,6 +1,6 @@
 package data_models;
 
-import interfaces.ClassificationObject;
+import interfaces.IClassificationObject;
 import interfaces.Parser;
 import java.io.File;
 import java.io.IOException;
@@ -12,14 +12,14 @@ import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
 
 public class ArticleParser implements Parser {
-    public ClassificationObject[] parseFile(File file) throws IOException {
+    public IClassificationObject[] parseFile(File file) throws IOException {
         Scanner scanner = new Scanner(file).useDelimiter("\\A");
         String content = scanner.hasNext() ? scanner.next() : "";
         content = content.replace("BODY>", "CONTENT>");
         Document document = Jsoup.parse(content);
         Elements elements = document.getElementsByTag("REUTERS");
 
-        ClassificationObject[] classificationObjects = new ClassificationObject[elements.size()];
+        IClassificationObject[] classificationObjects = new IClassificationObject[elements.size()];
 
         for (int e = 0; e < classificationObjects.length; e++) {
             Element element = elements.get(e);

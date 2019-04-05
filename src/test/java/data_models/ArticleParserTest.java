@@ -1,6 +1,6 @@
 package data_models;
 
-import interfaces.ClassificationObject;
+import interfaces.IClassificationObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import interfaces.Parser;
@@ -20,8 +20,8 @@ class ArticleParserTest {
 
     @Test
     void parseFile() throws IOException {
-        ClassificationObject[] objects = parser.parseFile(file);
-        for (ClassificationObject object : objects) {
+        IClassificationObject[] objects = parser.parseFile(file);
+        for (IClassificationObject object : objects) {
             System.out.println(object);
         }
     }
