@@ -30,4 +30,9 @@ class ClassificationTest {
         assertEquals(300, classification.getTestingSet().length);
     }
 
+    @Test
+    void getAccuracy() {
+        assertEquals(0, classification.getAccuracy());
+    }
+
 }

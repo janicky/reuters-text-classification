@@ -1,5 +1,5 @@
 import interfaces.IClassificationObject;
-import utils.Comparator;
+import utils.Calculations;
 import abstracts.Metric;
 import utils.Group;
 import utils.Operations;
@@ -36,7 +36,7 @@ public class Classification {
     }
 
     public void perform(Metric metric, String[] extractors) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Comparator comparator = new Comparator(metric, extractors);
+        Calculations comparator = new Calculations(metric, extractors);
         List<Group> groups = new ArrayList<>();
         truePositive = 0;
 

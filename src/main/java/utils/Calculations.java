@@ -5,11 +5,11 @@ import abstracts.Metric;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class Comparator {
+public class Calculations {
     private String[] extractors;
     private Metric metric;
 
-    public Comparator(Metric metric, String[] extractors) {
+    public Calculations(Metric metric, String[] extractors) {
         this.metric = metric;
         this.extractors = extractors;
     }

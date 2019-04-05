@@ -5,6 +5,7 @@ import interfaces.IClassificationObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Operations {
     public static String normalizeText(final String text) {
@@ -77,4 +78,5 @@ public class Operations {
         }
         return false;
     }
+
 }

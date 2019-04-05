@@ -1,9 +1,10 @@
 package utils;
 
+import data_models.Article;
+import interfaces.IClassificationObject;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,5 +37,16 @@ class OperationsTest {
         Map<String, Integer> map = Operations.wordsOccurrences(dictionary, prepared);
         assertEquals(1, map.get("astronaut").intValue());
         assertEquals(2, map.get("armstrong").intValue());
+    }
+
+    @Test
+    void selectObjects() {
+        SortedMap<IClassificationObject, Double> map = new TreeMap<>(Collections.reverseOrder());
+        map.put(new Article("TT1", new String[] { "P1", "P2" }, "TX1" ), 0.5);
+        map.put(new Article("TT2", new String[] { "P3" }, "TX2" ), 15.2);
+        map.put(new Article("TT3", new String[] { "P4" }, "TX3" ), 1.5);
+        map.put(new Article("TT3", new String[] { "P4" }, "TX3" ), 0.4);
+
+        System.out.println(map.toString());
     }
 }
