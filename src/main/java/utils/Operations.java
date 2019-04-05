@@ -43,4 +43,29 @@ public class Operations {
         }
         return selected;
     }
+
+    public static String selectLabel(IClassificationObject[] objects) {
+        Map<String, Integer> labelsOccurrences = new HashMap<>();
+        String max_label = null;
+        int max_count = 0;
+
+        for (IClassificationObject o : objects) {
+            for (String label : o.getLabels()) {
+                if (labelsOccurrences.containsKey(label)) {
+                    int current = labelsOccurrences.get(label);
+                    labelsOccurrences.put(label, current + 1);
+                } else {
+                    labelsOccurrences.put(label, 1);
+                }
+
+                int element = labelsOccurrences.get(label);
+                if (element > max_count) {
+                    max_count = element;
+                    max_label = label;
+                }
+            }
+        }
+
+        return max_label;
+    }
 }
