@@ -63,6 +63,13 @@ public class Classification {
         }
     }
 
+    public double getAccuracy() {
+        if (testingSet.length == 0) {
+            return 0;
+        }
+        return truePositive / (double) testingSet.length;
+    }
+
     public void setDictionary(String[] dictionary) {
         this.dictionary = dictionary;
     }
