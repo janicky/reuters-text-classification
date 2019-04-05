@@ -2,10 +2,7 @@ package utils;
 
 import interfaces.IClassificationObject;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Operations {
     public static String normalizeText(final String text) {
@@ -79,4 +76,19 @@ public class Operations {
         return false;
     }
 
+    public static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
+        Comparator<K> valueComparator =
+                (k1, k2) -> {
+                    int compare =
+                            map.get(k1).compareTo(map.get(k2));
+                    if (compare == 0)
+                        return 1;
+                    else
+                        return compare;
+                };
+
+        Map<K, V> sortedByValues = new TreeMap<>(valueComparator);
+        sortedByValues.putAll(map);
+        return sortedByValues;
+    }
 }
