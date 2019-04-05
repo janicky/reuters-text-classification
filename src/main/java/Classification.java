@@ -1,6 +1,7 @@
 import interfaces.IClassificationObject;
 import utils.Comparator;
 import abstracts.Metric;
+import utils.Group;
 import utils.Operations;
 
 import java.lang.reflect.InvocationTargetException;
@@ -36,6 +37,7 @@ public class Classification {
 
     public void perform(Metric metric, String[] extractors) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         Comparator comparator = new Comparator(metric, extractors);
+        List<Group> groups = new ArrayList<>();
 
         for(IClassificationObject testObject : testingSet) {
             SortedMap<IClassificationObject, Double> distances = new TreeMap<>(Collections.reverseOrder());
@@ -47,6 +49,12 @@ public class Classification {
 
             IClassificationObject[] selectedObjects = Operations.selectObjects(distances, k);
             String selectedLabel = Operations.selectLabel(selectedObjects);
+            Group selectedGroup = groups.stream().filter(e -> e.getLabel() == selectedLabel).findFirst().orElse(null);
+            if (selectedGroup == null) {
+                selectedGroup = new Group(selectedLabel);
+                groups.add(selectedGroup);
+            }
+            selectedGroup.addObject(testObject);
         }
     }
 
