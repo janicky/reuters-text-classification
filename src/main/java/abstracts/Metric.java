@@ -1,4 +1,6 @@
-package utils;
+package abstracts;
+
+import utils.Feature;
 
 import java.util.ArrayList;
 import java.util.List;

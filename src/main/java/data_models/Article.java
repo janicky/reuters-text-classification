@@ -1,10 +1,7 @@
 package data_models;
-
-import interfaces.ClassificationObject;
-
 import java.util.Arrays;
 
-public class Article implements ClassificationObject {
+public class Article extends abstracts.ClassificationObject {
     private String title;
     private String[] places;
     private String body;
@@ -46,4 +43,5 @@ public class Article implements ClassificationObject {
     public String[] getLabels() {
         return getPlaces();
     }
+
 }

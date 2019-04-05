@@ -1,6 +1,6 @@
 package utils;
 
-import interfaces.ClassificationObject;
+import abstracts.Metric;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

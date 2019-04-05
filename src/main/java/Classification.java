@@ -1,7 +1,6 @@
 import interfaces.ClassificationObject;
-import metrics.Euclidean;
 import utils.Comparator;
-import utils.Metric;
+import abstracts.Metric;
 import utils.Operations;
 
 import java.lang.reflect.InvocationTargetException;
@@ -39,7 +38,7 @@ public class Classification {
         Comparator comparator = new Comparator(metric, extractors);
 
         for(ClassificationObject testObject : testingSet) {
-            Map<ClassificationObject, Double> distances = new HashMap<>();
+            SortedMap<ClassificationObject, Double> distances = new TreeMap<>();
 
             for (ClassificationObject learningObject : learningSet) {
                 String[] vectorized_1 = Operations.splitText(Operations.normalizeText(testObject.getText()));
