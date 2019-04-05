@@ -42,11 +42,15 @@ class OperationsTest {
     @Test
     void selectObjects() {
         Map<IClassificationObject, Double> map = new HashMap<>();
-        map.put(new Article("TT1", new String[] { "P1", "P2" }, "TX1" ), 0.5);
+        IClassificationObject o1 = new Article("TT1", new String[] { "P1", "P2" }, "TX1" );
+        map.put(o1, 0.5);
         map.put(new Article("TT2", new String[] { "P3" }, "TX2" ), 15.2);
         map.put(new Article("TT3", new String[] { "P4" }, "TX3" ), 1.5);
-        map.put(new Article("TT3", new String[] { "P4" }, "TX3" ), 0.4);
+        IClassificationObject o2 = new Article("TT3", new String[] { "P4" }, "TX3" );
+        map.put(o2, 0.4);
 
         IClassificationObject[] selectedObjects = Operations.selectObjects(map, 2);
+        assertEquals(o2, selectedObjects[0]);
+        assertEquals(o1, selectedObjects[1]);
     }
 }

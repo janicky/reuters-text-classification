@@ -39,7 +39,7 @@ public class Operations {
         for (Object o : objects) {
             Map.Entry<IClassificationObject, Double> entry = (Map.Entry) o;
             selected[i++] = entry.getKey();
-            if (i >= k - 1) {
+            if (i >= k) {
                 return selected;
             }
         }
