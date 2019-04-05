@@ -46,6 +46,7 @@ public class Classification {
             }
 
             IClassificationObject[] selectedObjects = Operations.selectObjects(distances, k);
+            String selectedLabel = Operations.selectLabel(selectedObjects);
         }
     }
 
