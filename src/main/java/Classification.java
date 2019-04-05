@@ -40,6 +40,7 @@ public class Classification {
         List<Group> groups = new ArrayList<>();
         truePositive = 0;
 
+        int x = 0;
         for(IClassificationObject testObject : testingSet) {
             Map<IClassificationObject, Double> distances = new HashMap<>();
 
@@ -47,7 +48,7 @@ public class Classification {
                 double distance = comparator.compare(testObject.getVectorizedText(), learningObject.getVectorizedText(), dictionary);
                 distances.put(learningObject, distance);
             }
-
+            System.out.println("Testing object #" + x++);
             IClassificationObject[] selectedObjects = Operations.selectObjects(distances, k);
             String selectedLabel = Operations.selectLabel(selectedObjects);
             Group selectedGroup = groups.stream().filter(e -> e.getLabel() == selectedLabel).findFirst().orElse(null);

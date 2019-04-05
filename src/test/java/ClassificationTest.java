@@ -44,6 +44,8 @@ class ClassificationTest {
                 "densityExtraction"
         };
         classification.perform(new Euclidean(), extractors);
+
+        System.out.println("Accuracy: " + classification.getAccuracy());
     }
 
 }
