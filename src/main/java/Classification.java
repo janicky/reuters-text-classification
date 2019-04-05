@@ -1,6 +1,7 @@
 import interfaces.IClassificationObject;
 import utils.Comparator;
 import abstracts.Metric;
+import utils.Operations;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -37,19 +38,14 @@ public class Classification {
         Comparator comparator = new Comparator(metric, extractors);
 
         for(IClassificationObject testObject : testingSet) {
-            SortedMap<IClassificationObject, Double> distances = new TreeMap<>();
+            SortedMap<IClassificationObject, Double> distances = new TreeMap<>(Collections.reverseOrder());
 
             for (IClassificationObject learningObject : learningSet) {
                 double distance = comparator.compare(testObject.getVectorizedText(), learningObject.getVectorizedText(), dictionary);
                 distances.put(learningObject, distance);
             }
 
-            TreeMap<IClassificationObject, Double> sorted = new TreeMap<>();
-            sorted.putAll(distances);
-
-            for (int i = sorted.size() - 1; i > sorted.size() - 1 - k; i--) {
-//                to do
-            }
+            IClassificationObject[] selectedObjects = Operations.selectObjects(distances, k);
         }
     }
 

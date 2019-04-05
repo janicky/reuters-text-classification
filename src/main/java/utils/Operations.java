@@ -1,7 +1,10 @@
 package utils;
 
+import interfaces.IClassificationObject;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
 
 public class Operations {
     public static String normalizeText(final String text) {
@@ -27,5 +30,17 @@ public class Operations {
             }
         }
         return map;
+    }
+
+    public static IClassificationObject[] selectObjects(SortedMap<IClassificationObject, Double> objects, int k) {
+        IClassificationObject[] selected = new IClassificationObject[k];
+        int i = 0;
+        for (Map.Entry<IClassificationObject, Double> o : objects.entrySet()) {
+            selected[i++] = o.getKey();
+            if (i >= k - 1) {
+                return selected;
+            }
+        }
+        return selected;
     }
 }
