@@ -68,4 +68,13 @@ public class Operations {
 
         return max_label;
     }
+
+    public boolean checkLabel(String selectedLabel, String[] labels) {
+        for (String label : labels) {
+            if (label.equals(selectedLabel)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
