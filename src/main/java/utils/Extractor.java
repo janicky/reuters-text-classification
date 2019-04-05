@@ -1,7 +1,7 @@
 package utils;
 
 public class Extractor {
-    public static int occurrencesCountExtraction(String[] dictionary, String[] text) {
+    public static double occurrencesCountExtraction(String[] dictionary, String[] text) {
         int occurrences = 0;
 
         for (String dict : dictionary) {
@@ -12,10 +12,10 @@ public class Extractor {
                 }
             }
         }
-        return occurrences;
+        return (double) occurrences;
     }
 
-    public static int occurrencesSumExtraction(String[] dictionary, String[] text) {
+    public static double occurrencesSumExtraction(String[] dictionary, String[] text) {
         int occurrences = 0;
 
         for (String dict : dictionary) {
@@ -25,7 +25,7 @@ public class Extractor {
                 }
             }
         }
-        return occurrences;
+        return (double) occurrences;
     }
 
     public static double densityExtraction(String[] dictionary, String[] text) {
@@ -54,8 +54,8 @@ public class Extractor {
         return sum / (double) occurrences;
     }
 
-    public static int wordsCountExtraction(String[] dictionary, String[] text) {
-        return text.length;
+    public static double wordsCountExtraction(String[] dictionary, String[] text) {
+        return (double) text.length;
     }
 
     public static double wordsDistractionExtraction(String[] dictionary, String[] text) {

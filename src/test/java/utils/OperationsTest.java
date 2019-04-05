@@ -73,4 +73,10 @@ class OperationsTest {
         String label = Operations.selectLabel(selectedObjects);
         assertEquals("P1", label);
     }
+
+    @Test
+    void checkLabel() {
+        boolean checked = Operations.checkLabel("P1", object_1.getLabels());
+        assertTrue(checked);
+    }
 }

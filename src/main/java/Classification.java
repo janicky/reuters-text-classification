@@ -12,7 +12,7 @@ public class Classification {
     private int k;
     private IClassificationObject[] learningSet;
     private IClassificationObject[] testingSet;
-    private String[] dictionary;
+    private String[] dictionary = new String[] {};
 
     // splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
     public Classification(IClassificationObject[] objects, double splitRatio, int k) {
