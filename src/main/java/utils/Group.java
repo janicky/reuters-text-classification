@@ -19,4 +19,8 @@ public class Group {
     public List<IClassificationObject> getObjects() {
         return objects;
     }
+
+    public String getLabel() {
+        return label;
+    }
 }
