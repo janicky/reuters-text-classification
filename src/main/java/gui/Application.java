@@ -22,7 +22,7 @@ public class Application {
         }
 
         parameterSlider.addChangeListener(e -> {
-            System.out.println(parameterSlider.getValue());
+            kvalue.setText(Integer.toString(parameterSlider.getValue()));
         });
     }
 
