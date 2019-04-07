@@ -1,9 +1,12 @@
-import data_models.ArticleParser;
-import interfaces.IClassificationObject;
-import metrics.Euclidean;
+package classification;
+
+import classification.Classification;
+import classification.data_models.ArticleParser;
+import classification.interfaces.IClassificationObject;
+import classification.metrics.Euclidean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.Loader;
+import classification.utils.Loader;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

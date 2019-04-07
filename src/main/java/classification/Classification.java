@@ -1,8 +1,10 @@
-import interfaces.IClassificationObject;
-import utils.Calculations;
-import abstracts.Metric;
-import utils.Group;
-import utils.Operations;
+package classification;
+
+import classification.interfaces.IClassificationObject;
+import classification.utils.Calculations;
+import classification.abstracts.Metric;
+import classification.utils.Group;
+import classification.utils.Operations;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

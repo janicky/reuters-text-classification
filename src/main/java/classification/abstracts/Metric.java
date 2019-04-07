@@ -1,7 +1,7 @@
-package abstracts;
+package classification.abstracts;
 
-import interfaces.IMetric;
-import utils.Feature;
+import classification.interfaces.IMetric;
+import classification.utils.Feature;
 
 import java.util.ArrayList;
 import java.util.List;

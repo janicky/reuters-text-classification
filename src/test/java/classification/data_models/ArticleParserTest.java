@@ -1,9 +1,9 @@
-package data_models;
+package classification.data_models;
 
-import interfaces.IClassificationObject;
+import classification.interfaces.IClassificationObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import interfaces.IParser;
+import classification.interfaces.IParser;
 
 import java.io.File;
 import java.io.IOException;

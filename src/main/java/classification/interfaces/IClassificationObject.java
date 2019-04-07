@@ -1,4 +1,4 @@
-package interfaces;
+package classification.interfaces;
 
 public interface IClassificationObject {
     String getText();

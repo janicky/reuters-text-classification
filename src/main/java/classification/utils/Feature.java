@@ -1,4 +1,4 @@
-package utils;
+package classification.utils;
 
 public class Feature {
     private double difference;

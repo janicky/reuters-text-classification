@@ -1,7 +1,7 @@
-package data_models;
+package classification.data_models;
 import java.util.Arrays;
 
-public class Article extends abstracts.ClassificationObject {
+public class Article extends classification.abstracts.ClassificationObject {
     private String title;
     private String[] places;
     private String body;

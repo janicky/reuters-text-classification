@@ -1,7 +1,7 @@
-package metrics;
+package classification.metrics;
 
-import abstracts.Metric;
-import utils.Feature;
+import classification.abstracts.Metric;
+import classification.utils.Feature;
 
 public class Euclidean extends Metric {
     public double calculate() {

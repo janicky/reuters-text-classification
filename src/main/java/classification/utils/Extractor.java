@@ -1,4 +1,4 @@
-package utils;
+package classification.utils;
 
 public class Extractor {
     public static double occurrencesCountExtraction(String[] dictionary, String[] text) {

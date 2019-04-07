@@ -1,7 +1,7 @@
-package abstracts;
+package classification.abstracts;
 
-import interfaces.IClassificationObject;
-import utils.Operations;
+import classification.interfaces.IClassificationObject;
+import classification.utils.Operations;
 
 public abstract class ClassificationObject implements IClassificationObject {
     public String[] getVectorizedText() {
