@@ -27,27 +27,67 @@ Klasyfikacja tekstów ma zostać zrealizowania z wykorzystaniem algorytmu najbli
 
 \section{Wprowadzenie}
 \subsection{Wykorzystane cechy}
-\subsubsection{Liczba słów}
+
+\subsubsection{Liczba słów kluczowych, które wystąpiły}
+Występowanie określonych słów kluczowych w tekście,
+nie uwzględnia liczności słów. Cecha to liczba słów kluczowych,
+określająca ile słów kluczowych z całej puli wystąpiło w tekście.
+
+\subsubsection{Suma wystąpień słów kluczowych //TODO zmienić opis}
+Suma wystąpień każdego słowa kluczowego i tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
+
+\begin{equation}
+    F=S_{1} + ... + S_{n}
+\end{equation}
+gdzie $S$ - liczba wystąpień słowa kluczowego.
+
+
+\subsubsection{Gęstość występowania słów kluczowych}
+Gęstość wyrażona jako iloraz sumy wystąpień słów kluczowych i liczby wszystkich słów w tekście.
+Cecha przyjmuje wartości liczbowe z zakresu od 0 do 1.
+    \begin{equation}
+      F=\frac{S}{L}
+    \end{equation}
+gdzie $S$ - suma wystąpień słów kluczowych, $L$ - liczba wszystkich słów w tekście.
+
+
+\subsubsection{Średnia odległość słów kluczowych od początku tekstu}
+Średnia odległość słów kluczowych wyrażona jako iloraz sumy odległości słów kluczowych od początku tekstu i liczby
+słów kluczowych w tekście. Cecha to suma wartości liczbowych odzwierciedlających odległość danego słowa kluczowego
+od początku tekstu, gdzie pojedyncze słowo odpowiada odległości równej jeden.
+\begin{equation}
+    F=\frac{S_{1} + ... + S_{n}}{L}
+\end{equation}
+gdzie $S$ - odległość słowa kluczowego od początku tekstu, $L$ -  liczba słów kluczowych w tekście.
+
+
+
+\subsubsection{Liczba wszystkich słów //TODO zmienić opis}
 Określenie liczby wszystkich słów występujących w tekście. 
 Cecha to wartość liczbowa równa liczbie słów w tekście.
 
-\subsubsection{Występowanie określonych słów kluczowych}
-Występowanie określonych słów kluczowych w tekście, 
-nie uwzględnia liczności słów. Cecha to liczba słów kluczowych, 
-określająca ile słów kluczowych z całej puli wystąpiło w tekście.
+\subsubsection{Rozproszenie słów kluczowych //TODO zmienić opis}
+Rozproszenie słów kluczowych wyrażone jako iloraz sumy odległości pomiędzy słowami kluczowymi i iloczyn liczby
+wszystkich słów w tekście oraz liczby słów kluczowych w tekście.
+
+Możemy podjąć próbę i założyć, że większe nagromadzenie słów kluczowych na przestrzeni całego tekstu pozwala
+stwierdzić, czy określone słowa kluczowe mają powiązanie z tematem tekstu, a nie stanowią wzmianki czy wstępu do
+tekstu. Ekstrakcja ma pozwolić na określenie rozrzutu słów kluczowych w tekście. Cecha jest określona na podstawie
+sumy odległości pomiędzy słowami kluczowymi z uwzględnieniem gęstości ich występowania.
+\begin{equation}
+    F=\frac{E_{d}}{N*N_{k}}
+\end{equation}
+gdzie $E_{d}$ - suma odległości pomiędzy słowami kluczowymi, $N$ - liczba wszystkich słów w tekście,
+$N_{k}$ - liczba słów kluczowych w tekście.
+
+
 
 \subsubsection{Występowanie określonych podciągów}
 \dots
 
-\subsubsection{Gęstość występowania słów kluczowych}
-Gęstość występowania słów kluczowych w tekście wyrażona w procentach. 
-Uwzględnia liczbę wystąpień każdego słowa kluczowego w stosunku do liczby wszystkich słów w tekście. 
-Cecha to wartość liczbowa z zakresu [0; 1].
 
-\subsubsection{Odległość słowa kluczowego od początku tekstu}
-Odległość słów kluczowych od początku tekstu, która pozwoli zbliżyć się do określenia istotności słów kluczowych. 
-Cecha to suma wartości liczbowych odzwierciedlających odległość danego słowa kluczowego od początku tekstu, 
-gdzie pojedyncze słowo odpowiada odległości równej jeden.
+
+
 \newline \newline
 {\color{blue}
 We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
