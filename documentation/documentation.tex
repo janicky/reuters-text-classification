@@ -36,7 +36,7 @@ nie uwzględnia liczności słów. Cecha to liczba słów kluczowych,
 określająca ile słów kluczowych z całej puli wystąpiło w tekście.
 
 \subsubsection{Suma wystąpień słów kluczowych //TODO zmienić opis}
-Suma wystąpień każdego słowa kluczowego i tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
+Suma wystąpień każdego słowa kluczowego w tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
 
 \begin{equation}
     F=S_{1} + ... + S_{n}
@@ -64,11 +64,11 @@ gdzie $S$ - odległość słowa kluczowego od początku tekstu, $L$ -  liczba s�
 
 
 
-\subsubsection{Liczba wszystkich słów //TODO zmienić opis}
+\subsubsection{Liczba wszystkich słów}
 Określenie liczby wszystkich słów występujących w tekście. 
 Cecha to wartość liczbowa równa liczbie słów w tekście.
 
-\subsubsection{Rozproszenie słów kluczowych //TODO zmienić opis}
+\subsubsection{Rozproszenie słów kluczowych}
 Rozproszenie słów kluczowych wyrażone jako iloraz sumy odległości pomiędzy słowami kluczowymi i iloczyn liczby
 wszystkich słów w tekście oraz liczby słów kluczowych w tekście.
 
@@ -88,17 +88,29 @@ $N_{k}$ - liczba słów kluczowych w tekście.
 \dots
 
 \subsubsection{Częstość słów (ang. Term Frequency) //TODO zaimplementować}
+Częstość słów wtyrażona jako iloraz liczby wytąpień słowa kluczowegoh przez ilość słów w dokumencie. Cecha to
+częstotliwość wytępowania słowa kluczowego.
+\begin{equation}
+    F=\frac{K}{W}
+\end{equation}
+gdzie $K$ - liczba wystąpień danego słowa kluczowego w dokumencie, $W$ - liczba wszystkich słów w dokumencie
 
-%\begin{equation}
-%    F=\frac{E_{d}}{N*N_{k}}
-%\end{equation}
+\subsubsection{IDF (ang. inverse document frequency) //TODO zaimplementować}
+IDF wyrażony jest jako iloraz liczby dokumentów poddawanych badaniu przez liczbę dokumentów w których dane słowo
+kluczowe wystąpiło przynajmniej raz.
+
+\begin{equation}
+    F=log \frac{W}{D}
+\end{equation}
+gdzie $W$ - liczba wszystkich dokumentów, $D$ - liczba dokumentów w których wystąpiło słowo kluczowe
 
 \subsubsection{TF-IDF //TODO zaimplementować}
-
-%\begin{equation}
-%    F=\frac{E_{d}}{N*N_{k}}
-%\end{equation}
-
+TF-IDF jest to stosunek częstości słów do częstości występowanie danego słowa we wszystkich dokumentach.
+Worażona jako iloczyn częstości słów (TF) oraz IDF.
+\begin{equation}
+    F={TF}\cdot{IDF}
+\end{equation}
+gdzie $TF$ - częstość słów, $IDF$ - częstość występowania na tle innych dokuemntów.
 
 \newline \newline
 {\color{blue}
