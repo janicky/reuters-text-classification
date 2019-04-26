@@ -1,7 +1,7 @@
 package classification.utils;
 
 public class Feature {
-    private double difference;
+    private double difference, x, y;
 
     public Feature(int x, int y) {
         difference = (y - x);
@@ -13,5 +13,21 @@ public class Feature {
 
     public double getDifference() {
         return difference;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }
