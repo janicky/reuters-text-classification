@@ -1,48 +1,54 @@
 package classification.utils;
 
 import org.junit.jupiter.api.Test;
-
+import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtractorTest {
     private final String[] text = new String[] { "machine", "learning", "based", "systems", "learning" };
     private final String[] dictionary = new String[] { "learning", "artificial", "representation", "systems" };
 
+    double temp = 0;
     @Test
     void occurrencesCountExtraction() {
-        double occurrences = Extractor.occurrencesCountExtraction(dictionary, text);
-//        Assertions
-        assertEquals(2, (int)occurrences);
+        Map occurrences = Extractor.occurrencesCountExtraction(dictionary, text);
+        assertEquals(2d, occurrences.get("learning"));
+        assertEquals(0d, occurrences.get("artificial"));
+        assertEquals(0d, occurrences.get("representation"));
+        assertEquals(1d, occurrences.get("systems"));
     }
 
     @Test
     void occurrencesSumExtraction() {
-        double occurrences = Extractor.occurrencesSumExtraction(dictionary, text);
-//        Assertions
-        assertEquals(3, (int)occurrences);
+        Map occurrences = Extractor.occurrencesSumExtraction(dictionary, text);
+        assertEquals(3d, occurrences.get("occurrencesSum"));
     }
 
     @Test
     void densityExtraction() {
-        double density = Extractor.densityExtraction(dictionary, text);
-        assertTrue(Math.abs(0.6 - density) < 0.0001);
+        Map<String, Double> density = Extractor.densityExtraction(dictionary, text);
+        double temp = density.get("density");
+        assertTrue(Math.abs(0.6 - temp) < 0.0001);
     }
 
     @Test
     void averageDistanceExtraction() {
-        double distance = Extractor.averageDistanceExtraction(dictionary, text);
-        assertTrue(Math.abs(2.6666666666666665 - distance) < 0.0001);
+        Map<String, Double> distance = Extractor.averageDistanceExtraction(dictionary, text);
+        double temp = distance.get("distance");
+        assertTrue(Math.abs(2.6666666666666665 - temp) < 0.0001);
     }
 
     @Test
     void wordsCountExtraction() {
-        double count = Extractor.wordsCountExtraction(dictionary, text);
-        assertTrue(Math.abs(5 - count) < 0.0001);
+        Map<String, Double> wordsCount = Extractor.wordsCountExtraction(dictionary, text);
+        double temp = wordsCount.get("wordsCount");
+        assertTrue(Math.abs(5 - temp) < 0.0001);
     }
 
     @Test
     void wordsDistractionExtraction() {
-        double distraction = Extractor.wordsDistractionExtraction(dictionary, text);
-        assertTrue(Math.abs(0.3 - distraction) < 0.0001);
+        Map<String, Double> distraction = Extractor.wordsDistractionExtraction(dictionary, text);
+        double temp = distraction.get("wordsDistraction");
+        assertTrue(Math.abs(0.3 - temp) < 0.0001);
     }
 }
