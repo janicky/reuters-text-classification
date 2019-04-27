@@ -1,6 +1,7 @@
 \documentclass{classrep}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
+\usepackage{amsmath}
 
 \studycycle{Informatyka, studia niestacjonarne, I st.}
 \coursesemester{VI}
@@ -38,12 +39,12 @@ celu wyeliminowanie niepożądanych słów oraz sprowadzenie odmian słów o tym
 Występowanie określonych słów kluczowych w tekście,
 nie uwzględnia liczności słów. Cecha to liczba słów kluczowych,
 określająca ile słów kluczowych z całej puli wystąpiło w tekście.
-Cecha przyjmuje wartości z zakresu [$0, n$] przy czym $n$ - jest to liczba słów w tekście, zakładając, że
+Cecha przyjmuje wartości z zakresu [$0, n$] przy czym $n$ to liczba słów w tekście, zakładając, że
 tekst składa się z tych samych słów kluczowych.
 
 \subsubsection{Suma wystąpień słów kluczowych //TODO zmienić opis}
 Suma wystąpień każdego słowa kluczowego w tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
-Cecha przyjmuje wartości od [$0, n$] gdzie $n$ - liczba słów w tekście.
+Cecha przyjmuje wartości od [$0, n$] gdzie $n$ liczba słów w tekście.
 
 \begin{equation}
     F=S_{1} + ... + S_{n}
@@ -74,7 +75,7 @@ gdzie $S$ - odległość słowa kluczowego od początku tekstu, $L$ -  liczba s�
 
 \subsubsection{Liczba wszystkich słów}
 Określenie liczby wszystkich słów występujących w tekście. 
-Cecha przyjmuje wartość $n$ równą liczbie słów w tekście.
+Cecha przyjmuje wartości $n$ równą liczbie słów w tekście.
 \begin{equation}
     F=|S|
 \end{equation}
@@ -87,7 +88,7 @@ wszystkich słów w tekście oraz liczby słów kluczowych w tekście.
 Możemy podjąć próbę i założyć, że większe nagromadzenie słów kluczowych na przestrzeni całego tekstu pozwala
 stwierdzić, czy określone słowa kluczowe mają powiązanie z tematem tekstu, a nie stanowią wzmianki czy wstępu do
 tekstu. Ekstrakcja ma pozwolić na określenie rozrzutu słów kluczowych w tekście. Cecha jest określona na podstawie
-sumy odległości pomiędzy słowami kluczowymi z uwzględnieniem gęstości ich występowania.
+sumy odległości pomiędzy słowami kluczowymi z uwzględnieniem gęstości ich występowania. Przyjmuje wartości $[0, \infty]$.
 \begin{equation}
     F=\frac{E_{d}}{N*N_{k}}
 \end{equation}
@@ -155,14 +156,14 @@ wartościami podniesionymi do kwadratu, wyrażona wzorem:
 \begin{equation}
     d(x,y)=\sqrt{(x_{1}-y_{1})^{2}-(x_{n}-y_{n})^{2}}
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wartość artykułów
+gdzie $d$ - miara odległości, $x$, $y$ - wartości cech
 
 \subsubsection{Metryka Czebyszewa}
-Odległość Czybyszewa jest to różnica pomiędzy znormalizowanymi cechami wartości obiektów, określona wzorem:
+Odległość Czebyszewa jest to różnica pomiędzy znormalizowanymi cechami wartości obiektów, określona wzorem:
 \begin{equation}
     d(x,y)=max_{i}|x_{i}-y_{i}|
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wektory wartości artykułów
+gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów
 
 \subsubsection{Metryka Manhattana}
 Metryka Manhattana jest metryką podobną do metryki euklidesowej z tą różnicą, że odległość wyliczana jest
@@ -170,16 +171,19 @@ z bezwzględnych różnic pomiędzy wektorami. Odległość tę wyraża się wzo
 \begin{equation}
     d(x,y)=\sum |x_{i}-y_{i}|
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wektory wartości artykułów
+gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów
 
 \subsubsection{Metryka Hamminga}
-Odlagłość ta polega na porównaniu dwóch wektorów, przy czym różnica ta polega na sumie ilości elementów, które
-różnią się od siebie. Wyrażona jest wzorem:
-Wyrażone wzorem:
+Odległość Hamminga $d(x,y)$ pomiędzy dwoma wektorami $x, y$ - to liczba pozycji na, których się różnią.
 \begin{equation}
-    d(x,y)=\sum (x_{i}-y_{i})
+    h(i) =\left\{\begin{matrix}
+                     0 & \text{dla }v_{1i}=v_{2i}\\
+                     1 & \text{dla }v_{1i}\neq v_{2i}
+    \end{matrix}\right.
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wektory wartości artykułów, $x-y$ - wartość 0 lub 1
+
+
+gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów, $C$ - zbiór cech
 
 {\color{blue}
 W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
@@ -224,18 +228,15 @@ charakterze uniwersalnym.}
 
 \begin{thebibliography}{0}
 
-\bibitem{art1} Adam Niewiadomski.
+\bibitem{art1} Adam Niewiadomski;
 \textsl{Materiały, przykłady i ćwiczenia do przedmiotu
-Komputerowe Systemy Rozpoznawania}, 21 września 2009.
+Komputerowe Systemy Rozpoznawania}; 21 września 2009;
 
-\bibitem{art2} Isabelle Guyon, Steve Gunn, Masoud Nikravesh, Lofti A. Zadeh.
-\textsl{Feature Extraction: Foundations and Applications Springer}, 16 listopada 2008.
+\bibitem{art2} Isabelle Guyon, Steve Gunn, Masoud Nikravesh, Lofti A. Zadeh;
+\textsl{Feature Extraction: Foundations and Applications}; Springer; 16 listopada 2008;
 
-\bibitem{art3} Feature extraction.
-\textsl{\\url {https://en.wikipedia.org/wiki/Feature_extraction}}
-
-\bibitem{art4} David D. Lewis.
-\textsl{Feature Selection and Feature Extract ion for Text Categorization}, University of Chicago, 26 września 1992
+\bibitem{art3} David D. Lewis;
+\textsl{Feature Selection and Feature Extract ion for Text Categorization}; University of Chicago; 26 września 1992;
 
 
 \end{thebibliography}
