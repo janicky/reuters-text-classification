@@ -1,4 +1,4 @@
-package classification.abstracts;
+package classification.data_models;
 
 import classification.data_models.IClassificationObject;
 import classification.utils.Operations;
