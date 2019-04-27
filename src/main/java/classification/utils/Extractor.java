@@ -68,7 +68,7 @@ public class Extractor {
         return averageDistance;
     }
 
-    public static Map wordsCountExtraction(String[] dictionary, String[] text) {
+    public static Map wordsCountExtraction(String[] text) {
         Map<String, Double> wordsCount = new LinkedHashMap<>();
         wordsCount.put("wordsCount", (double)text.length);
         return wordsCount;

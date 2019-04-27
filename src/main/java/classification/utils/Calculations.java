@@ -1,6 +1,6 @@
 package classification.utils;
 
-import classification.abstracts.Metric;
+import classification.metrics.Metric;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

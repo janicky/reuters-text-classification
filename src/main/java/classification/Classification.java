@@ -2,7 +2,7 @@ package classification;
 
 import classification.interfaces.IClassificationObject;
 import classification.utils.Calculations;
-import classification.abstracts.Metric;
+import classification.metrics.Metric;
 import classification.utils.Group;
 import classification.utils.Operations;
 
@@ -14,7 +14,7 @@ public class Classification {
     private int k;
     private IClassificationObject[] learningSet;
     private IClassificationObject[] testingSet;
-    private String[] dictionary = new String[] {};
+    private String[] dictionary = new String[] { "total", "stage", "british" };
 
     // splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
     public Classification(IClassificationObject[] objects, double splitRatio, int k) {

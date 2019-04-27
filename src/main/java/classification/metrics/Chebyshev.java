@@ -1,9 +1,8 @@
 package classification.metrics;
 
-import classification.abstracts.Metric;
 import classification.utils.Feature;
 
-public class Czybyszew extends Metric {
+public class Chebyshev extends Metric {
     private double getMax(double a, double b) {
         return (a>b?a:b);
     }

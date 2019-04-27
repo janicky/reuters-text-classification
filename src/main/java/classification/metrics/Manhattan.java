@@ -1,6 +1,5 @@
 package classification.metrics;
 
-import classification.abstracts.Metric;
 import classification.utils.Feature;
 
 public class Manhattan extends Metric {
