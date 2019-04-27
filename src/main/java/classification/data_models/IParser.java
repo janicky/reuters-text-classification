@@ -1,4 +1,6 @@
-package classification.interfaces;
+package classification.data_models;
+
+import classification.data_models.IClassificationObject;
 
 import java.io.File;
 import java.io.IOException;

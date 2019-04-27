@@ -1,7 +1,7 @@
 package classification.utils;
 
 import classification.data_models.Article;
-import classification.interfaces.IClassificationObject;
+import classification.data_models.IClassificationObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

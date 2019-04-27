@@ -1,6 +1,6 @@
 package classification.utils;
 
-import classification.interfaces.IClassificationObject;
+import classification.data_models.IClassificationObject;
 
 import java.util.*;
 

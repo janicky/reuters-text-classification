@@ -1,7 +1,7 @@
 package classification.metrics;
 
 import org.junit.jupiter.api.Test;
-import classification.utils.Feature;
+import classification.features.Feature;
 
 import static org.junit.jupiter.api.Assertions.*;
 

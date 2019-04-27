@@ -1,7 +1,5 @@
 package classification.data_models;
 
-import classification.interfaces.IClassificationObject;
-import classification.interfaces.IParser;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
