@@ -1,6 +1,6 @@
 package classification.abstracts;
 
-import classification.interfaces.IClassificationObject;
+import classification.data_models.IClassificationObject;
 import classification.utils.Operations;
 
 public abstract class ClassificationObject implements IClassificationObject {

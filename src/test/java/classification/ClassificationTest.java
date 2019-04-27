@@ -1,8 +1,7 @@
 package classification;
 
-import classification.Classification;
 import classification.data_models.ArticleParser;
-import classification.interfaces.IClassificationObject;
+import classification.data_models.IClassificationObject;
 import classification.metrics.Euclidean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

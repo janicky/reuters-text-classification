@@ -1,6 +1,6 @@
 package classification;
 
-import classification.interfaces.IClassificationObject;
+import classification.data_models.IClassificationObject;
 import classification.utils.Calculations;
 import classification.metrics.Metric;
 import classification.utils.Group;
