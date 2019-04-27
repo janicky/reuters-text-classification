@@ -1,10 +1,12 @@
 package classification.utils;
 
+import classification.features.Extractor;
 import classification.features.Feature;
 import classification.metrics.Metric;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 public class Calculations {
     private String[] extractors;
@@ -15,14 +17,21 @@ public class Calculations {
         this.extractors = extractors;
     }
 
-    public double compare(String[] o1, String[] o2, String[] dictionary) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Class extractor = Class.forName("classification.features.Extractor");
+    public double compare(String[] o1, String[] o2, String[] dictionary) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Extractor extractor1 = new Extractor(o1, dictionary);
+        Extractor extractor2 = new Extractor(o2, dictionary);
 
         for (int i = 0; i < extractors.length; i++) {
-            Method method = extractor.getDeclaredMethod(extractors[i], String[].class, String[].class);
-            double e1 = (double) method.invoke(this, dictionary, o1);
-            double e2 = (double) method.invoke(this, dictionary, o2);
-            metric.addFeature(new Feature(e1, e2));
+            Method method1 = extractor1.getClass().getDeclaredMethod(extractors[i]);
+            Method method2 = extractor2.getClass().getDeclaredMethod(extractors[i]);
+            method1.invoke(extractor1);
+            method2.invoke(extractor2);
+        }
+
+        for (Map.Entry<String, Double> feature : extractor1.getFeatures().entrySet()) {
+            Double val1 = feature.getValue();
+            Double val2 = extractor2.getFeatures().get(feature.getKey());
+            metric.addFeature(new Feature(val1, val2));
         }
 
         return metric.calculate();

@@ -114,4 +114,8 @@ public class Extractor {
         features.put("wordsDistraction", distraction);
         return wordsDistraction;
     }
+
+    public Map<String, Double> getFeatures() {
+        return features;
+    }
 }
