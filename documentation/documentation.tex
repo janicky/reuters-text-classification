@@ -37,9 +37,12 @@ kategorii. Odbywa się to na podstawie watrości poszczególnych wyekstrachowany
 Występowanie określonych słów kluczowych w tekście,
 nie uwzględnia liczności słów. Cecha to liczba słów kluczowych,
 określająca ile słów kluczowych z całej puli wystąpiło w tekście.
+Cecha przyjmuje wartości z zakresu [$0, n$] przy czym $n$ - jest to liczba słów w tekście, zakładając, że
+tekst składa się z tych samych słów kluczowych.
 
 \subsubsection{Suma wystąpień słów kluczowych //TODO zmienić opis}
 Suma wystąpień każdego słowa kluczowego w tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
+Cecha przyjmuje wartości od [$0, n$] gdzie $n$ - liczba słów w tekście.
 
 \begin{equation}
     F=S_{1} + ... + S_{n}
@@ -49,7 +52,7 @@ gdzie $S$ - liczba wystąpień słowa kluczowego.
 
 \subsubsection{Gęstość występowania słów kluczowych}
 Gęstość wyrażona jako iloraz sumy wystąpień słów kluczowych i liczby wszystkich słów w tekście.
-Cecha przyjmuje wartości liczbowe z zakresu od 0 do 1.
+Cecha przyjmuje wartości liczbowe z zakresu [$0, 1$].
     \begin{equation}
       F=\frac{S}{L}
     \end{equation}
@@ -59,7 +62,8 @@ gdzie $S$ - suma wystąpień słów kluczowych, $L$ - liczba wszystkich słów w
 \subsubsection{Średnia odległość słów kluczowych od początku tekstu}
 Średnia odległość słów kluczowych wyrażona jako iloraz sumy odległości słów kluczowych od początku tekstu i liczby
 słów kluczowych w tekście. Cecha to suma wartości liczbowych odzwierciedlających odległość danego słowa kluczowego
-od początku tekstu, gdzie pojedyncze słowo odpowiada odległości równej jeden.
+od początku tekstu, gdzie pojedyncze słowo odpowiada odległości równej jeden. Cecha przyjmuje wartości [$0, n$] gdzie n
+jest maksymalną średnią z symu odległości słów kluczowych od początku tekstu.
 \begin{equation}
     F=\frac{S_{1} + ... + S_{n}}{L}
 \end{equation}
@@ -69,7 +73,11 @@ gdzie $S$ - odległość słowa kluczowego od początku tekstu, $L$ -  liczba s�
 
 \subsubsection{Liczba wszystkich słów}
 Określenie liczby wszystkich słów występujących w tekście. 
-Cecha to wartość liczbowa równa liczbie słów w tekście.
+Cecha przyjmuje wartość $n$ równą liczbie słów w tekście.
+\begin{equation}
+    F=|S|
+\end{equation}
+gdzie $S$ - to zbiór słów występujących w tekście.
 
 \subsubsection{Rozproszenie słów kluczowych}
 Rozproszenie słów kluczowych wyrażone jako iloraz sumy odległości pomiędzy słowami kluczowymi i iloczyn liczby
@@ -141,28 +149,31 @@ zbiorem będzie zbiór artykułów. Do obliczenia odległości pomiędzy dwoma a
 wykorzystane metryki opisane poniżej.
 
 \subsubsection{Metryka Euklidesowa}
-Odległość Euklidesowa okreslona jest wzorem:
+Odległość Euklidesowa jest to odległość między dwoma wektorami określona jako pierwiastek kwadratowy sumy różnic między
+wartościami podniesionymi do kwadratu, wyrażona wzorem:
 \begin{equation}
     d(x,y)=\sqrt{(x_{1}-y_{1})^{2}-(x_{n}-y_{n})^{2}}
 \end{equation}
 gdzie $d$ - miara odległości, $x$, $y$ - wartość artykułów
 
-\subsubsection{Metryka Czybyszewa}
-Odległość Czybyszewa określa się wzorem:
+\subsubsection{Metryka Czebyszewa}
+Odległość Czybyszewa jest to różnica pomiędzy znormalizowanymi cechami wartości obiektów, określona wzorem:
 \begin{equation}
     d(x,y)=max_{i}|x_{i}-y_{i}|
 \end{equation}
 gdzie $d$ - miara odległości, $x$, $y$ - wektory wartości artykułów
 
 \subsubsection{Metryka Manhattana}
-Odlagłość ta wyraża się wzorem:
+Metryka Manhattana jest metryką podobną do metryki euklidesowej z tą różnicą, że odległość wyliczana jest
+z bezwzględnych różnic pomiędzy wektorami. Odległość tę wyraża się wzorem:
 \begin{equation}
     d(x,y)=\sum |x_{i}-y_{i}|
 \end{equation}
 gdzie $d$ - miara odległości, $x$, $y$ - wektory wartości artykułów
 
 \subsubsection{Metryka Hamminga}
-Odlagłość ta polega na sumie różnicy elementów.\\
+Odlagłość ta polega na porównaniu dwóch wektorów, przy czym różnica ta polega na sumie ilości elementów, które
+różnią się od siebie. Wyrażona jest wzorem:
 Wyrażone wzorem:
 \begin{equation}
     d(x,y)=\sum (x_{i}-y_{i})
@@ -212,20 +223,17 @@ charakterze uniwersalnym.}
 
 \begin{thebibliography}{0}
 
-    \bibitem{art1} Adam Niewiadomski.
-    \textsl{Materiały, przykłady i ćwiczenia do przedmiotu
-    Komputerowe Systemy Rozpoznawania}, 21 września 2009.\\
+\bibitem{art1} Adam Niewiadomski.
+\textsl{Materiały, przykłady i ćwiczenia do przedmiotu
+Komputerowe Systemy Rozpoznawania}, 21 września 2009.
 
-    \bibitem{art2} Isabelle Guyon, Steve Gunn, Masoud Nikravesh, Lofti A. Zadeh.
-    \textsl{Feature Extraction: Foundations and Applications Springer}, 16 listopad 2008.
+\bibitem{art2} Isabelle Guyon, Steve Gunn, Masoud Nikravesh, Lofti A. Zadeh.
+\textsl{Feature Extraction: Foundations and Applications Springer}, 16 listopad 2008.
 
-    \bibitem{art3} Feature extraction.
-    \textsl{}\\ \url {https://en.wikipedia.org/wiki/Feature_extraction}
+\bibitem{art3} Feature extraction.
+\textsl{\\url {https://en.wikipedia.org/wiki/Feature_extraction}}
 
 
 \end{thebibliography}
-{\color{blue} 
-Na końcu należy obowiązkowo podać cytowaną w sprawozdaniu
-literaturę, z której grupa korzystała w trakcie prac nad zadaniem (przykład na
-końcu szablonu)}
+
 \end{document}
