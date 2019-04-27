@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{amsmath}
+\usepackage[T1]{fontenc}
 
 \studycycle{Informatyka, studia niestacjonarne, I st.}
 \coursesemester{VI}
@@ -97,10 +98,10 @@ $N_{k}$ - liczba słów kluczowych w tekście.
 
 
 
-\subsubsection{Występowanie określonych podciągów //TODO zaimplementować}
+\subsubsection{Występowanie określonych podciągów}
 \dots
 
-\subsubsection{Częstość słów (ang. Term Frequency) //TODO zaimplementować}
+\subsubsection{Częstość słów (ang. Term Frequency)}
 Częstość słów wtyrażona jako iloraz liczby wytąpień słowa kluczowegoh przez ilość słów w dokumencie. Cecha to
 częstotliwość wytępowania słowa kluczowego.
 \begin{equation}
@@ -108,7 +109,7 @@ częstotliwość wytępowania słowa kluczowego.
 \end{equation}
 gdzie $K$ - liczba wystąpień danego słowa kluczowego w dokumencie, $W$ - liczba wszystkich słów w dokumencie
 
-\subsubsection{IDF (ang. inverse document frequency) //TODO zaimplementować}
+\subsubsection{IDF (ang. inverse document frequency)}
 IDF wyrażony jest jako iloraz liczby dokumentów poddawanych badaniu przez liczbę dokumentów w których dane słowo
 kluczowe wystąpiło przynajmniej raz.
 
@@ -117,7 +118,7 @@ kluczowe wystąpiło przynajmniej raz.
 \end{equation}
 gdzie $W$ - liczba wszystkich dokumentów, $D$ - liczba dokumentów w których wystąpiło słowo kluczowe
 
-\subsubsection{TF-IDF //TODO zaimplementować}
+\subsubsection{TF-IDF}
 TF-IDF jest to stosunek częstości słów do częstości występowania danego słowa we wszystkich dokumentach.
 Worażona jako iloczyn częstości słów (TF) oraz IDF.
 \begin{equation}
@@ -182,8 +183,28 @@ Odległość Hamminga $d(x,y)$ pomiędzy dwoma wektorami $x, y$ - to liczba pozy
     \end{matrix}\right.
 \end{equation}
 
+\subsubsection{Metryka Canberra}
+Odległość Canberra to ważona wersja metryki Manhattan, wyrażona wzorem:
+\begin{equation}
+    d(x,y)=\sum_{i=1}^{n} \frac{|x_{i}-y_{i}|}{|x_{i}|+|y_{i}|}
+\end{equation}
+gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów
 
-gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów, $C$ - zbiór cech
+\subsection{Miary podobieństwa tekstów}
+Miara podobieństwa tesktów to miara mówiąca o tym w jakim stopniu dany tekst $A$ jest podobny do tekstu $B$.
+
+\subsubsection{Metoda n-gramów}
+Metoda n-gramów określa w jakim stopniu łańcuch znaków $x$ jest podobny do łańcucha znaków $y$, na podstawie podciągów.
+
+\begin{equation}
+    sim_{n}(x,y)=\frac{1}{N-n+1}\sum_{i=1}^{N-n+1}h(i)
+\end{equation}
+gdzie $h(i)$ - przyjmuje 1 jeżeli dany podciąg występuje w łancuchu znaków $y$, w przeciwnym wypadku przyjmuje wartość 0.\\
+$N-n+1$ - ilość n-elementowych podciągów w łańcuchu znaków
+
+\subsubsection{Uogólniona miara n-gramów}
+
+\subsubsection{Miara podobieńtwa zdań}
 
 {\color{blue}
 W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
