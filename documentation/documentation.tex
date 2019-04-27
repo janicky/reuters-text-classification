@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{amsmath}
+\usepackage[T1]{fontenc}
 
 \studycycle{Informatyka, studia niestacjonarne, I st.}
 \coursesemester{VI}
@@ -183,17 +184,27 @@ Odległość Hamminga $d(x,y)$ pomiędzy dwoma wektorami $x, y$ - to liczba pozy
 \end{equation}
 
 \subsubsection{Metryka Canberra}
-Odległość Canberra to ważona wersja odległości Manhattan, wyrażona wzorem:
+Odległość Canberra to ważona wersja metryki Manhattan, wyrażona wzorem:
 \begin{equation}
     d(x,y)=\sum_{i=1}^{n} \frac{|x_{i}-y_{i}|}{|x_{i}|+|y_{i}|}
 \end{equation}
 gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów
 
-\subsubsection{Miary odległości}
-\subsubsection{Miara n-gramów}
+\subsection{Miary podobieństwa tekstów}
+Miara podobieństwa tesktów to miara mówiąca o tym w jakim stopniu dany tekst $A$ jest podobny do tekstu $B$.
+
+\subsubsection{Metoda n-gramów}
+Metoda n-gramów określa w jakim stopniu łańcuch znaków $x$ jest podobny do łańcucha znaków $y$, na podstawie podciągów.
+
+\begin{equation}
+    sim_{n}(x,y)=\frac{1}{N-n+1}\sum_{i=1}^{N-n+1}h(i)
+\end{equation}
+gdzie $h(i)$ - przyjmuje 1 jeżeli dany podciąg występuje w łancuchu znaków $y$, w przeciwnym wypadku przyjmuje wartość 0.\\
+$N-n+1$ - ilość n-elementowych podciągów w łańcuchu znaków
+
 \subsubsection{Uogólniona miara n-gramów}
 
-gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów, $C$ - zbiór cech
+\subsubsection{Miara podobieńtwa zdań}
 
 {\color{blue}
 W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
