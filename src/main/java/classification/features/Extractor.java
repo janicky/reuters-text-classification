@@ -1,11 +1,20 @@
 package classification.features;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Extractor {
-    public static Map occurrencesCountExtraction(String[] dictionary, String[] text) {
+
+    private String[] text;
+    private String[] dictionary;
+    private Map<String, Double> features = new LinkedHashMap<>();
+
+    public Extractor(String[] text, String[] dictionary) {
+        this.text = text;
+        this.dictionary = dictionary;
+    }
+
+    public Map occurrencesCountExtraction() {
         Map<String, Double> occurrencesCount = new LinkedHashMap<>();
 
         for (String dict : dictionary) {
@@ -16,11 +25,12 @@ public class Extractor {
                 }
             }
             occurrencesCount.put(dict, (double)occurrences);
+            features.put(dict, (double)occurrences);
         }
         return occurrencesCount;
     }
 
-    public static Map occurrencesSumExtraction(String[] dictionary, String[] text) {
+    public Map occurrencesSumExtraction() {
         Map<String, Double> occurrencesSum = new LinkedHashMap<>();
         double occurrences = 0;
 
@@ -32,21 +42,24 @@ public class Extractor {
             }
         }
         occurrencesSum.put("occurrencesSum", occurrences);
+        features.put("occurrencesSum", occurrences);
         return occurrencesSum;
     }
 
-    public static Map densityExtraction(String[] dictionary, String[] text) {
+    public Map densityExtraction() {
         Map<String, Double> result = new LinkedHashMap<>();
-        Map<String, Double> occSum = occurrencesSumExtraction(dictionary, text);
+        Map<String, Double> occSum = occurrencesSumExtraction();
         if (text.length == 0) {
             result.put("density", 0d);
             return result;
         }
-        result.put("density", (occSum.get("occurrencesSum") / text.length));
+        double density = occSum.get("occurrencesSum") / text.length;
+        result.put("density", density);
+        features.put("density", density);
         return result;
     }
 
-    public static Map averageDistanceExtraction(String[] dictionary, String[] text) {
+    public Map averageDistanceExtraction() {
         Map<String, Double> averageDistance = new LinkedHashMap<>();
         double sum = 0;
         double occurrences = 0;
@@ -59,22 +72,28 @@ public class Extractor {
                 }
             }
         }
-        averageDistance.put("distance", sum/occurrences);
 
         if (occurrences == 0) {
             averageDistance.put("distance", 0d);
+            features.put("distance", 0d);
             return averageDistance;
         }
+
+        double distance = sum / occurrences;
+        averageDistance.put("distance", distance);
+        features.put("distance", distance);
+
         return averageDistance;
     }
 
-    public static Map wordsCountExtraction(String[] text) {
+    public Map wordsCountExtraction() {
         Map<String, Double> wordsCount = new LinkedHashMap<>();
         wordsCount.put("wordsCount", (double)text.length);
+        features.put("wordsCount", (double)text.length);
         return wordsCount;
     }
 
-    public static Map wordsDistractionExtraction(String[] dictionary, String[] text) {
+    public Map wordsDistractionExtraction() {
         Map<String, Double> wordsDistraction = new LinkedHashMap<>();
         double start = -1, sum = 0, words = 0;
 
@@ -90,7 +109,9 @@ public class Extractor {
                 }
             }
         }
-        wordsDistraction.put("wordsDistraction", (words - 1) > 0 ? (sum / text.length) / (double)(words - 1) : 0);
+        double distraction = (words - 1) > 0 ? (sum / text.length) / (words - 1) : 0;
+        wordsDistraction.put("wordsDistraction", distraction);
+        features.put("wordsDistraction", distraction);
         return wordsDistraction;
     }
 }
