@@ -1,6 +1,6 @@
 package classification.metrics;
 
-import classification.utils.Feature;
+import classification.features.Feature;
 
 import java.util.ArrayList;
 import java.util.List;

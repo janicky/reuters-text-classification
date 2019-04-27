@@ -1,6 +1,6 @@
 package classification.metrics;
 
-import classification.utils.Feature;
+import classification.features.Feature;
 
 public class Chebyshev extends Metric {
     private double getMax(double a, double b) {

@@ -27,7 +27,7 @@ public class Application {
     }
 
     private void fillExtractors() throws ClassNotFoundException {
-        Class c = Class.forName("classification.utils.Extractor");
+        Class c = Class.forName("classification.features.Extractor");
         DefaultListModel model = new DefaultListModel();
         extractorsList.setModel(model);
         Method[] methods = c.getDeclaredMethods();

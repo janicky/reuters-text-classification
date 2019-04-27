@@ -1,5 +1,6 @@
 package classification.utils;
 
+import classification.features.Feature;
 import classification.metrics.Metric;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,7 +16,7 @@ public class Calculations {
     }
 
     public double compare(String[] o1, String[] o2, String[] dictionary) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Class extractor = Class.forName("classification.utils.Extractor");
+        Class extractor = Class.forName("classification.features.Extractor");
 
         for (int i = 0; i < extractors.length; i++) {
             Method method = extractor.getDeclaredMethod(extractors[i], String[].class, String[].class);

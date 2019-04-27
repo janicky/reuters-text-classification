@@ -1,6 +1,6 @@
 package classification.metrics;
 
-import classification.utils.Feature;
+import classification.features.Feature;
 
 public class Hamming extends Metric {
     public double calculate() { //TODO check implementation

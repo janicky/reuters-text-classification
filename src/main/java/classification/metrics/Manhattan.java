@@ -1,6 +1,6 @@
 package classification.metrics;
 
-import classification.utils.Feature;
+import classification.features.Feature;
 
 public class Manhattan extends Metric {
     public double calculate() {

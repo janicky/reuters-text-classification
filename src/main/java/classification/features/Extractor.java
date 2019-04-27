@@ -1,4 +1,4 @@
-package classification.utils;
+package classification.features;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
