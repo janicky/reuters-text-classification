@@ -1,4 +1,4 @@
-package classification.interfaces;
+package classification.data_models;
 
 import classification.data_models.IClassificationObject;
 
