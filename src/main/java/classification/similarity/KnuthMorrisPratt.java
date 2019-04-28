@@ -2,7 +2,7 @@ package classification.similarity;
 
 public class KnuthMorrisPratt implements ISimilarityMeter {
 
-    int measure(String o1, String o2) {
+    public double measure(String o1, String o2) {
         int[] lsp = longestSuffixPrefix(o2);
 
         int j = 0;
@@ -18,7 +18,7 @@ public class KnuthMorrisPratt implements ISimilarityMeter {
             }
         }
 
-        return -1;  // Not found
+        return -1;
     }
 
     int[] longestSuffixPrefix(String pattern) {
