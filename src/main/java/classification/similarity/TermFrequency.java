@@ -1,6 +1,6 @@
-package classification.features;
+package classification.similarity;
 
-public class TermFrequency {
+public class TermFrequency implements ISimilarityMeter {
     public static double termFrequency(String[] text, String term) {
         int count = 0;
         if (text.length == 0) {
