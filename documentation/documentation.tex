@@ -43,14 +43,17 @@ określająca ile słów kluczowych z całej puli wystąpiło w tekście.
 Cecha przyjmuje wartości z zakresu [$0, n$] przy czym $n$ to liczba słów w tekście, zakładając, że
 tekst składa się z tych samych słów kluczowych.
 
-\subsubsection{Suma wystąpień słów kluczowych //TODO zmienić opis}
+\subsubsection{Suma wystąpień słów kluczowych}
 Suma wystąpień każdego słowa kluczowego w tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
 Cecha przyjmuje wartości od [$0, n$] gdzie $n$ liczba słów w tekście.
 
 \begin{equation}
     F=S_{1} + ... + S_{n}
 \end{equation}
-gdzie $S$ - liczba wystąpień słowa kluczowego.
+gdzie:\\
+\begin{description}
+    \item $S$ - liczba wystąpień słowa kluczowego;
+\end{description}
 
 
 \subsubsection{Gęstość występowania słów kluczowych}
@@ -59,7 +62,11 @@ Cecha przyjmuje wartości liczbowe z zakresu [$0, 1$].
     \begin{equation}
       F=\frac{S}{L}
     \end{equation}
-gdzie $S$ - suma wystąpień słów kluczowych, $L$ - liczba wszystkich słów w tekście.
+gdzie:\\
+\begin{description}
+    \item $S$ - suma wystąpień słów kluczowych;
+    \item $L$ - liczba wszystkich słów w tekście;
+\end{description}
 
 
 \subsubsection{Średnia odległość słów kluczowych od początku tekstu}
@@ -70,9 +77,11 @@ jest maksymalną średnią z symu odległości słów kluczowych od początku te
 \begin{equation}
     F=\frac{S_{1} + ... + S_{n}}{L}
 \end{equation}
-gdzie $S$ - odległość słowa kluczowego od początku tekstu, $L$ -  liczba słów kluczowych w tekście.
-
-
+gdzie:\\
+\begin{description}
+    \item $S$ - odległość słowa kluczowego od początku tekstu;
+    \item $L$ -  liczba słów kluczowych w tekście;
+\end{description}
 
 \subsubsection{Liczba wszystkich słów}
 Określenie liczby wszystkich słów występujących w tekście. 
@@ -80,7 +89,10 @@ Cecha przyjmuje wartości $n$ równą liczbie słów w tekście.
 \begin{equation}
     F=|S|
 \end{equation}
-gdzie $S$ - to zbiór słów występujących w tekście.
+gdzie:\\
+\begin{description}
+    \item $S$ - to zbiór słów występujących w tekście;
+\end{description}
 
 \subsubsection{Rozproszenie słów kluczowych}
 Rozproszenie słów kluczowych wyrażone jako iloraz sumy odległości pomiędzy słowami kluczowymi i iloczyn liczby
@@ -93,13 +105,15 @@ sumy odległości pomiędzy słowami kluczowymi z uwzględnieniem gęstości ich
 \begin{equation}
     F=\frac{E_{d}}{N*N_{k}}
 \end{equation}
-gdzie $E_{d}$ - suma odległości pomiędzy słowami kluczowymi, $N$ - liczba wszystkich słów w tekście,
-$N_{k}$ - liczba słów kluczowych w tekście.
+gdzie:\\
+\begin{description}
+    \item $E_{d}$ - suma odległości pomiędzy słowami kluczowymi;
+    \item $N$ - liczba wszystkich słów w tekście;
+    \item $N_{k}$ - liczba słów kluczowych w tekście;
+\end{description}
 
-
-
-\subsubsection{Występowanie określonych podciągów}
-\dots
+%\subsubsection{Występowanie określonych podciągów}
+%\dots
 
 \subsubsection{Częstość słów (ang. Term Frequency)}
 Częstość słów wtyrażona jako iloraz liczby wytąpień słowa kluczowegoh przez ilość słów w dokumencie. Cecha to
@@ -107,7 +121,11 @@ częstotliwość wytępowania słowa kluczowego.
 \begin{equation}
     F=\frac{K}{W}
 \end{equation}
-gdzie $K$ - liczba wystąpień danego słowa kluczowego w dokumencie, $W$ - liczba wszystkich słów w dokumencie
+gdzie:\\
+\begin{description}
+    \item $K$ - liczba wystąpień danego słowa kluczowego w dokumencie;
+    \item $W$ - liczba wszystkich słów w dokumencie;
+\end{description}
 
 \subsubsection{IDF (ang. inverse document frequency)}
 IDF wyrażony jest jako iloraz liczby dokumentów poddawanych badaniu przez liczbę dokumentów w których dane słowo
@@ -116,7 +134,11 @@ kluczowe wystąpiło przynajmniej raz.
 \begin{equation}
     F=log \frac{W}{D}
 \end{equation}
-gdzie $W$ - liczba wszystkich dokumentów, $D$ - liczba dokumentów w których wystąpiło słowo kluczowe
+gdzie:\\
+\begin{description}
+    \item $W$ - liczba wszystkich dokumentów;
+    \item $D$ - liczba dokumentów w których wystąpiło słowo kluczowe;
+\end{description}
 
 \subsubsection{TF-IDF}
 TF-IDF jest to stosunek częstości słów do częstości występowania danego słowa we wszystkich dokumentach.
@@ -124,7 +146,11 @@ Worażona jako iloczyn częstości słów (TF) oraz IDF.
 \begin{equation}
     F={TF}\cdot{IDF}
 \end{equation}
-gdzie $TF$ - częstość słów, $IDF$ - częstość występowania na tle innych dokuemntów.
+gdzie:\\
+\begin{description}
+    \item $TF$ - częstość słów;
+    \item $IDF$ - częstość występowania na tle innych dokuemntów;
+\end{description}
 
 \newline \newline
 {\color{blue}
@@ -157,14 +183,22 @@ wartościami podniesionymi do kwadratu, wyrażona wzorem:
 \begin{equation}
     d(x,y)=\sqrt{(x_{1}-y_{1})^{2}-(x_{n}-y_{n})^{2}}
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wartości cech
+gdzie:\\
+\begin{description}
+    \item $d$ - miara odległości;
+    \item $x$, $y$ - wartości cech;
+\end{description}
 
 \subsubsection{Metryka Czebyszewa}
 Odległość Czebyszewa jest to różnica pomiędzy znormalizowanymi cechami wartości obiektów, określona wzorem:
 \begin{equation}
     d(x,y)=max_{i}|x_{i}-y_{i}|
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów
+gdzie:\\
+\begin{description}
+    \item $d$ - miara odległości;
+    \item $x$, $y$ - wartości cech obiektów;
+\end{description}
 
 \subsubsection{Metryka Manhattana}
 Metryka Manhattana jest metryką podobną do metryki euklidesowej z tą różnicą, że odległość wyliczana jest
@@ -172,7 +206,11 @@ z bezwzględnych różnic pomiędzy wektorami. Odległość tę wyraża się wzo
 \begin{equation}
     d(x,y)=\sum |x_{i}-y_{i}|
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów
+gdzie:\\
+\begin{description}
+    \item $d$ - miara odległości;
+    \item $x$, $y$ - wartości cech obiektów;
+\end{description}
 
 \subsubsection{Metryka Hamminga}
 Odległość Hamminga $d(x,y)$ pomiędzy dwoma wektorami $x, y$ - to liczba pozycji na, których się różnią.
@@ -182,29 +220,52 @@ Odległość Hamminga $d(x,y)$ pomiędzy dwoma wektorami $x, y$ - to liczba pozy
                      1 & \text{dla }v_{1i}\neq v_{2i}
     \end{matrix}\right.
 \end{equation}
+gdzie:\\
+\begin{description}
+    \item $v_{1i}, v_{2i}$ - znak w słowie
+\end{description}
 
 \subsubsection{Metryka Canberra}
 Odległość Canberra to ważona wersja metryki Manhattan, wyrażona wzorem:
 \begin{equation}
     d(x,y)=\sum_{i=1}^{n} \frac{|x_{i}-y_{i}|}{|x_{i}|+|y_{i}|}
 \end{equation}
-gdzie $d$ - miara odległości, $x$, $y$ - wartości cech obiektów
+gdzie:\\
+\begin{description}
+    \item $d$ - miara odległości;
+    \item $x$, $y$ - wartości cech obiektów;
+\end{description}
 
 \subsection{Miary podobieństwa tekstów}
 Miara podobieństwa tesktów to miara mówiąca o tym w jakim stopniu dany tekst $A$ jest podobny do tekstu $B$.
 
 \subsubsection{Metoda n-gramów}
 Metoda n-gramów określa w jakim stopniu łańcuch znaków $x$ jest podobny do łańcucha znaków $y$, na podstawie podciągów.
-
 \begin{equation}
     sim_{n}(x,y)=\frac{1}{N-n+1}\sum_{i=1}^{N-n+1}h(i)
 \end{equation}
-gdzie $h(i)$ - przyjmuje 1 jeżeli dany podciąg występuje w łancuchu znaków $y$, w przeciwnym wypadku przyjmuje wartość 0.\\
-$N-n+1$ - ilość n-elementowych podciągów w łańcuchu znaków
+gdzie:\\
+\begin{description}
+    \item $h(i)$ - przyjmuje 1 jeżeli dany podciąg występuje w łancuchu znaków $y$, w przeciwnym wypadku przyjmuje wartość 0;
+    \item $N$ - liczba liter w słowie;
+    \item $n$ - długość n-grama;
+    \item $N-n+1$ - ilość n-elementowych podciągów w łańcuchu znaków;
+\end{description}
 
 \subsubsection{Uogólniona miara n-gramów}
+Uogólniona miara n-gramów sprawdza podobieństwo słów w oparciu o podciągi o określonej długości. Wyrażona jest wzorem:
 
-\subsubsection{Miara podobieńtwa zdań}
+\begin{equation}
+    u_{N}(x, y)=\frac{2}{N^{2}+N}\sum_{i=1}^{N(x)}\sum_{j=1}^{N(x-i+1)}h(i,j)
+\end{equation}
+gdzie:\\
+\begin{description}
+    \item $h(i,j)$ przyjmuje wartość 1 jeżeli dany podciąg ze słowa $x$ znajduje się w słowie $y$;
+    \item $N(x),N(y)$ - ilość liter w słowach $x, y$, $N=max{N(x),N(y)}$;
+    \item $\frac{N^{2}+N}{2}$ - ilość możliwych podciągów 1-elementowych do N-elementowych w słowie o długości $N$;
+\end{description}
+
+%\subsubsection{Miara podobieńtwa zdań}
 
 {\color{blue}
 W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
@@ -259,6 +320,11 @@ Komputerowe Systemy Rozpoznawania}; 21 września 2009;
 \bibitem{art3} David D. Lewis;
 \textsl{Feature Selection and Feature Extract ion for Text Categorization}; University of Chicago; 26 września 1992;
 
+\bibitem{art4} Knuth–Morris–Pratt algorithm;
+\textsl{\url{https://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm}}
+
+\bibitem{art5} B.S.Charulatha, Paul Rodrigues, T.Chitralekha, Arun Rajaraman;
+\textsl{A Comparative study of different distance metrics that can be used in Fuzzy Clustering Algorithms}; 2013
 
 \end{thebibliography}
 
