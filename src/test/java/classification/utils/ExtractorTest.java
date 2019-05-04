@@ -1,6 +1,6 @@
 package classification.utils;
 
-import classification.features.Extractor;
+import classification.features.Extraction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
@@ -10,11 +10,11 @@ class ExtractorTest {
     private final String[] text = new String[] { "machine", "learning", "based", "systems", "learning" };
     private final String[] dictionary = new String[] { "learning", "artificial", "representation", "systems" };
 
-    Extractor extractor;
+    Extraction extractor;
 
     @BeforeEach
     void initialize() {
-        extractor = new Extractor(text, dictionary);
+        extractor = new Extraction(text, dictionary);
     }
 
     @Test

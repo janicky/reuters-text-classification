@@ -1,6 +1,6 @@
 package classification.utils;
 
-import classification.features.Extractor;
+import classification.features.Extraction;
 import classification.features.Feature;
 import classification.metrics.Metric;
 
@@ -18,8 +18,8 @@ public class Calculations {
     }
 
     public double compare(String[] o1, String[] o2, String[] dictionary) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Extractor extractor1 = new Extractor(o1, dictionary);
-        Extractor extractor2 = new Extractor(o2, dictionary);
+        Extraction extractor1 = new Extraction(o1, dictionary);
+        Extraction extractor2 = new Extraction(o2, dictionary);
 
         for (int i = 0; i < extractors.length; i++) {
             Method method1 = extractor1.getClass().getDeclaredMethod(extractors[i]);
