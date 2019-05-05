@@ -32,4 +32,14 @@ public class StopWords {
     public String[] getStopWords() {
         return stopWords;
     }
+
+    private String[][] getDocuments() {
+        String[][] output = new String[objects.length][];
+
+        for (int i = 0; i < objects.length; i++) {
+            output[i] = objects[i].getVectorizedText();
+        }
+
+        return output;
+    }
 }
