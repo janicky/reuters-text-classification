@@ -4,6 +4,7 @@ import classification.utils.Operations;
 
 public abstract class ClassificationObject implements IClassificationObject {
     public String[] getVectorizedText() {
-        return Operations.splitText(getText());
+        String cleaned = Operations.removeSpecialCharacters(getText());
+        return Operations.splitText(cleaned);
     }
 }

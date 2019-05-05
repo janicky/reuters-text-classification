@@ -1,10 +1,12 @@
 package classification.utils;
 
 import classification.data_models.IClassificationObject;
+import classification.features.TermFrequency;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,8 +18,23 @@ public class StopWords {
         this.objects = objects;
     }
 
-    public void generate() {
+    public void generate(double significance) {
+        List<String> newWords = new ArrayList<>();
+        String[][] documents = getDocuments();
 
+        for (String[] document : documents) {
+            for (String word : document) {
+                if (!newWords.contains(word)) {
+                    double tfidf = TermFrequency.termFrequencyInverseFrequency(documents, document, word);
+                    if (tfidf < significance) {
+                        newWords.add(word);
+                    }
+                }
+            }
+        }
+
+        stopWords = newWords.toArray(new String[newWords.size()]);
+        System.out.println(Arrays.toString(stopWords));
     }
 
     public void loadFromFile(String filename) throws FileNotFoundException {
@@ -27,6 +44,8 @@ public class StopWords {
             words.add(scanner.nextLine());
         }
         scanner.close();
+
+        stopWords = words.toArray(new String[words.size()]);
     }
 
     public String[] getStopWords() {

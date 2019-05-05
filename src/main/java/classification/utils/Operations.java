@@ -5,7 +5,7 @@ import classification.data_models.IClassificationObject;
 import java.util.*;
 
 public class Operations {
-    public static String normalizeText(final String text) {
+    public static String removeSpecialCharacters(final String text) {
         return text.trim().replaceAll("[^A-Za-z\\s+]", "").toLowerCase();
     }
 
