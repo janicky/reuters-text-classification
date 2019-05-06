@@ -9,7 +9,7 @@ public class Extraction {
 
     private String[] text;
     private String[] keywords;
-    private Map<String, Feature> features = new LinkedHashMap<>();
+    private Map<String, IFeature> features = new LinkedHashMap<>();
 
     public Extraction(String[] text, String[] keywords) {
         this.text = text;
@@ -96,7 +96,7 @@ public class Extraction {
         features.put("wordsCount", new NumberFeature(text.length));
     }
 
-    public Map<String, Feature> getFeatures() {
+    public Map<String, IFeature> getFeatures() {
         return features;
     }
 }
