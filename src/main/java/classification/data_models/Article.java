@@ -7,6 +7,7 @@ public class Article extends ClassificationObject {
     private String body;
 
     public Article(String title, String[] places, String body) {
+        super(body);
         this.title = title;
         this.places = places;
         this.body = body;
