@@ -25,8 +25,8 @@ public class StopWords {
         for (String[] document : documents) {
             for (String word : document) {
                 if (!newWords.contains(word)) {
-                    double tfidf = TermFrequency.termFrequencyInverseFrequency(documents, document, word);
-                    if (tfidf < significance) {
+                    double idf = TermFrequency.inverseFrequency(documents, word);
+                    if (idf < significance) {
                         newWords.add(word);
                     }
                 }
@@ -34,7 +34,6 @@ public class StopWords {
         }
 
         stopWords = newWords.toArray(new String[newWords.size()]);
-        System.out.println(Arrays.toString(stopWords));
     }
 
     public void loadFromFile(String filename) throws FileNotFoundException {

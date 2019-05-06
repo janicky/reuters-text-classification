@@ -29,7 +29,8 @@ class StopWordsTest {
 
     @Test
     void generate() {
-        stopWords.generate(0.015);
+        stopWords.generate(2.5);
+        System.out.println(Arrays.toString(stopWords.getStopWords()));
         System.out.println(stopWords.getStopWords().length);
     }
 }
