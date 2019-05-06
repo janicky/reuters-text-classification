@@ -11,6 +11,10 @@ public abstract class ClassificationObject implements IClassificationObject {
     }
 
     public String[] getVectorizedText() {
-        return  vectorizedText;
+        return vectorizedText;
+    }
+
+    public void setVectorizedText(String[] vectorizedText) {
+        this.vectorizedText = vectorizedText;
     }
 }
