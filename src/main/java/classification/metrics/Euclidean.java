@@ -1,17 +1,19 @@
 package classification.metrics;
 
-import classification.features.Feature;
+import classification.features.IFeature;
 
-public class Euclidean extends Metric {
-    public double calculate() {
+import java.util.Map;
+
+public class Euclidean implements IMetric {
+
+    public double compare(Map<String, IFeature> vector_1, Map<String, IFeature> vector_2) {
         double sum = 0;
-        for (Feature feature : features) {
-            sum += (Math.pow(2, feature.getX()))
-                    - (2 * feature.getX()*feature.getY())
-                    + (Math.pow(2, feature.getY()));
 
-//            sum += feature.getDifference() * feature.getDifference();
+        for (Map.Entry<String, IFeature> feature_1 : vector_1.entrySet()) {
+            IFeature feature_2 = vector_2.get(feature_1.getKey());
+            sum += feature_1.getValue().compareTo(feature_2);
         }
+
         return Math.sqrt(sum);
     }
 }
