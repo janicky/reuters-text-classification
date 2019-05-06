@@ -11,7 +11,7 @@ public class Euclidean implements IMetric {
 
         for (Map.Entry<String, IFeature> feature_1 : vector_1.entrySet()) {
             IFeature feature_2 = vector_2.get(feature_1.getKey());
-            sum += feature_1.getValue().compareTo(feature_2);
+            sum += feature_1.getValue().compareTo(feature_2) * feature_1.getValue().compareTo(feature_2);
         }
 
         return Math.sqrt(sum);
