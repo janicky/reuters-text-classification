@@ -4,4 +4,5 @@ public interface IClassificationObject {
     String getText();
     String[] getLabels();
     String[] getVectorizedText();
+    void setVectorizedText(String[] vectorizedText);
 }

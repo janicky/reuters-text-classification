@@ -6,7 +6,6 @@ import classification.features.TermFrequency;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,6 +44,33 @@ public class StopWords {
         scanner.close();
 
         stopWords = words.toArray(new String[words.size()]);
+    }
+
+    public void removeStopWords() {
+        if (stopWords.length == 0) {
+            return;
+        }
+        for (IClassificationObject object : objects) {
+            String[] words = object.getVectorizedText();
+            List<String> newWords = new ArrayList<>();
+
+            for (String word : words) {
+                boolean stop = false;
+                for (String stopWord : stopWords) {
+                    if (word.equals(stopWord)) {
+                        stop = true;
+                        break;
+                    }
+                }
+                if (!stop) {
+                    newWords.add(word);
+                }
+            }
+
+            if (newWords.size() != words.length) {
+                object.setVectorizedText(newWords.toArray(new String[newWords.size()]));
+            }
+        }
     }
 
     public String[] getStopWords() {
