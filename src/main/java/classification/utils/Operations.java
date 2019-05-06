@@ -1,6 +1,8 @@
 package classification.utils;
 
 import classification.data_models.IClassificationObject;
+import org.tartarus.snowball.SnowballStemmer;
+import org.tartarus.snowball.ext.englishStemmer;
 
 import java.util.*;
 
@@ -94,5 +96,12 @@ public class Operations {
         Map<K, V> sortedByValues = new TreeMap<>(valueComparator);
         sortedByValues.putAll(map);
         return sortedByValues;
+    }
+
+    public static String stem(String word) {
+        SnowballStemmer stemmer = new englishStemmer();
+        stemmer.setCurrent(word);
+        stemmer.stem();
+        return stemmer.getCurrent();
     }
 }

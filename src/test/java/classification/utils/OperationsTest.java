@@ -78,4 +78,11 @@ class OperationsTest {
         boolean checked = Operations.checkLabel("P1", object_1.getLabels());
         assertTrue(checked);
     }
+
+    @Test
+    void stem() {
+        String word = "expectations";
+        String expected = "expect";
+        assertEquals(expected, Operations.stem(word));
+    }
 }
