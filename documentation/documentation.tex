@@ -181,7 +181,7 @@ wykorzystane metryki opisane poniżej.
 Odległość Euklidesowa jest to odległość między dwoma wektorami określona jako pierwiastek kwadratowy sumy różnic między
 wartościami podniesionymi do kwadratu, wyrażona wzorem:
 \begin{equation}
-    d(x,y)=\sqrt{(x_{1}-y_{1})^{2}-(x_{n}-y_{n})^{2}}
+    d(x,y)=\sqrt{\sum_{i=1}^{n}((x_{i}-y_{i})^{2})}
 \end{equation}
 gdzie:\\
 \begin{description}
@@ -205,30 +205,6 @@ Metryka Manhattana jest metryką podobną do metryki euklidesowej z tą różnic
 z bezwzględnych różnic pomiędzy wektorami. Odległość tę wyraża się wzorem:
 \begin{equation}
     d(x,y)=\sum |x_{i}-y_{i}|
-\end{equation}
-gdzie:\\
-\begin{description}
-    \item $d$ - miara odległości;
-    \item $x$, $y$ - wartości cech obiektów;
-\end{description}
-
-\subsubsection{Metryka Hamminga}
-Odległość Hamminga $d(x,y)$ pomiędzy dwoma wektorami $x, y$ - to liczba pozycji na, których się różnią.
-\begin{equation}
-    h(i) =\left\{\begin{matrix}
-                     0 & \text{dla }v_{1i}=v_{2i}\\
-                     1 & \text{dla }v_{1i}\neq v_{2i}
-    \end{matrix}\right.
-\end{equation}
-gdzie:\\
-\begin{description}
-    \item $v_{1i}, v_{2i}$ - znak w słowie
-\end{description}
-
-\subsubsection{Metryka Canberra}
-Odległość Canberra to ważona wersja metryki Manhattan, wyrażona wzorem:
-\begin{equation}
-    d(x,y)=\sum_{i=1}^{n} \frac{|x_{i}-y_{i}|}{|x_{i}|+|y_{i}|}
 \end{equation}
 gdzie:\\
 \begin{description}
