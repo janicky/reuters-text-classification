@@ -50,4 +50,8 @@ class ClassificationTest {
         System.out.println("Accuracy: " + classification.getAccuracy());
     }
 
+    @Test
+    void prepareData() {
+
+    }
 }
