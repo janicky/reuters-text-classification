@@ -1,11 +1,10 @@
 package classification.data_models;
 
-import classification.data_models.IClassificationObject;
 import classification.utils.Operations;
 
 public abstract class ClassificationObject implements IClassificationObject {
     public String[] getVectorizedText() {
-        String normalized = Operations.normalizeText(getText());
-        return Operations.splitText(normalized);
+        String cleaned = Operations.removeSpecialCharacters(getText());
+        return Operations.splitText(cleaned);
     }
 }

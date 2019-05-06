@@ -31,9 +31,9 @@ class OperationsTest {
     }
 
     @Test
-    void normalizeText() {
+    void removeSpecialCharacters() {
         String text = "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.";
-        String cleanedText = Operations.normalizeText(text);
+        String cleanedText = Operations.removeSpecialCharacters(text);
         assertEquals("two things are infinite the universe and human stupidity and im not sure about the universe", cleanedText);
     }
 
@@ -52,7 +52,7 @@ class OperationsTest {
     void wordsOccurrences() {
         String[] dictionary = new String[] { "neil", "armstrong", "astronaut", "engineer", "first", "moon" };
         String text = "Neil Alden Armstrong was an American astronaut and aeronautical engineer who was the first person to walk on the Moon. Armstrong prepared his famous epigram on his own.";
-        String[] prepared = Operations.splitText(Operations.normalizeText(text));
+        String[] prepared = Operations.splitText(Operations.removeSpecialCharacters(text));
 
         Map<String, Integer> map = Operations.wordsOccurrences(dictionary, prepared);
         assertEquals(1, map.get("astronaut").intValue());

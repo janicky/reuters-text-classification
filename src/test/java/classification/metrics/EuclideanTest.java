@@ -1,7 +1,11 @@
 package classification.metrics;
 
+import classification.features.IFeature;
+import classification.features.NumberFeature;
 import org.junit.jupiter.api.Test;
-import classification.features.Feature;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,8 +14,13 @@ class EuclideanTest {
     @Test
     void calculate() {
         Euclidean e = new Euclidean();
-        e.addFeature(new Feature(3, 4));
-        e.addFeature(new Feature(5, 7));
-        assertTrue(Math.abs(2.23606797749979 - e.calculate()) < 0.0001);
+        Map<String, IFeature> features_1 = Map.ofEntries(
+          Map.entry("length", new NumberFeature(4))
+        );
+        Map<String, IFeature> features_2 = Map.ofEntries(
+          Map.entry("length", new NumberFeature(3))
+        );
+
+        assertTrue(Math.abs(1.0 - e.compare(features_1, features_2)) < 0.0001);
     }
 }
