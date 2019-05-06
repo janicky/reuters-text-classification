@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StopWordsTest {
 
-    StopWords stopWords;
+    private StopWords stopWords;
 
     @BeforeEach
     void initialize() throws IOException {
@@ -30,7 +30,6 @@ class StopWordsTest {
     @Test
     void generate() {
         stopWords.generate(2.5);
-        System.out.println(Arrays.toString(stopWords.getStopWords()));
-        System.out.println(stopWords.getStopWords().length);
+        assertEquals(105, stopWords.getStopWords().length);
     }
 }
