@@ -2,11 +2,10 @@ package classification.features;
 
 import classification.similarity.NGram;
 
-public class TextFeature extends Feature implements IFeature<String> {
+public class TextFeature implements IFeature<String> {
 
     private String value;
     public TextFeature(String value) {
-        measure = Measure.SIMILARITY;
         this.value = value;
     }
 

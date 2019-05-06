@@ -1,6 +1,6 @@
 package classification.features;
 
-public class NumberFeature extends Feature implements IFeature<Double> {
+public class NumberFeature implements IFeature<Double> {
 
     private double value;
 

@@ -1,5 +1,9 @@
 package classification.metrics;
 
+import classification.features.IFeature;
+
+import java.util.Map;
+
 public interface IMetric {
-    public double calculate();
+    double compare(Map<String, IFeature> vector_1, Map<String, IFeature> vector_2);
 }
