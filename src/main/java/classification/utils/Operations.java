@@ -104,4 +104,13 @@ public class Operations {
         stemmer.stem();
         return stemmer.getCurrent();
     }
+
+    public static void stem(IClassificationObject[] objects) {
+        for (IClassificationObject object : objects) {
+            String[] text = object.getVectorizedText();
+            for (int i = 0; i < text.length; i++) {
+                text[i] = Operations.stem(text[i]);
+            }
+        }
+    }
 }

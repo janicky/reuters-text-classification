@@ -57,7 +57,7 @@ public class StopWords {
             for (String word : words) {
                 boolean stop = false;
                 for (String stopWord : stopWords) {
-                    if (word.equals(stopWord)) {
+                    if (word.equals(stopWord) || word.length() == 0) {
                         stop = true;
                         break;
                     }
