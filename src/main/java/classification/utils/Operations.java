@@ -113,4 +113,42 @@ public class Operations {
             }
         }
     }
+
+    public static IClassificationObject[] filterObjects(IClassificationObject[] objects, String[] labels, int mode) {
+        List<IClassificationObject> filtered = new ArrayList<>();
+        for (IClassificationObject object : objects) {
+            String[] object_labels = object.getLabels();
+            boolean match = matchLabels(labels, object_labels, 2);
+            if (match) {
+                filtered.add(object);
+            }
+        }
+
+        return filtered.toArray(new IClassificationObject[filtered.size()]);
+    }
+
+    private static boolean matchLabels(String[] labels, String[] o_labels, int mode) {
+//        mode:
+//            0 - match any
+//            1 - match only
+//            2 - match only one
+        if (mode == 2 && o_labels.length != 1) {
+            return false;
+        }
+        for (String o_label : o_labels) {
+            boolean proper = false;
+            for (String label : labels) {
+                if (label.equals(o_label)) {
+                    if (mode == 0) {
+                        return true;
+                    }
+                    proper = true;
+                }
+            }
+            if (!proper) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
