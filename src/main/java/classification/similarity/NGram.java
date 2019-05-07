@@ -8,6 +8,10 @@ public class NGram implements ISimilarityMeter {
     }
 
     public double measure(final String o1, final String o2) {
+        if (o1 == null || o2 == null || o1.length() < n || o2.length() < n) {
+            return 0;
+        }
+
         String s1 = (o1.length() > o2.length() ? o1 : o2);
         String s2 = (o1.length() > o2.length() ? o2 : o1);
 

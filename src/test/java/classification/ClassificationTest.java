@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import classification.utils.Loader;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -40,12 +41,23 @@ class ClassificationTest {
     }
 
     @Test
-    void perform() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void perform() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, FileNotFoundException {
         String[] extractors = new String[] {
-                "wordsCountExtraction",
-                "densityExtraction"
+                "keywordOccurrences",
+                "keywordsPosition",
+                "mostFrequentKeyword"
         };
-        classification.perform(new Euclidean(), extractors);
+
+        System.out.println("Loading stopwords... ");
+        classification.loadStopWords("data/stopwords.txt");
+        System.out.println("Prepare data...");
+        classification.prepareData();
+        System.out.println("Generate keywords...");
+        classification.generateKeywords(0.5);
+        System.out.println("Features extraction...");
+        classification.extractFeatures(extractors);
+        System.out.println("Starting classification...");
+        classification.perform(new Euclidean());
 
         System.out.println("Accuracy: " + classification.getAccuracy());
     }

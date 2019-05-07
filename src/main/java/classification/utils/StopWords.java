@@ -47,7 +47,7 @@ public class StopWords {
     }
 
     public void removeStopWords() {
-        if (stopWords.length == 0) {
+        if (stopWords == null || stopWords.length == 0) {
             return;
         }
         for (IClassificationObject object : objects) {

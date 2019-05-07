@@ -5,6 +5,7 @@ import classification.features.Extraction;
 import classification.metrics.IMetric;
 import classification.utils.*;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -21,17 +22,27 @@ public class Classification {
     // splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
     public Classification(IClassificationObject[] objects, double splitRatio, int k) {
         this.objects = objects;
-        prepareData();
         stopWords = new StopWords(objects);
+        prepareData();
         keywords = new Keywords(objects);
         splitSets(objects, splitRatio);
         this.k = k;
+    }
+
+    // Load stop words from file
+    public void loadStopWords(String filename) throws FileNotFoundException {
+        stopWords.loadFromFile(filename);
     }
 
     // Stemming and remove stop words
     public void prepareData() {
         Operations.stem(objects);
         stopWords.removeStopWords();
+    }
+
+    // Generate keywords
+    public void generateKeywords(double significance) {
+        keywords.generate(significance);
     }
 
     public void extractFeatures(String[] extractors) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -60,8 +71,7 @@ public class Classification {
         }
     }
 
-    public void perform(IMetric metric, String[] extractors) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Calculations comparator = new Calculations(metric, extractors);
+    public void perform(IMetric metric) {
         List<Group> groups = new ArrayList<>();
         truePositive = 0;
 
@@ -70,7 +80,7 @@ public class Classification {
             Map<IClassificationObject, Double> distances = new HashMap<>();
 
             for (IClassificationObject learningObject : learningSet) {
-                double distance = comparator.compare(testObject.getVectorizedText(), learningObject.getVectorizedText(), keywords.getKeywords());
+                double distance = metric.compare(testObject.getFeaturesVector(), learningObject.getFeaturesVector());
                 distances.put(learningObject, distance);
             }
             System.out.println("Testing object #" + x++);

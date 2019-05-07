@@ -48,6 +48,9 @@ public class Extraction {
                     features.put("kp_" + keyword, new NumberFeature(i));
                 }
             }
+            if (features.get("kp_" + keyword) == null) {
+                features.put("kp_" + keyword, new NumberFeature(text.length));
+            }
         }
     }
 
