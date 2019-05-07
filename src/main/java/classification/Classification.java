@@ -11,42 +11,53 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class Classification {
-    private int truePositive = 0;
-    private int k;
     private IClassificationObject[] objects;
+    private IClassificationObject[] filteredObjects;
     private IClassificationObject[] learningSet;
     private IClassificationObject[] testingSet;
     private StopWords stopWords;
     private Keywords keywords;
 
-    // splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
-    public Classification(IClassificationObject[] objects, double splitRatio, int k) {
+    private int truePositive = 0;
+    private int k;
+    private String[] labels;
+
+//    splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
+    public Classification(IClassificationObject[] objects) {
         this.objects = objects;
+        this.filteredObjects = objects;
         stopWords = new StopWords(objects);
-        prepareData();
         keywords = new Keywords(objects);
-        splitSets(objects, splitRatio);
-        this.k = k;
     }
 
-    // Load stop words from file
+//    Use objects only with specified labels
+    public void filterObjects(String[] labels, int mode) {
+        filteredObjects = Operations.filterObjects(objects, labels, mode);
+    }
+
+//    Split data sets
+    public void splitSets(double splitRatio) {
+        splitSets(filteredObjects, splitRatio);
+    }
+
+//     Load stop words from file
     public void loadStopWords(String filename) throws FileNotFoundException {
         stopWords.loadFromFile(filename);
     }
 
-    // Stemming and remove stop words
+//     Stemming and remove stop words
     public void prepareData() {
-        Operations.stem(objects);
+        Operations.stem(filteredObjects);
         stopWords.removeStopWords();
     }
 
-    // Generate keywords
+//     Generate keywords
     public void generateKeywords(double significance) {
         keywords.generate(significance);
     }
 
     public void extractFeatures(String[] extractors) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        for (IClassificationObject object : objects) {
+        for (IClassificationObject object : filteredObjects) {
             Extraction extraction = new Extraction(object.getVectorizedText(), keywords.getKeywords());
             for (String extractor : extractors) {
                 Method method = extraction.getClass().getDeclaredMethod(extractor);
@@ -114,5 +125,21 @@ public class Classification {
 
     public IClassificationObject[] getTestingSet() {
         return testingSet;
+    }
+
+    public int getK() {
+        return k;
+    }
+
+    public void setK(int k) {
+        this.k = k;
+    }
+
+    public String[] getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String[] labels) {
+        this.labels = labels;
     }
 }

@@ -10,6 +10,7 @@ import classification.utils.Loader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +22,8 @@ class ClassificationTest {
     @BeforeEach
     void initialize() throws IOException {
         objects = Loader.load("data/reut2-000.sgm", new ArticleParser());
-        classification = new Classification(objects, 0.7, 15);
+        classification = new Classification(objects);
+        classification.setK(15);
     }
 
     @Test
@@ -31,6 +33,7 @@ class ClassificationTest {
 
     @Test
     void objectsRatio() {
+        classification.splitSets(0.7);
         assertEquals(700, classification.getLearningSet().length);
         assertEquals(300, classification.getTestingSet().length);
     }
@@ -48,11 +51,16 @@ class ClassificationTest {
                 "mostFrequentKeyword"
         };
 
+        String[] labels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
+        System.out.println("Filtering objects... " + Arrays.toString(labels));
+        classification.filterObjects(labels, 2);
+        System.out.println("Splitting objects...");
+        classification.splitSets(0.6);
         System.out.println("Loading stopwords... ");
         classification.loadStopWords("data/stopwords.txt");
-        System.out.println("Prepare data...");
+        System.out.println("Preparing data...");
         classification.prepareData();
-        System.out.println("Generate keywords...");
+        System.out.println("Generating keywords...");
         classification.generateKeywords(0.5);
         System.out.println("Features extraction...");
         classification.extractFeatures(extractors);
