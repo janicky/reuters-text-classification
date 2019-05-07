@@ -2,7 +2,9 @@ package classification;
 
 import classification.data_models.ArticleParser;
 import classification.data_models.IClassificationObject;
+import classification.metrics.Chebyshev;
 import classification.metrics.Euclidean;
+import classification.metrics.Manhattan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import classification.utils.Loader;
@@ -46,11 +48,14 @@ class ClassificationTest {
     @Test
     void perform() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, FileNotFoundException {
         String[] extractors = new String[] {
-                "keywordOccurrences",
-                "keywordsPosition",
-                "mostFrequentKeyword"
+                "keywordOccurrencesCount",
+                "keywordsAveragePosition",
+                "mostFrequentKeyword",
+                "keywordsDensity",
+                "wordsCount"
         };
 
+        classification.setK(5);
         String[] labels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
         System.out.println("Filtering objects... " + Arrays.toString(labels));
         classification.filterObjects(labels, 2);

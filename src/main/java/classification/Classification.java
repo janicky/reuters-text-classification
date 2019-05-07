@@ -27,7 +27,6 @@ public class Classification {
         this.objects = objects;
         this.filteredObjects = objects;
         stopWords = new StopWords(objects);
-        keywords = new Keywords(objects);
     }
 
 //    Use objects only with specified labels
@@ -38,6 +37,7 @@ public class Classification {
 //    Split data sets
     public void splitSets(double splitRatio) {
         splitSets(filteredObjects, splitRatio);
+        keywords = new Keywords(learningSet);
     }
 
 //     Load stop words from file
@@ -94,7 +94,6 @@ public class Classification {
                 double distance = metric.compare(testObject.getFeaturesVector(), learningObject.getFeaturesVector());
                 distances.put(learningObject, distance);
             }
-            System.out.println("Testing object #" + x++);
             IClassificationObject[] selectedObjects = Operations.selectObjects(distances, k);
             String selectedLabel = Operations.selectLabel(selectedObjects);
             Group selectedGroup = groups.stream().filter(e -> e.getLabel() == selectedLabel).findFirst().orElse(null);
