@@ -1,25 +1,70 @@
 package classification;
 
 import classification.data_models.IClassificationObject;
-import classification.utils.Calculations;
-import classification.metrics.Metric;
-import classification.utils.Group;
-import classification.utils.Operations;
+import classification.features.Extraction;
+import classification.metrics.IMetric;
+import classification.utils.*;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class Classification {
-    private int truePositive = 0;
-    private int k;
+    private IClassificationObject[] objects;
+    private IClassificationObject[] filteredObjects;
     private IClassificationObject[] learningSet;
     private IClassificationObject[] testingSet;
-    private String[] dictionary = new String[] { "total", "stage", "british" };
+    private StopWords stopWords;
+    private Keywords keywords;
 
-    // splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
-    public Classification(IClassificationObject[] objects, double splitRatio, int k) {
-        splitSets(objects, splitRatio);
-        this.k = k;
+    private int truePositive = 0;
+    private int k;
+    private String[] labels;
+
+//    splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
+    public Classification(IClassificationObject[] objects) {
+        this.objects = objects;
+        this.filteredObjects = objects;
+        stopWords = new StopWords(objects);
+    }
+
+//    Use objects only with specified labels
+    public void filterObjects(String[] labels, int mode) {
+        filteredObjects = Operations.filterObjects(objects, labels, mode);
+    }
+
+//    Split data sets
+    public void splitSets(double splitRatio) {
+        splitSets(filteredObjects, splitRatio);
+        keywords = new Keywords(learningSet);
+    }
+
+//     Load stop words from file
+    public void loadStopWords(String filename) throws FileNotFoundException {
+        stopWords.loadFromFile(filename);
+    }
+
+//     Stemming and remove stop words
+    public void prepareData() {
+        Operations.stem(filteredObjects);
+        stopWords.removeStopWords();
+    }
+
+//     Generate keywords
+    public void generateKeywords(double significance) {
+        keywords.generate(significance);
+    }
+
+    public void extractFeatures(String[] extractors) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        for (IClassificationObject object : filteredObjects) {
+            Extraction extraction = new Extraction(object.getVectorizedText(), keywords.getKeywords());
+            for (String extractor : extractors) {
+                Method method = extraction.getClass().getDeclaredMethod(extractor);
+                method.invoke(extraction);
+            }
+            object.setFeaturesVector(extraction.getFeatures());
+        }
     }
 
     private void splitSets(IClassificationObject[] objects, double splitRatio) {
@@ -37,8 +82,7 @@ public class Classification {
         }
     }
 
-    public void perform(Metric metric, String[] extractors) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Calculations comparator = new Calculations(metric, extractors);
+    public void perform(IMetric metric) {
         List<Group> groups = new ArrayList<>();
         truePositive = 0;
 
@@ -47,10 +91,9 @@ public class Classification {
             Map<IClassificationObject, Double> distances = new HashMap<>();
 
             for (IClassificationObject learningObject : learningSet) {
-                double distance = comparator.compare(testObject.getVectorizedText(), learningObject.getVectorizedText(), dictionary);
+                double distance = metric.compare(testObject.getFeaturesVector(), learningObject.getFeaturesVector());
                 distances.put(learningObject, distance);
             }
-            System.out.println("Testing object #" + x++);
             IClassificationObject[] selectedObjects = Operations.selectObjects(distances, k);
             String selectedLabel = Operations.selectLabel(selectedObjects);
             Group selectedGroup = groups.stream().filter(e -> e.getLabel() == selectedLabel).findFirst().orElse(null);
@@ -66,15 +109,13 @@ public class Classification {
         }
     }
 
+
+
     public double getAccuracy() {
         if (testingSet.length == 0) {
             return 0;
         }
         return truePositive / (double) testingSet.length;
-    }
-
-    public void setDictionary(String[] dictionary) {
-        this.dictionary = dictionary;
     }
 
     public IClassificationObject[] getLearningSet() {
@@ -83,5 +124,21 @@ public class Classification {
 
     public IClassificationObject[] getTestingSet() {
         return testingSet;
+    }
+
+    public int getK() {
+        return k;
+    }
+
+    public void setK(int k) {
+        this.k = k;
+    }
+
+    public String[] getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String[] labels) {
+        this.labels = labels;
     }
 }

@@ -31,7 +31,7 @@ public class Extraction {
 
     public void keywordsDensity() {
         if (text.length == 0) {
-            features.put("density", new NumberFeature(0d));
+            features.put("keywords_density", new NumberFeature(0d));
             return;
         }
 
@@ -47,6 +47,9 @@ public class Extraction {
                 if (keyword.equals(text[i])) {
                     features.put("kp_" + keyword, new NumberFeature(i));
                 }
+            }
+            if (features.get("kp_" + keyword) == null) {
+                features.put("kp_" + keyword, new NumberFeature(text.length));
             }
         }
     }
