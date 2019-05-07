@@ -34,19 +34,44 @@ kategorii. Odbywa się to na podstawie watrości poszczególnych wyekstrachowany
 Do ekstrakcji wykorzystywany jest znormalizowany zbiór słów badanego tekstu, oznaczony przez T. Normalizacja ma na
 celu wyeliminowanie niepożądanych słów oraz sprowadzenie odmian słów o tym samym znaczeniu do jednego (określenie rdzenia słowa).
 
-\subsection{Wykorzystane ekstraktory cech}
+\subsection{Wykorzystane cechy}
+\subsubsection{Występowanie słowa kluczowego}
+Na podstawie dostarczonego słowa kluczowego określamy czy to słowo występuje w dokumencie (reprezentacja binarna).
+Przy użyciu tej cechy nie bierzemy pod uwagę liczności występowania tego słowa kluczowego. Cecha przyjmuje wartości $\{0; 1\}$.
+\begin{equation}
+    F=\left\{\begin{matrix}
+                 1, & kiedy\ w = t_{i}\\
+                 0, & w\ przeciwnym\ przypadku
+    \end{matrix}\right.
+\end{equation}
+gdzie:\\
+\begin{description}
+    \item $w$ - dane słowo kluczowe;
+    \item $t_{1}$ - kolejne słowa występujące w tekście;
+\end{description}
 
-\subsubsection{Występowanie określonych słów kluczowych}
-Występowanie określonych słów kluczowych w tekście,
-nie uwzględnia liczności słów. Cecha to liczba słów kluczowych,
-określająca ile słów kluczowych z całej puli wystąpiło w tekście.
-Cecha przyjmuje wartości z zakresu [$0, n$] przy czym $n$ to liczba słów w tekście, zakładając, że
-tekst składa się z tych samych słów kluczowych.
+\subsubsection{Liczba wystąpień słowa kluczowego}
+Na podstawie dostarczonego słowa kluczowego określamy liczbę wystąpień tego słowa w dokumencie. Wykorzystanie tej cechy dla listy
+słów kluczowych pozwala na stwierdzenie  jak licznie występuje każde słowo kluczowe w dokumencie. Chcemy sprawdzić,
+czy określenie liczności słów kluczowych ma istotny wpływ na klasyfikację dokumentu.
+\begin{equation}
+    F=\sum_{i=0}^{n} S(w)
+\end{equation}
+gdzie:
+\begin{equation}
+    S(w)=\left\{\begin{matrix}
+                    1, & kiedy\ w = t_{i}\\
+                    0, & w\ przeciwnym\ przypadku
+    \end{matrix}\right.
+\end{equation}\\ oraz:
+\begin{description}
+    \item $t_{i}$ - kolejne słowa występujące w tekście;
+    \item $n$ - liczba słów kluczowych;
+\end{description}
 
 \subsubsection{Suma wystąpień słów kluczowych}
 Suma wystąpień każdego słowa kluczowego w tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
-Cecha przyjmuje wartości od [$0, n$] gdzie $n$ liczba słów w tekście.
-
+Cecha to liczba całkowita przyjmująca wartości z przedziału $<0; n>$ gdzie $n$ liczba słów w tekście.
 \begin{equation}
     F=S_{1} + ... + S_{n}
 \end{equation}
@@ -58,7 +83,7 @@ gdzie:\\
 
 \subsubsection{Gęstość występowania słów kluczowych}
 Gęstość wyrażona jako iloraz sumy wystąpień słów kluczowych i liczby wszystkich słów w tekście.
-Cecha przyjmuje wartości liczbowe z zakresu [$0, 1$].
+Cecha to liczba przyjmująca wartości z zakresu $<0; 1>$.
     \begin{equation}
       F=\frac{S}{L}
     \end{equation}
@@ -68,11 +93,23 @@ gdzie:\\
     \item $L$ - liczba wszystkich słów w tekście;
 \end{description}
 
+\subsubsection{Odległość słowa kluczowego od początku tekstu}
+Odległość słowa kluczowego od początku tekstu wyrażona za pomocą sumy liczby wyrazów poprzedzających
+dane słowo kluczowe.
+Cecha przyjmuje wartości liczbowe z zakresu $<0; n>$, gdzie $n$ - liczba wyrazów poprzedzających słowo kluczowe.
+\begin{equation}
+    F=\sum_{0}^{n}1
+\end{equation}
+gdzie:\\
+\begin{description}
+    \item $n$ - liczba wyrazów poprzedzających dane słowo kluczowe;
+\end{description}
+
 
 \subsubsection{Średnia odległość słów kluczowych od początku tekstu}
 Średnia odległość słów kluczowych wyrażona jako iloraz sumy odległości słów kluczowych od początku tekstu i liczby
 słów kluczowych w tekście. Cecha to suma wartości liczbowych odzwierciedlających odległość danego słowa kluczowego
-od początku tekstu, gdzie pojedyncze słowo odpowiada odległości równej jeden. Cecha przyjmuje wartości [$0, n$] gdzie n
+od początku tekstu, gdzie pojedyncze słowo odpowiada odległości równej jeden. Cecha przyjmuje wartości $<0; n>$ gdzie n
 jest maksymalną średnią z sumy odległości słów kluczowych od początku tekstu.
 \begin{equation}
     F=\frac{S_{1} + ... + S_{n}}{L}
@@ -83,9 +120,39 @@ gdzie:\\
     \item $L$ -  liczba słów kluczowych w tekście;
 \end{description}
 
+\subsubsection{Pierwsze słowo kluczowe}
+Pierwsze słowo kluczowe przyjmuje wartość pierwszego napotkanego słowa kluczowego w tekście. Cecha przyjmuje wartość
+tekstową odpowiadającą pierwszemu napotkanemu słowu kluczowemu.
+\begin{equation}
+    F= h(i)=\left\{\begin{matrix}
+       w, & w = t_{i}
+    \end{matrix}\right.
+\end{equation}
+gdzie:\\
+\begin{description}
+    \item $w$ - dane słowo kluczowe;
+    \item $t_{i}$ - kolejne słowa występujące w tekście;
+\end{description}
+
+\subsubsection{Najczęściej występujące słowo kluczowe}
+Najczęściej występujące słowo kluczowe wyrażone jako tekst odpowiadający najwyększej liczbie wystąpień danego
+słowa kluczowego w tekście. Cecha przyjmuje wartość tekstową odpowiadającą najczęściej występującemu słowu kluczowemu.
+\begin{equation}
+    F= w_{max_{i}(h(w_{i}), h(w_{i}))}
+\end{equation}
+gdzie:
+\begin{equation}
+    h(w)=\sum_{i=0}^{n} S(w)
+\end{equation}
+\begin{description}
+    \item $S(w)$ - według wzoru (3);
+    \item $w$ - dane słowo kluczowe;
+    \item $t_{i}$ - kolejne słowa występujące w tekście;
+\end{description}
+
 \subsubsection{Liczba wszystkich słów}
 Określenie liczby wszystkich słów występujących w tekście. 
-Cecha przyjmuje wartości $n$ równą liczbie słów w tekście.
+Cecha przyjmuje wartość $n$ równą liczbie słów w tekście.
 \begin{equation}
     F=|S|
 \end{equation}
@@ -94,30 +161,41 @@ gdzie:\\
     \item $S$ - to zbiór słów występujących w tekście;
 \end{description}
 
-\subsubsection{Rozproszenie słów kluczowych}
-Rozproszenie słów kluczowych wyrażone jako iloraz sumy odległości pomiędzy słowami kluczowymi i iloczyn liczby
-wszystkich słów w tekście oraz liczby słów kluczowych w tekście.
-
-Możemy podjąć próbę i założyć, że większe nagromadzenie słów kluczowych na przestrzeni całego tekstu pozwala
-stwierdzić, czy określone słowa kluczowe mają powiązanie z tematem tekstu, a nie stanowią wzmianki czy wstępu do
-tekstu. Ekstrakcja ma pozwolić na określenie rozrzutu słów kluczowych w tekście. Cecha jest określona na podstawie
-sumy odległości pomiędzy słowami kluczowymi z uwzględnieniem gęstości ich występowania. Przyjmuje wartości $[0, \infty]$.
-\begin{equation}
-    F=\frac{E_{d}}{N*N_{k}}
-\end{equation}
-gdzie:\\
-\begin{description}
-    \item $E_{d}$ - suma odległości pomiędzy słowami kluczowymi;
-    \item $N$ - liczba wszystkich słów w tekście;
-    \item $N_{k}$ - liczba słów kluczowych w tekście;
-\end{description}
+%\subsubsection{Rozproszenie słów kluczowych}
+%Rozproszenie słów kluczowych wyrażone jako iloraz sumy odległości pomiędzy słowami kluczowymi i iloczyn liczby
+%wszystkich słów w tekście oraz liczby słów kluczowych w tekście.
+%
+%Możemy podjąć próbę i założyć, że większe nagromadzenie słów kluczowych na przestrzeni całego tekstu pozwala
+%stwierdzić, czy określone słowa kluczowe mają powiązanie z tematem tekstu, a nie stanowią wzmianki czy wstępu do
+%tekstu. Ekstrakcja ma pozwolić na określenie rozrzutu słów kluczowych w tekście. Cecha jest określona na podstawie
+%sumy odległości pomiędzy słowami kluczowymi z uwzględnieniem gęstości ich występowania. Przyjmuje wartości $[0, \infty]$.
+%\begin{equation}
+%    F=\frac{E_{d}}{N*N_{k}}
+%\end{equation}
+%gdzie:\\
+%\begin{description}
+%    \item $E_{d}$ - suma odległości pomiędzy słowami kluczowymi;
+%    \item $N$ - liczba wszystkich słów w tekście;
+%    \item $N_{k}$ - liczba słów kluczowych w tekście;
+%\end{description}
 
 %\subsubsection{Występowanie określonych podciągów}
 %\dots
+\subsection{Określanie istotności słów}
+Podczas analizy tekstu można zauważyć, że niektóre słowa są bardziej lub mniej istotne. W związku z tym zależy nam
+na eliminacji słów nieznaczących i wyodrębnieniu słów istotnych w kontekście dokumentu. Istotność słów możemy określić
+na podstawie następujących algorytmów:
+%\begin{itemize}
+%    \item podane przez użytkownika;
+%    \item wczytane w pliku;
+%    \item wygenerowane na podstawie zbioru uczączego;
+%\end{itemize}
+%Generowanie słów kluczowych odbywa się za pomocą poniżej zaprezentowanych metod.
 
 \subsubsection{Częstość słów (ang. Term Frequency)}
-Częstość słów wtyrażona jako iloraz liczby wytąpień słowa kluczowegoh przez ilość słów w dokumencie. Cecha to
-częstotliwość wytępowania słowa kluczowego.
+Liczba wystąpień słowa w dokumencie w stosunku do wszystkich słów pozwala nam na określenie częstotliwości występowania
+określonego słowa. Zakładamy, że słowo, które występuje stosunkowo rzadko w dokumencie jest wysoce istotne. Zależność tą
+można określić za pomocą wzoru:
 \begin{equation}
     F=\frac{K}{W}
 \end{equation}
@@ -128,9 +206,9 @@ gdzie:\\
 \end{description}
 
 \subsubsection{IDF (ang. inverse document frequency)}
-IDF wyrażony jest jako iloraz liczby dokumentów poddawanych badaniu przez liczbę dokumentów w których dane słowo
-kluczowe wystąpiło przynajmniej raz.
-
+Możemy określić w ilu dokumentach występuje dane słowo. Jeśli słowo występuje w małej liczbie dokumentów lub tylko w
+jednym, można stwierdzić, że to słowo jest ściśle powiązane z treścią tych dokumentów. Zależność tą można określić za
+pomocą wzoru:
 \begin{equation}
     F=log \frac{W}{D}
 \end{equation}
@@ -141,14 +219,15 @@ gdzie:\\
 \end{description}
 
 \subsubsection{TF-IDF}
-TF-IDF jest to stosunek częstości słów do częstości występowania danego słowa we wszystkich dokumentach.
-Worażona jako iloczyn częstości słów (TF) oraz IDF.
+Jest to połączenie częstości słów występujących w dokumencie zestawione z stosunkiem wytępowania tego słowa we wszystkich
+dokumentach. Połączenie tych cech pozwala na uzależnienie istotności słowa nie tylko od dokumentu w którym występuje,
+ale również od występowania w całym zbiorze dokumentów. Zależność tą można określić za pomocą wzoru:
 \begin{equation}
     F={TF}\cdot{IDF}
 \end{equation}
 gdzie:\\
 \begin{description}
-    \item $TF$ - częstość słów;
+    \item $TF$ - częstość słów w danym dokumencie;
     \item $IDF$ - częstość występowania na tle innych dokuemntów;
 \end{description}
 
