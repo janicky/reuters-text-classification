@@ -20,4 +20,12 @@ public class MainView extends JFrame {
     public void addTab(String title, JPanel panel) {
         mainPane.addTab(title, panel);
     }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public void displayError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }

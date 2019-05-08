@@ -1,6 +1,7 @@
 package application.view.tabs;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class DataTab extends JPanel {
     private JPanel mainPanel;
@@ -14,5 +15,13 @@ public class DataTab extends JPanel {
 
     public void setAvailableModels(final String[] models) {
         selectedModel.setModel(new DefaultComboBoxModel(models));
+    }
+
+    public void addSelectedModelListener(ActionListener listener) {
+        selectedModel.addActionListener(listener);
+    }
+
+    public void addSelectFilesButtonListener(ActionListener listener) {
+        selectFilesButton.addActionListener(listener);
     }
 }

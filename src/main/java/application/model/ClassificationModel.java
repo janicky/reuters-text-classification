@@ -4,6 +4,7 @@ import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
 import classification.utils.Loader;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class ClassificationModel {
 
     private IParser getParserBySelectedModel() throws InvalidParserException {
         try {
-            Class c = Class.forName(availableModels[selectedModel] + "Parser");
+            Class c = Class.forName("classification.data_models." + availableModels[selectedModel] + "Parser");
             Constructor constructor = c.getConstructor();
             return (IParser) constructor.newInstance();
         } catch (Exception e) {
