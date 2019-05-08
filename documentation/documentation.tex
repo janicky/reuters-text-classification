@@ -33,6 +33,7 @@ Klasyfikacja tekstów, która odbywa się za pomocą algorytmu KNN. Polega ona n
 kategorii. Odbywa się to na podstawie watrości poszczególnych wyekstrachowanych cech, które posiada każdy z tekstów.\\
 Do ekstrakcji wykorzystywany jest znormalizowany zbiór słów badanego tekstu, oznaczony przez T. Normalizacja ma na
 celu wyeliminowanie niepożądanych słów oraz sprowadzenie odmian słów o tym samym znaczeniu do jednego (określenie rdzenia słowa).
+\clearpage
 
 \subsection{Wykorzystane cechy}
 \subsubsection{Występowanie słowa kluczowego}
@@ -70,8 +71,8 @@ gdzie:
 \end{description}
 
 \subsubsection{Suma wystąpień słów kluczowych}
-Suma wystąpień każdego słowa kluczowego w tekście. Cecha to suma wystąpień wszystkich słów kluczowych w tekście.
-Cecha to liczba całkowita przyjmująca wartości z przedziału $<0; n>$ gdzie $n$ liczba słów w tekście.
+Wystąpienie w dokumencie wszystkich słów kluczowych z listy ma istotny wpływ na to w jakim stopniu dany tekst
+przynależy do danej etykiety. Cecha to liczba całkowita przyjmująca wartości z przedziału $<0; n>$ gdzie $n$ liczba słów w tekście.
 \begin{equation}
     F=S_{1} + ... + S_{n}
 \end{equation}
@@ -80,10 +81,10 @@ gdzie:\\
     \item $S$ - liczba wystąpień słowa kluczowego;
 \end{description}
 
-
+\clearpage
 \subsubsection{Gęstość występowania słów kluczowych}
-Gęstość wyrażona jako iloraz sumy wystąpień słów kluczowych i liczby wszystkich słów w tekście.
-Cecha to liczba przyjmująca wartości z zakresu $<0; 1>$.
+Wyliczenie gęstości słów klyczowych pozwala na sprawdzenie czy cały dokument stanowi na dany temat czy jest to
+jedynie wzmianka. Cecha to liczba przyjmująca wartości z zakresu $<0; 1>$.
     \begin{equation}
       F=\frac{S}{L}
     \end{equation}
@@ -135,7 +136,7 @@ gdzie:\\
 \end{description}
 
 \subsubsection{Najczęściej występujące słowo kluczowe}
-Najczęściej występujące słowo kluczowe wyrażone jako tekst odpowiadający najwyększej liczbie wystąpień danego
+Najczęściej występujące słowo kluczowe wyrażone jako tekst odpowiadający największej liczbie wystąpień danego
 słowa kluczowego w tekście. Cecha przyjmuje wartość tekstową odpowiadającą najczęściej występującemu słowu kluczowemu.
 \begin{equation}
     F= w_{max_{i}(h(w_{i}), h(w_{i}))}
@@ -184,13 +185,12 @@ gdzie:\\
 \subsection{Określanie istotności słów}
 Podczas analizy tekstu można zauważyć, że niektóre słowa są bardziej lub mniej istotne. W związku z tym zależy nam
 na eliminacji słów nieznaczących i wyodrębnieniu słów istotnych w kontekście dokumentu. Istotność słów możemy określić
-na podstawie następujących algorytmów:
-%\begin{itemize}
-%    \item podane przez użytkownika;
-%    \item wczytane w pliku;
-%    \item wygenerowane na podstawie zbioru uczączego;
-%\end{itemize}
-%Generowanie słów kluczowych odbywa się za pomocą poniżej zaprezentowanych metod.
+na podstawie następujących algorytmów opisanych poniżej.\\
+\indent Podczas generowania słów kluczowych oraz stop listy wykorzystujemy algorytm TF-IDF za pomocą którego określamy istotność
+danego słowa. Kiedy dane słowo posiada wartość większą niż "0,05" uznajemy to słowo za istotne tym samym dopisując je do
+listy słów kluczowych, jeżeli jednak dane słowo jest poniżej wartośći "0,003" uznajemy to słowo za nieistotne a następnie
+dodajemy je do stop listy. Słowa kluczowe oraz stop listę można podać bezpośrednio przez użytkownika lub wczytać z pliku.
+
 
 \subsubsection{Częstość słów (ang. Term Frequency)}
 Liczba wystąpień słowa w dokumencie w stosunku do wszystkich słów pozwala nam na określenie częstotliwości występowania
@@ -230,26 +230,6 @@ gdzie:\\
     \item $TF$ - częstość słów w danym dokumencie;
     \item $IDF$ - częstość występowania na tle innych dokuemntów;
 \end{description}
-
-\newline \newline
-{\color{blue}
-We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
-zadania (przy czym należy tu ograniczyć się wyłącznie do tego, co było
-wykorzystane) tak aby osoba, która nigdy wcześniej nie zetknęła się z tą
-tematyką, potrafiła zrozumieć dalszy opis. Część ta powinna wprowadzać
-wszystkie wykorzystywane wzory, oznaczenia itp., do których należy się
-odwoływać w dalszej części niniejszgo sprawozdania. Zamieszczony tu własny
-opis teorii (a nie skopiowany!) należy poprzeć odwołaniami bibliograficznymi
-do literatury zamieszczonej na końcu. }
-
-\section{Opis implementacji}
-{\color{blue}
-Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
-między nimi. Powinien się tu również znaleźć diagram UML  (diagram klas)
-prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
-podać, w jakim języku programowania została stworzona aplikacja. }
-
-\section{Materiały i metody}
 
 \subsection{Metryki - miara odległości}
 Wykorzystane metryki służa do określenia odległości pomiędzy elementami tego samego zbioru w naszym przypadku tym
@@ -332,6 +312,65 @@ gdzie:\\
     \item
     \item
 \end{description}
+
+\subsection{Określanie poprawności klasyfikacji}
+Poprawność sklasyfikowanych danych określa w jakim stopniu dokumenty zostały poprawnie przyporządkowane etykietom.
+Wartość poprawności będzie oscylować w przedziale $<0;1>$. Kiedy wartość będzie będzie zbliżać się do jedynki będzie
+to oznaczać, że większość dokumentów została sklasyfikowana poprawnie.
+
+\begin{equation}
+    F=\frac{P}{W}
+\end{equation}
+gdzie:\\
+\begin{description}
+    \item $P$ - liczba poprawnie sklasyfikowanych dokumentów
+    \item $W$ - liczba wszystkich klasyfikacji
+\end{description}
+
+
+
+\newline \newline
+{\color{blue}
+We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
+zadania (przy czym należy tu ograniczyć się wyłącznie do tego, co było
+wykorzystane) tak aby osoba, która nigdy wcześniej nie zetknęła się z tą
+tematyką, potrafiła zrozumieć dalszy opis. Część ta powinna wprowadzać
+wszystkie wykorzystywane wzory, oznaczenia itp., do których należy się
+odwoływać w dalszej części niniejszgo sprawozdania. Zamieszczony tu własny
+opis teorii (a nie skopiowany!) należy poprzeć odwołaniami bibliograficznymi
+do literatury zamieszczonej na końcu. }
+
+\section{Opis implementacji}
+Projekt został zaimplementowany w języku Java. W celu łatwiejszej nawigacji został podzielony na poszczególne pakiety:
+\begin{itemize}
+    \item data\_models
+    \item features
+    \item helpers
+    \item metrics
+    \item similarity
+    \item utils
+    \item gui
+\end{itemize}
+Z powyższych pakietów możemy wyszczególnić najważniejsze klasy ze względu na tematykę projektu. Podstawowym pakietem
+jest pakiet "data\_model", w którym to wczytywane są z pliku artykuły a następnie dzielone na poszczególne klasy "Article".
+Klasa "Extraction" zawiera w sobie wszystkie wykorzystane w programie cechy z podziałem każdej cechy jako jedną metodę.
+Daje to możliwość skorzystania jedynie z cech, które nas interesują. W pakiecie "metrics" zostały zaimplementowane metody
+liczenia odległości pomiędzy wektorami cech na podstawie interfejsu "IMetric", w którym to zadeklarowana została
+metoda "compare" służąca do porównywania wektorów cech. Pakiet "similarity" odpowiada za liczenie odległości w
+przpadkach kiedy cecha jest słowem. Klasa "TermFrequency" odpowiada za generowanie słów kluczowych oraz stop listy.
+Wszystkie klasy wykorzystane zostają w klasie "Classification", dokounuje się tam wszystkich operacji począwszy od podziału
+tekstów na dwa zbiory po klasyfikację tekstu do odpowiedniej etykiety.
+
+
+{\color{blue}
+Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
+między nimi. Powinien się tu również znaleźć diagram UML  (diagram klas)
+prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
+podać, w jakim języku programowania została stworzona aplikacja. }
+
+\section{Materiały i metody}
+
+
 
 
 {\color{blue}
