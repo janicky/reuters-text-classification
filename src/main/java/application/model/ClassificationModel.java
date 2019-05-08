@@ -4,7 +4,6 @@ import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
 import classification.utils.Loader;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +27,14 @@ public class ClassificationModel {
 
     public void setSelectedModel(int selectedModel) {
         this.selectedModel = selectedModel;
+    }
+
+    public IClassificationObject[] getObjects() {
+        return objects;
+    }
+
+    public void setObjects(IClassificationObject[] objects) {
+        this.objects = objects;
     }
 
     private IParser getParserBySelectedModel() throws InvalidParserException {

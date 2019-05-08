@@ -28,4 +28,7 @@ public class MainView extends JFrame {
     public void displayError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
+    public void displayInfo(String message) {
+        JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.PLAIN_MESSAGE);
+    }
 }

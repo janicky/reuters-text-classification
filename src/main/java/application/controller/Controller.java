@@ -4,6 +4,7 @@ import application.model.ClassificationModel;
 import application.model.exceptions.InvalidParserException;
 import application.view.MainView;
 import application.view.tabs.DataTab;
+import classification.data_models.IClassificationObject;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -44,6 +45,8 @@ public class Controller {
             File[] selectedFiles = chooser.getSelectedFiles();
             try {
                 model.loadObjects(selectedFiles);
+                IClassificationObject[] loaded_objects = model.getObjects();
+                view.displayInfo("Loaded objects: " + loaded_objects.length);
             } catch (InvalidParserException e) {
                 view.displayError("Invalid parser. Selected model hasn`t parser.");
             } catch (IOException e) {
