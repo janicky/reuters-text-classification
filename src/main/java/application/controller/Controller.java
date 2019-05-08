@@ -1,14 +1,14 @@
 package application.controller;
 
 import application.model.ClassificationModel;
-import application.view.View;
+import application.view.MainView;
 
 public class Controller {
 
-    private View view;
+    private MainView view;
     private ClassificationModel model;
 
-    public Controller(View view, ClassificationModel model) {
+    public Controller(MainView view, ClassificationModel model) {
         this.view = view;
         this.model = model;
     }
