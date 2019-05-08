@@ -2,5 +2,11 @@
 target
 out
 auxil
-*.vpp.bak_*
-*.vpp.lck
+documentation/*.vpp.bak_*
+documentation/*.vpp.lck
+documentation/*.aux
+documentation/*.fdb_latexmk
+documentation/*.fls
+documentation/*.log
+documentation/*.pdf
+documentation/*.synctex.gz

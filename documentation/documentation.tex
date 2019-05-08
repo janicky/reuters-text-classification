@@ -1,10 +1,16 @@
 \documentclass{classrep}
 \usepackage[utf8]{inputenc}
-\usepackage{color}
+\usepackage[dvipsnames]{color}
 \usepackage{amsmath}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage[section]{placeins}
+\usepackage{listings}
+\usepackage{xparse}
+
+\NewDocumentCommand{\codeword}{v}{%
+\texttt{\textcolor{blue}{#1}}%
+}
 
 \studycycle{Informatyka, studia niestacjonarne, I st.}
 \coursesemester{VI}
@@ -310,9 +316,7 @@ gdzie:\\
 \subsubsection{Algorytm KMP (Knutha-Morrisa-Pratta)}
 Algorytm KMP wyszukuje podany wzorzec $x$ w tekście $y$, jeżeli podany wzorzec zostaje znaleziony zwracana jest jego
 pozycja w tekście. Wyrażony jest wzorem:
-\begin{equation}
 
-\end{equation}
 gdzie:\\
 \begin{description}
     \item
@@ -334,9 +338,6 @@ gdzie:\\
     \item $W$ - liczba wszystkich klasyfikacji
 \end{description}
 
-
-
-\newline \newline
 {\color{blue}
 We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
 zadania (przy czym należy tu ograniczyć się wyłącznie do tego, co było
@@ -348,29 +349,39 @@ opis teorii (a nie skopiowany!) należy poprzeć odwołaniami bibliograficznymi
 do literatury zamieszczonej na końcu. }
 
 \section{Opis implementacji}
-Projekt został zaimplementowany w języku Java. W celu łatwiejszej nawigacji został podzielony na poszczególne pakiety:
+\subsection{Struktura projektu}
+Projekt został zrealizowany w języku Java. W celu uporządkowania projektu utworzona została następująca struktura:
 \begin{itemize}
-    \item data\_models
-    \item features
-    \item helpers
-    \item metrics
-    \item similarity
-    \item utils
-    \item gui
+    \item \textbf{data\_models} - obsługa przygotowania obiektów do klasyfikacji
+    \item \textbf{features} - ekstraktory oraz implementacja cech
+    \item \textbf{helpers} - metody pomocnicze
+    \item \textbf{metrics} - klasy realizujące miary odległości
+    \item \textbf{similarity} - klasy realizujące miary podobieństwa tekstu
+    \item \textbf{utils} - narzędzia do manipulacji danymi (stemizacja, słowa kluczowe, stoplista, zapis/odczyt, ...)
 \end{itemize}
-Z powyższych pakietów możemy wyszczególnić najważniejsze klasy ze względu na tematykę projektu. Podstawowym pakietem
-jest pakiet "data\_model", w którym to wczytywane są z pliku artykuły a następnie dzielone na poszczególne klasy "Article".
-Klasa "Extraction" zawiera w sobie wszystkie wykorzystane w programie cechy z podziałem każdej cechy jako jedną metodę.
-Daje to możliwość skorzystania jedynie z cech, które nas interesują. W pakiecie "metrics" zostały zaimplementowane metody
-liczenia odległości pomiędzy wektorami cech na podstawie interfejsu "IMetric", w którym to zadeklarowana została
-metoda "compare" służąca do porównywania wektorów cech. Pakiet "similarity" odpowiada za liczenie odległości w
-przpadkach kiedy cecha jest słowem. Klasa "TermFrequency" wykorzystywana jest podczas generowania słów kluczowych oraz stop listy.
-Wszystkie klasy wykorzystane zostają w klasie "Classification", dokounuje się tam wszystkich operacji począwszy od podziału
-tekstów na dwa zbiory po klasyfikację tekstu do odpowiedniej etykiety.
+
+\subsection{Najważniejsze składowe}
+Aby zachować niezależność od obiektów, które podlegają klasyfikacji, utworzono interfejs \codeword{IClassificationObject}.
+Interfejs gwarantuje, aby klasyfikowany obiekt posiadał metody udostępniające dane wymagane do klasyfikacji. Dodatkowo 
+stworzono interfejsy \codeword{IMetric} oraz \codeword{ISimilarity}, których implementacja pozwala na dostarczenie
+nowych metryk lub miar podobieństwa. Klasa \codeword{Extraction} zawiera ekstraktory cech, które tworzą mapę obiektów 
+\codeword{IFeature} wewnątrz klasy. Każde użycie ekstraktora powoduje dodanie cech do mapy, która staje się wektorem 
+cech danego obiektu. Klasa \codeword{Classification} dokonuje podziału dostarczonych obiektów na dwie grupy zgodnie
+z ustalonym współczynnikiem podziału oraz odpowiada za realizację wszystkich zadań - wywołuje metody realizujące
+stemizację, normalizację, ekstrakcję, generowanie słów kluczowych i ostatecznie klasyfikację.
+% Z powyższych pakietów możemy wyszczególnić najważniejsze klasy ze względu na tematykę projektu. Podstawowym pakietem
+% jest pakiet $data\_model$, w którym to wczytywane są z pliku artykuły a następnie dzielone na poszczególne klasy "Article".
+% Klasa "Extraction" zawiera w sobie wszystkie wykorzystane w programie cechy z podziałem każdej cechy jako jedną metodę.
+% Daje to możliwość skorzystania jedynie z cech, które nas interesują. W pakiecie "metrics" zostały zaimplementowane metody
+% liczenia odległości pomiędzy wektorami cech na podstawie interfejsu "IMetric", w którym to zadeklarowana została
+% metoda "compare" służąca do porównywania wektorów cech. Pakiet "similarity" odpowiada za liczenie odległości w
+% przpadkach kiedy cecha jest słowem. Klasa "TermFrequency" wykorzystywana jest podczas generowania słów kluczowych oraz stop listy.
+% Wszystkie klasy wykorzystane zostają w klasie "Classification", dokounuje się tam wszystkich operacji począwszy od podziału
+% tekstów na dwa zbiory po klasyfikację tekstu do odpowiedniej etykiety.
 
 \begin{figure}[h!]
     \centering
-    \makebox[\textwidth][c]{\includegraphics[width=18cm\textwidth]{uml.png}}%
+    \makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{uml.png}}%
     \caption{Diagram klas}
     \label{fig:uml}
 \end{figure}
