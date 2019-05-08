@@ -13,7 +13,12 @@ public class Controller {
         this.view = view;
         this.model = model;
 
+        initializeDataTab();
+    }
+
+    private void initializeDataTab() {
         DataTab dt = new DataTab();
         view.addTab("Data", dt.getMainPanel());
+        dt.setAvailableModels(model.getAvailableModels());
     }
 }

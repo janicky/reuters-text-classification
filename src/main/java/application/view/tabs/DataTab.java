@@ -11,4 +11,8 @@ public class DataTab extends JPanel {
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
+    public void setAvailableModels(final String[] models) {
+        selectedModel.setModel(new DefaultComboBoxModel(models));
+    }
 }
