@@ -3,6 +3,8 @@
 \usepackage{color}
 \usepackage{amsmath}
 \usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
 
 \studycycle{Informatyka, studia niestacjonarne, I st.}
 \coursesemester{VI}
@@ -59,7 +61,7 @@ czy określenie liczności słów kluczowych ma istotny wpływ na klasyfikację 
     F=\sum_{i=0}^{n} S(w)
 \end{equation}
 gdzie:
-\begin{equation}
+\begin{equation} \label{eq:1}
     S(w)=\left\{\begin{matrix}
                     1, & kiedy\ w = t_{i}\\
                     0, & w\ przeciwnym\ przypadku
@@ -146,7 +148,7 @@ gdzie:
     h(w)=\sum_{i=0}^{n} S(w)
 \end{equation}
 \begin{description}
-    \item $S(w)$ - według wzoru (3);
+    \item $S(w)$ - według wzoru (\ref{eq:1});
     \item $w$ - dane słowo kluczowe;
     \item $t_{i}$ - kolejne słowa występujące w tekście;
 \end{description}
@@ -361,6 +363,14 @@ przpadkach kiedy cecha jest słowem. Klasa "TermFrequency" odpowiada za generowa
 Wszystkie klasy wykorzystane zostają w klasie "Classification", dokounuje się tam wszystkich operacji począwszy od podziału
 tekstów na dwa zbiory po klasyfikację tekstu do odpowiedniej etykiety.
 
+\begin{figure}[h!]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=18cm\textwidth]{uml.png}}%
+    \caption{Diagram klas}
+    \label{fig:uml}
+\end{figure}
+
+
 
 {\color{blue}
 Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
@@ -369,9 +379,6 @@ prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
 podać, w jakim języku programowania została stworzona aplikacja. }
 
 \section{Materiały i metody}
-
-
-
 
 {\color{blue}
 W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
