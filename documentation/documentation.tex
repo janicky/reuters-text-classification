@@ -3,6 +3,8 @@
 \usepackage{color}
 \usepackage{amsmath}
 \usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
 
 \studycycle{Informatyka, studia niestacjonarne, I st.}
 \coursesemester{VI}
@@ -59,7 +61,7 @@ czy określenie liczności słów kluczowych ma istotny wpływ na klasyfikację 
     F=\sum_{i=0}^{n} S(w)
 \end{equation}
 gdzie:
-\begin{equation}
+\begin{equation} \label{eq:1}
     S(w)=\left\{\begin{matrix}
                     1, & kiedy\ w = t_{i}\\
                     0, & w\ przeciwnym\ przypadku
@@ -146,7 +148,7 @@ gdzie:
     h(w)=\sum_{i=0}^{n} S(w)
 \end{equation}
 \begin{description}
-    \item $S(w)$ - według wzoru (3);
+    \item $S(w)$ - według wzoru (\ref{eq:1});
     \item $w$ - dane słowo kluczowe;
     \item $t_{i}$ - kolejne słowa występujące w tekście;
 \end{description}
@@ -185,11 +187,7 @@ gdzie:\\
 \subsection{Określanie istotności słów}
 Podczas analizy tekstu można zauważyć, że niektóre słowa są bardziej lub mniej istotne. W związku z tym zależy nam
 na eliminacji słów nieznaczących i wyodrębnieniu słów istotnych w kontekście dokumentu. Istotność słów możemy określić
-na podstawie następujących algorytmów opisanych poniżej.\\
-\indent Podczas generowania słów kluczowych oraz stop listy wykorzystujemy algorytm TF-IDF za pomocą którego określamy istotność
-danego słowa. Kiedy dane słowo posiada wartość większą niż "0,05" uznajemy to słowo za istotne tym samym dopisując je do
-listy słów kluczowych, jeżeli jednak dane słowo jest poniżej wartośći "0,003" uznajemy to słowo za nieistotne a następnie
-dodajemy je do stop listy. Słowa kluczowe oraz stop listę można podać bezpośrednio przez użytkownika lub wczytać z pliku.
+na podstawie następujących algorytmów opisanych poniżej.
 
 
 \subsubsection{Częstość słów (ang. Term Frequency)}
@@ -230,6 +228,15 @@ gdzie:\\
     \item $TF$ - częstość słów w danym dokumencie;
     \item $IDF$ - częstość występowania na tle innych dokuemntów;
 \end{description}
+
+\subsubsection{Generowanie stop listy}
+Tworzenie stop listy opieramy na algorytmie IDF. Słowo które ma najmniejszą wartość IDF występuje najczęściej. Czyli jest
+nieistotne. Dodajemy do stoplisty jeśli dana wartość będzie poniżej określonego progu.
+
+\subsubsection{Nauka słów kluczowych}
+Do nauki słów kluczowych wykorzystujemy algorytm TF-IDF, za pomocą którego określamy istotność
+danego słowa. Kiedy dla danego słowa wartość ta jest większą od założonej, uznajemy to słowo za istotne tym samym dopisując je do
+listy słów kluczowych. Słowa kluczowe mogą zostać również określone odgórnie.
 
 \subsection{Metryki - miara odległości}
 Wykorzystane metryki służa do określenia odległości pomiędzy elementami tego samego zbioru w naszym przypadku tym
@@ -357,9 +364,17 @@ Klasa "Extraction" zawiera w sobie wszystkie wykorzystane w programie cechy z po
 Daje to możliwość skorzystania jedynie z cech, które nas interesują. W pakiecie "metrics" zostały zaimplementowane metody
 liczenia odległości pomiędzy wektorami cech na podstawie interfejsu "IMetric", w którym to zadeklarowana została
 metoda "compare" służąca do porównywania wektorów cech. Pakiet "similarity" odpowiada za liczenie odległości w
-przpadkach kiedy cecha jest słowem. Klasa "TermFrequency" odpowiada za generowanie słów kluczowych oraz stop listy.
+przpadkach kiedy cecha jest słowem. Klasa "TermFrequency" wykorzystywana jest podczas generowania słów kluczowych oraz stop listy.
 Wszystkie klasy wykorzystane zostają w klasie "Classification", dokounuje się tam wszystkich operacji począwszy od podziału
 tekstów na dwa zbiory po klasyfikację tekstu do odpowiedniej etykiety.
+
+\begin{figure}[h!]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=18cm\textwidth]{uml.png}}%
+    \caption{Diagram klas}
+    \label{fig:uml}
+\end{figure}
+
 
 
 {\color{blue}
@@ -369,9 +384,6 @@ prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
 podać, w jakim języku programowania została stworzona aplikacja. }
 
 \section{Materiały i metody}
-
-
-
 
 {\color{blue}
 W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
