@@ -12,4 +12,8 @@ public class Loader {
         File file = new File(path);
         return parser.parseFile(file);
     }
+
+    public static IClassificationObject[] loadFromFile(File file, IParser parser) throws IOException {
+        return parser.parseFile(file);
+    }
 }
