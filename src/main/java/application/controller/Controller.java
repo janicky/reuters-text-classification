@@ -14,6 +14,7 @@ import java.io.IOException;
 public class Controller {
 
     private MainView view;
+    private DataTab dataTab;
     private ClassificationModel model;
     private JFileChooser chooser;
 
@@ -25,11 +26,11 @@ public class Controller {
     }
 
     private void initializeDataTab() {
-        DataTab dt = new DataTab();
-        view.addTab("Data", dt.getMainPanel());
-        dt.setAvailableModels(model.getAvailableModels());
-        dt.addSelectedModelListener(e -> onSelectModel(e));
-        dt.addSelectFilesButtonListener(e -> onSelectFiles());
+        dataTab = new DataTab();
+        view.addTab("Data", dataTab.getMainPanel());
+        dataTab.setAvailableModels(model.getAvailableModels());
+        dataTab.addSelectedModelListener(e -> onSelectModel(e));
+        dataTab.addSelectFilesButtonListener(e -> onSelectFiles());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -46,6 +47,7 @@ public class Controller {
             try {
                 model.loadObjects(selectedFiles);
                 IClassificationObject[] loaded_objects = model.getObjects();
+                dataTab.setObjects(loaded_objects);
                 view.displayInfo("Loaded objects: " + loaded_objects.length);
             } catch (InvalidParserException e) {
                 view.displayError("Invalid parser. Selected model hasn`t parser.");

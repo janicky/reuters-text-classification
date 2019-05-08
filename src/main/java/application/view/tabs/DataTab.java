@@ -1,5 +1,7 @@
 package application.view.tabs;
 
+import classification.data_models.IClassificationObject;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
@@ -23,5 +25,13 @@ public class DataTab extends JPanel {
 
     public void addSelectFilesButtonListener(ActionListener listener) {
         selectFilesButton.addActionListener(listener);
+    }
+
+    public void setObjects(IClassificationObject[] objects) {
+        DefaultListModel list_model = new DefaultListModel();
+        for (IClassificationObject o : objects) {
+            list_model.addElement(o);
+        }
+        objectsList.setModel(list_model);
     }
 }
