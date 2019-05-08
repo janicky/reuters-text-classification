@@ -11,6 +11,9 @@ public class MainView extends JFrame {
         setTitle(title);
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 700);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+//        Center window
+        setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
     }
 }
