@@ -1,7 +1,5 @@
 package application.view;
 
-import application.view.tabs.DataTab;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,9 +15,9 @@ public class MainView extends JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //        Center window
         setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
+    }
 
-
-        DataTab dt = new DataTab();
-        mainPane.addTab("Data", dt.getMainPanel());
+    public void addTab(String title, JPanel panel) {
+        mainPane.addTab(title, panel);
     }
 }

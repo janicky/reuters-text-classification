@@ -29,4 +29,6 @@ public abstract class ClassificationObject implements IClassificationObject {
     public void setFeaturesVector(Map<String, IFeature> featuresVector) {
         this.featuresVector = featuresVector;
     }
+
+    public static final String[] availableModels = { "Article" };
 }
