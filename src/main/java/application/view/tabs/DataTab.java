@@ -3,6 +3,7 @@ package application.view.tabs;
 import classification.data_models.IClassificationObject;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
 public class DataTab extends JPanel {
@@ -10,6 +11,14 @@ public class DataTab extends JPanel {
     private JList objectsList;
     private JButton selectFilesButton;
     private JComboBox selectedModel;
+    private JTable objectsInfo;
+    private DefaultTableModel tableModel;
+
+    public DataTab() {
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Value");
+    }
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -33,5 +42,19 @@ public class DataTab extends JPanel {
             list_model.addElement(o);
         }
         objectsList.setModel(list_model);
+    }
+
+    public void updateInfo(Object[][] info) {
+        tableModel.getDataVector().removeAllElements();
+        for (Object[] row : info) {
+            tableModel.addRow(row);
+        }
+        System.out.println("Test" + info.length);
+        objectsInfo.setModel(tableModel);
+        tableModel.fireTableDataChanged();
+    }
+
+    private void createUIComponents() {
+        objectsInfo = new JTable(tableModel);
     }
 }

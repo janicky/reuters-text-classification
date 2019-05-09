@@ -60,4 +60,10 @@ public class ClassificationModel {
 
         objects = objectsList.toArray(new IClassificationObject[objectsList.size()]);
     }
+
+    public Object[][] getObjectsInfo() {
+        return new Object[][] {
+                { "Objects count", objects.length }
+        };
+    }
 }

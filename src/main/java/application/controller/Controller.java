@@ -48,7 +48,7 @@ public class Controller {
                 model.loadObjects(selectedFiles);
                 IClassificationObject[] loaded_objects = model.getObjects();
                 dataTab.setObjects(loaded_objects);
-                view.displayInfo("Loaded objects: " + loaded_objects.length);
+                dataTab.updateInfo(model.getObjectsInfo());
             } catch (InvalidParserException e) {
                 view.displayError("Invalid parser. Selected model hasn`t parser.");
             } catch (IOException e) {
