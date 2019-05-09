@@ -58,7 +58,6 @@ public class DataTab extends JPanel {
         for (Object[] row : info) {
             tableModel.addRow(row);
         }
-        System.out.println("Test" + info.length);
         objectsInfo.setModel(tableModel);
         tableModel.fireTableDataChanged();
     }

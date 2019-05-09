@@ -162,6 +162,7 @@
                       <component id="6f5b1" class="javax.swing.JList" binding="labelsList">
                         <constraints/>
                         <properties>
+                          <enabled value="false"/>
                           <model/>
                         </properties>
                       </component>
@@ -211,7 +212,9 @@
                 <children>
                   <component id="ad579" class="javax.swing.JList" binding="objectsList">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <enabled value="false"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

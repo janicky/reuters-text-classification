@@ -9,9 +9,12 @@ import application.view.tabs.SetsTab;
 import classification.data_models.IClassificationObject;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Controller {
 
@@ -42,6 +45,7 @@ public class Controller {
     private void initializeFilterTab() {
         filterTab = new FilterTab();
         view.addTab("Filter objects", filterTab.getMainPanel());
+        filterTab.addLabelsListSelectionListener(e -> onLabelsSelect(e));
     }
 
     private void initializeSetsTab() {
@@ -66,11 +70,22 @@ public class Controller {
                 dataTab.setObjects(loaded_objects);
                 dataTab.setLabels(model.getLabels());
                 dataTab.updateInfo(model.getObjectsInfo());
+                filterTab.setLabels(model.getLabels());
+                filterTab.setObjects(loaded_objects);
             } catch (InvalidParserException e) {
                 view.displayError("Invalid parser. Selected model hasn`t parser.");
             } catch (IOException e) {
                 view.displayError("File loading error.");
             }
+        }
+    }
+
+    private void onLabelsSelect(ListSelectionEvent event) {
+        JList source = (JList) event.getSource();
+        if (source.getValueIsAdjusting()) {
+            int[] selectedIndices = source.getSelectedIndices();
+            String[] selectedLabels = model.getLabels(selectedIndices);
+            filterTab.setSelectedLabels(selectedLabels);
         }
     }
 }

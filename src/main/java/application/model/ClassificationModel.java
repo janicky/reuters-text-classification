@@ -100,4 +100,13 @@ public class ClassificationModel {
     public String[] getLabels() {
         return labels;
     }
+
+    public String[] getLabels(int[] indices) {
+        String[] output = new String[indices.length];
+        int i = 0;
+        for (int index : indices) {
+            output[i++] = labels[index];
+        }
+        return output;
+    }
 }
