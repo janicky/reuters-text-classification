@@ -55,6 +55,7 @@ public class ClassificationModel {
 
     public void setFilteredObjects(IClassificationObject[] filteredObjects) {
         this.filteredObjects = filteredObjects;
+        stopWords = new StopWords(filteredObjects);
     }
 
     private IParser getParserBySelectedModel() throws InvalidParserException {
@@ -80,7 +81,6 @@ public class ClassificationModel {
 
         objects = objectsList.toArray(new IClassificationObject[objectsList.size()]);
         loadLabels();
-        stopWords = new StopWords(objects);
     }
 
     private void loadLabels() {

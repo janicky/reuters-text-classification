@@ -27,6 +27,9 @@ public class StopWordsTab {
     public void addLoadFromFileButtonListener(ActionListener listener) {
         loadFromFileButton.addActionListener(listener);
     }
+    public void addGenerateButtonListener(ActionListener listener) {
+        generateButton.addActionListener(listener);
+    }
 
     public void setStopWords(String[] stopWords) {
         DefaultListModel listModel = new DefaultListModel();
