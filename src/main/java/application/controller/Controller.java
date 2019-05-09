@@ -7,6 +7,7 @@ import application.view.tabs.DataTab;
 import application.view.tabs.FilterTab;
 import application.view.tabs.SetsTab;
 import classification.data_models.IClassificationObject;
+import classification.utils.Operations;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -49,6 +50,7 @@ public class Controller {
         filterTab.setSelectedLabels(model.getDefaultLabels());
         model.setSelectedLabels(model.getDefaultLabels());
         filterTab.addFilterOptionSelectListener(e -> onFilterOptionSelect(e));
+        filterTab.addFilterObjectsButtonListener(e -> onFilterObjects());
     }
 
     private void initializeSetsTab() {
@@ -74,7 +76,18 @@ public class Controller {
                 dataTab.setLabels(model.getLabels());
                 dataTab.updateInfo(model.getObjectsInfo());
                 filterTab.setLabels(model.getLabels());
-                filterTab.setObjects(loaded_objects);
+
+                if (model.getSelectedLabels() != null && model.getSelectedLabels().length > 0) {
+                    String[] labels = model.getSelectedLabels();
+                    int mode = model.getFilterOption();
+                    IClassificationObject[] filtered = Operations.filterObjects(loaded_objects, labels, mode);
+                    filterTab.setObjects(filtered);
+                    model.setFilteredObjects(filtered);
+                } else {
+                    filterTab.setObjects(loaded_objects);
+                    model.setFilteredObjects(loaded_objects);
+                }
+
             } catch (InvalidParserException e) {
                 view.displayError("Invalid parser. Selected model hasn`t parser.");
             } catch (IOException e) {
@@ -102,6 +115,25 @@ public class Controller {
             model.setFilterOption(1);
         } else {
             model.setFilterOption(2);
+        }
+    }
+
+    private void onFilterObjects() {
+        IClassificationObject[] objects = model.getObjects();
+        String[] labels = model.getSelectedLabels();
+        int mode = model.getFilterOption();
+        try {
+            if (objects == null || objects.length == 0) {
+                throw new Exception("No objects were found.");
+            }
+            if (labels == null || labels.length == 0) {
+                throw new Exception("No labels selected.");
+            }
+            IClassificationObject[] filtered = Operations.filterObjects(objects, labels, mode);
+            model.setFilteredObjects(filtered);
+            filterTab.setObjects(filtered);
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
         }
     }
 }

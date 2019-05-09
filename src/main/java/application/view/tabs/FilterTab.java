@@ -15,6 +15,7 @@ public class FilterTab {
     private JRadioButton matchOnlyOneRadioButton;
     private JButton filterObjectsButton;
     private JList selectedLabelsList;
+    private JLabel objectsCount;
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -50,5 +51,9 @@ public class FilterTab {
         matchAnyRadioButton.addActionListener(listener);
         matchOnlyRadioButton.addActionListener(listener);
         matchOnlyOneRadioButton.addActionListener(listener);
+    }
+
+    public void addFilterObjectsButtonListener(ActionListener listener) {
+        filterObjectsButton.addActionListener(listener);
     }
 }
