@@ -33,12 +33,12 @@ class ClassificationTest {
         assertEquals(1000, objects.length);
     }
 
-    @Test
-    void objectsRatio() {
-        classification.splitSets(0.7);
-        assertEquals(700, classification.getLearningSet().length);
-        assertEquals(300, classification.getTestingSet().length);
-    }
+//    @Test
+//    void objectsRatio() {
+//        classification.splitSets(0.7);
+//        assertEquals(700, classification.getLearningSet().length);
+//        assertEquals(300, classification.getTestingSet().length);
+//    }
 
     @Test
     void getAccuracy() {
@@ -60,7 +60,7 @@ class ClassificationTest {
         System.out.println("Filtering objects... " + Arrays.toString(labels));
         classification.filterObjects(labels, 2);
         System.out.println("Splitting objects...");
-        classification.splitSets(0.6);
+//        classification.splitSets(0.6);
         System.out.println("Loading stopwords... ");
         classification.loadStopWords("data/stopwords.txt");
         System.out.println("Preparing data...");

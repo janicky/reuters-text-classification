@@ -35,8 +35,7 @@ public class Classification {
     }
 
 //    Split data sets
-    public void splitSets(double splitRatio) {
-        splitSets(filteredObjects, splitRatio);
+    public void initKeywords() {
         keywords = new Keywords(learningSet);
     }
 
@@ -64,21 +63,6 @@ public class Classification {
                 method.invoke(extraction);
             }
             object.setFeaturesVector(extraction.getFeatures());
-        }
-    }
-
-    private void splitSets(IClassificationObject[] objects, double splitRatio) {
-        int learningSetSize = (int) Math.ceil(objects.length * splitRatio);
-        int testingSetSize = objects.length - learningSetSize;
-
-        learningSet = new IClassificationObject[learningSetSize];
-        testingSet = new IClassificationObject[testingSetSize];
-
-        for (int i = 0; i < learningSetSize; i++) {
-            learningSet[i] = objects[i];
-        }
-        for (int i = 0; i < testingSetSize; i++) {
-            testingSet[i] = objects[learningSetSize + i];
         }
     }
 
@@ -140,5 +124,13 @@ public class Classification {
 
     public void setLabels(String[] labels) {
         this.labels = labels;
+    }
+
+    public void setLearningSet(IClassificationObject[] learningSet) {
+        this.learningSet = learningSet;
+    }
+
+    public void setTestingSet(IClassificationObject[] testingSet) {
+        this.testingSet = testingSet;
     }
 }
