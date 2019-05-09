@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ClassificationModel {
@@ -65,5 +66,22 @@ public class ClassificationModel {
         return new Object[][] {
                 { "Objects count", objects.length }
         };
+    }
+
+    public String[] getLabels() {
+        HashMap<String, Integer> labels = new HashMap<>();
+        for (IClassificationObject object : objects) {
+            for (String label : object.getLabels()) {
+                labels.put(label, 1);
+            }
+        }
+
+        String[] output = new String[labels.size()];
+        int i = 0;
+        for (String key : labels.keySet()) {
+            output[i++] = key;
+        }
+
+        return output;
     }
 }
