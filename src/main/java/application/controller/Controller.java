@@ -6,18 +6,16 @@ import application.view.MainView;
 import application.view.tabs.DataTab;
 import application.view.tabs.FilterTab;
 import application.view.tabs.SetsTab;
+import application.view.tabs.StopWordsTab;
 import classification.data_models.IClassificationObject;
 import classification.utils.Operations;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Controller {
 
@@ -25,6 +23,7 @@ public class Controller {
     private DataTab dataTab;
     private FilterTab filterTab;
     private SetsTab setsTab;
+    private StopWordsTab stopWordsTab;
     private ClassificationModel model;
     private JFileChooser chooser;
 
@@ -35,6 +34,7 @@ public class Controller {
         initializeDataTab();
         initializeFilterTab();
         initializeSetsTab();
+        initializeStopWordsTab();
     }
 
     private void initializeDataTab() {
@@ -62,6 +62,11 @@ public class Controller {
         setsTab.setTestingPercent(model.getTestingRatio());
         setsTab.addSplitRatioSliderListener(e -> onSplitRatioChange(e));
         setsTab.addSplitDataButtonListener(e -> onSplitDataButtonClick());
+    }
+
+    private void initializeStopWordsTab() {
+        stopWordsTab = new StopWordsTab();
+        view.addTab("Stop words", stopWordsTab.getMainPanel());
     }
 
     private void onSelectModel(ActionEvent event) {
