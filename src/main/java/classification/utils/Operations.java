@@ -151,4 +151,23 @@ public class Operations {
         }
         return true;
     }
+
+    public static IClassificationObject[][] splitSets(IClassificationObject[] objects, double splitRatio) {
+        IClassificationObject[][] output = new IClassificationObject[2][];
+
+        int learningSetSize = (int) Math.ceil(objects.length * splitRatio);
+        int testingSetSize = objects.length - learningSetSize;
+
+        output[0] = new IClassificationObject[learningSetSize];
+        output[1] = new IClassificationObject[testingSetSize];
+
+        for (int i = 0; i < learningSetSize; i++) {
+            output[0][i] = objects[i];
+        }
+        for (int i = 0; i < testingSetSize; i++) {
+            output[1][i] = objects[learningSetSize + i];
+        }
+
+        return output;
+    }
 }
