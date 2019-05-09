@@ -64,7 +64,8 @@ public class ClassificationModel {
 
     public Object[][] getObjectsInfo() {
         return new Object[][] {
-                { "Objects count", objects.length }
+                { "Objects count", objects.length },
+                { "Labels", getLabels().length }
         };
     }
 
