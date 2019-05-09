@@ -86,6 +86,7 @@ public class Controller {
             int[] selectedIndices = source.getSelectedIndices();
             String[] selectedLabels = model.getLabels(selectedIndices);
             filterTab.setSelectedLabels(selectedLabels);
+            model.setLabels(selectedLabels);
         }
     }
 }

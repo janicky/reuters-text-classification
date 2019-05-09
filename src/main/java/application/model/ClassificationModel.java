@@ -97,6 +97,10 @@ public class ClassificationModel {
         };
     }
 
+    public void setLabels(String[] labels) {
+        this.labels = labels;
+    }
+
     public String[] getLabels() {
         return labels;
     }
