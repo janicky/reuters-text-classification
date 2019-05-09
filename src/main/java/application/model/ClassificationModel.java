@@ -25,6 +25,7 @@ public class ClassificationModel {
     private String[] selectedLabels;
     private int filterOption = 2;
     private double splitRatio = 0.6;
+    private double significance = 0.5;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -158,5 +159,13 @@ public class ClassificationModel {
 
     public void setTestingObjects(IClassificationObject[] testingObjects) {
         this.testingObjects = testingObjects;
+    }
+
+    public double getSignificance() {
+        return significance;
+    }
+
+    public void setSignificance(double significance) {
+        this.significance = significance;
     }
 }

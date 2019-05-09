@@ -67,6 +67,7 @@ public class Controller {
     private void initializeStopWordsTab() {
         stopWordsTab = new StopWordsTab();
         view.addTab("Stop words", stopWordsTab.getMainPanel());
+        stopWordsTab.addSignificanceSpinnerListener(e -> onSignificanceChange(e));
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -171,5 +172,10 @@ public class Controller {
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
+    }
+
+    private void onSignificanceChange(ChangeEvent event) {
+        JSpinner source = (JSpinner) event.getSource();
+        model.setSignificance((double) source.getValue());
     }
 }
