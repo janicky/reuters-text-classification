@@ -4,6 +4,7 @@ import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
 import classification.utils.Loader;
+import classification.utils.StopWords;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class ClassificationModel {
     private IClassificationObject[] filteredObjects;
     private IClassificationObject[] learningObjects;
     private IClassificationObject[] testingObjects;
+    private StopWords stopWords;
     private String[] labels;
     private final String[] defaultLabels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
     private String[] selectedLabels;
@@ -78,6 +80,7 @@ public class ClassificationModel {
 
         objects = objectsList.toArray(new IClassificationObject[objectsList.size()]);
         loadLabels();
+        stopWords = new StopWords(objects);
     }
 
     private void loadLabels() {
@@ -167,5 +170,9 @@ public class ClassificationModel {
 
     public void setSignificance(double significance) {
         this.significance = significance;
+    }
+
+    public StopWords getStopWords() {
+        return stopWords;
     }
 }

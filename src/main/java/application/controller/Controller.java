@@ -9,12 +9,14 @@ import application.view.tabs.SetsTab;
 import application.view.tabs.StopWordsTab;
 import classification.data_models.IClassificationObject;
 import classification.utils.Operations;
+import classification.utils.StopWords;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Controller {
@@ -68,6 +70,7 @@ public class Controller {
         stopWordsTab = new StopWordsTab();
         view.addTab("Stop words", stopWordsTab.getMainPanel());
         stopWordsTab.addSignificanceSpinnerListener(e -> onSignificanceChange(e));
+        stopWordsTab.addLoadFromFileButtonListener(e -> onStopWordsLoadFromFile());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -177,5 +180,26 @@ public class Controller {
     private void onSignificanceChange(ChangeEvent event) {
         JSpinner source = (JSpinner) event.getSource();
         model.setSignificance((double) source.getValue());
+    }
+
+    private void onStopWordsLoadFromFile() {
+        chooser = new JFileChooser();
+
+        StopWords stopWords = model.getStopWords();
+        if (stopWords == null) {
+            view.displayError("First load objects.");
+            return;
+        }
+        int decision = chooser.showOpenDialog(view.getMainPanel());
+        if (decision == JFileChooser.APPROVE_OPTION) {
+            String selectedFile = chooser.getSelectedFile().getPath();
+            try {
+                stopWords.loadFromFile(selectedFile);
+                stopWordsTab.setStopWords(stopWords.getStopWords());
+                stopWords.removeStopWords();
+            } catch (FileNotFoundException e) {
+                view.displayError("Couldn't load stop words from file.");
+            }
+        }
     }
 }
