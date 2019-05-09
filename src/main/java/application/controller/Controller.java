@@ -4,6 +4,7 @@ import application.model.ClassificationModel;
 import application.model.exceptions.InvalidParserException;
 import application.view.MainView;
 import application.view.tabs.DataTab;
+import application.view.tabs.FilterTab;
 import application.view.tabs.SetsTab;
 import classification.data_models.IClassificationObject;
 
@@ -16,6 +17,7 @@ public class Controller {
 
     private MainView view;
     private DataTab dataTab;
+    private FilterTab filterTab;
     private SetsTab setsTab;
     private ClassificationModel model;
     private JFileChooser chooser;
@@ -25,20 +27,26 @@ public class Controller {
         this.model = model;
 
         initializeDataTab();
+        initializeFilterTab();
         initializeSetsTab();
     }
 
     private void initializeDataTab() {
         dataTab = new DataTab();
-        view.addTab("Data", dataTab.getMainPanel());
+        view.addTab("Load data", dataTab.getMainPanel());
         dataTab.setAvailableModels(model.getAvailableModels());
         dataTab.addSelectedModelListener(e -> onSelectModel(e));
         dataTab.addSelectFilesButtonListener(e -> onSelectFiles());
     }
 
+    private void initializeFilterTab() {
+        filterTab = new FilterTab();
+        view.addTab("Filter objects", filterTab.getMainPanel());
+    }
+
     private void initializeSetsTab() {
         setsTab = new SetsTab();
-        view.addTab("Sets", setsTab.getMainPanel());
+        view.addTab("Create sets", setsTab.getMainPanel());
     }
 
     private void onSelectModel(ActionEvent event) {
