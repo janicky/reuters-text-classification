@@ -41,6 +41,7 @@ public class FilterTab {
             listModel.addElement(object);
         }
         objectsList.setModel(listModel);
+        objectsCount.setText(Integer.toString(objects.length));
     }
 
     public void addLabelsListSelectionListener(ListSelectionListener listener) {

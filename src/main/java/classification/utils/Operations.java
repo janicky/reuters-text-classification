@@ -118,7 +118,7 @@ public class Operations {
         List<IClassificationObject> filtered = new ArrayList<>();
         for (IClassificationObject object : objects) {
             String[] object_labels = object.getLabels();
-            boolean match = matchLabels(labels, object_labels, 2);
+            boolean match = matchLabels(labels, object_labels, mode);
             if (match) {
                 filtered.add(object);
             }

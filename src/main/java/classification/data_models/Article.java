@@ -1,4 +1,7 @@
 package classification.data_models;
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.helper.StringUtil;
+
 import java.util.Arrays;
 
 public class Article extends ClassificationObject {
@@ -33,7 +36,7 @@ public class Article extends ClassificationObject {
         sb.append(" " + Arrays.toString(places));
 //        sb.append("Body: " + body).append('\n');
 
-        return sb.toString();
+        return StringUtils.abbreviate(sb.toString(), 60);
     }
 
 //    Interface implementation
