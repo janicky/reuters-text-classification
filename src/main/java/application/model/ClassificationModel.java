@@ -17,6 +17,7 @@ public class ClassificationModel {
     private final String[] availableModels = { "Article" };
     private int selectedModel = 0;
     private IClassificationObject[] objects;
+    private IClassificationObject[] filteredObjects;
     private String[] labels;
 
     public String[] getAvailableModels() {
@@ -37,6 +38,14 @@ public class ClassificationModel {
 
     public void setObjects(IClassificationObject[] objects) {
         this.objects = objects;
+    }
+
+    public IClassificationObject[] getFilteredObjects() {
+        return filteredObjects;
+    }
+
+    public void setFilteredObjects(IClassificationObject[] filteredObjects) {
+        this.filteredObjects = filteredObjects;
     }
 
     private IParser getParserBySelectedModel() throws InvalidParserException {
