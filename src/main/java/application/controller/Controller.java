@@ -10,6 +10,8 @@ import classification.data_models.IClassificationObject;
 import classification.utils.Operations;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
@@ -58,6 +60,7 @@ public class Controller {
         view.addTab("Create sets", setsTab.getMainPanel());
         setsTab.setLearningPercent(model.getLearningRatio());
         setsTab.setTestingPercent(model.getTestingRatio());
+        setsTab.addSplitRatioSliderListener(e -> onSplitRatioChange(e));
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -137,5 +140,13 @@ public class Controller {
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
+    }
+
+    private void onSplitRatioChange(ChangeEvent event) {
+        JSlider slider = (JSlider) event.getSource();
+        int value = slider.getValue();
+        model.setSplitRatio(value / 100.0);
+        setsTab.setLearningPercent(model.getLearningRatio());
+        setsTab.setTestingPercent(model.getTestingRatio());
     }
 }

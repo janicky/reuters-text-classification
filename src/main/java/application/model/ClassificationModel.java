@@ -135,11 +135,19 @@ public class ClassificationModel {
         this.filterOption = filterOption;
     }
 
-    public double getLearningRatio() {
+    public double getSplitRatio() {
         return splitRatio;
     }
 
-    public double getTestingRatio() {
-        return 1 - splitRatio;
+    public void setSplitRatio(double splitRatio) {
+        this.splitRatio = splitRatio;
+    }
+
+    public int getLearningRatio() {
+        return (int)(splitRatio * 100);
+    }
+
+    public int getTestingRatio() {
+        return (int)((1 - splitRatio) * 100);
     }
 }
