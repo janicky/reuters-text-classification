@@ -20,6 +20,7 @@ public class ClassificationModel {
     private IClassificationObject[] objects;
     private IClassificationObject[] filteredObjects;
     private String[] labels;
+    private final String[] defaultLabels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
     private String[] selectedLabels;
 
     public String[] getAvailableModels() {
@@ -118,5 +119,9 @@ public class ClassificationModel {
 
     public void setSelectedLabels(String[] selectedLabels) {
         this.selectedLabels = selectedLabels;
+    }
+
+    public String[] getDefaultLabels() {
+        return defaultLabels;
     }
 }

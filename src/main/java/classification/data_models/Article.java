@@ -28,10 +28,10 @@ public class Article extends ClassificationObject {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("--------------\n");
-        sb.append("Title: " + title).append('\n');
-        sb.append("Places: " + Arrays.toString(places)).append('\n');
-        sb.append("Body: " + body).append('\n');
+//        sb.append("--------------\n");
+        sb.append("Title: " + title);
+        sb.append(" " + Arrays.toString(places));
+//        sb.append("Body: " + body).append('\n');
 
         return sb.toString();
     }

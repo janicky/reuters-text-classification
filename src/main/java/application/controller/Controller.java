@@ -46,6 +46,8 @@ public class Controller {
         filterTab = new FilterTab();
         view.addTab("Filter objects", filterTab.getMainPanel());
         filterTab.addLabelsListSelectionListener(e -> onLabelsSelect(e));
+        filterTab.setSelectedLabels(model.getDefaultLabels());
+        model.setSelectedLabels(model.getDefaultLabels());
     }
 
     private void initializeSetsTab() {
