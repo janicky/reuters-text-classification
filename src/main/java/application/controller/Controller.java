@@ -4,6 +4,7 @@ import application.model.ClassificationModel;
 import application.model.exceptions.InvalidParserException;
 import application.view.MainView;
 import application.view.tabs.DataTab;
+import application.view.tabs.SetsTab;
 import classification.data_models.IClassificationObject;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class Controller {
 
     private MainView view;
     private DataTab dataTab;
+    private SetsTab setsTab;
     private ClassificationModel model;
     private JFileChooser chooser;
 
@@ -23,6 +25,7 @@ public class Controller {
         this.model = model;
 
         initializeDataTab();
+        initializeSetsTab();
     }
 
     private void initializeDataTab() {
@@ -31,6 +34,11 @@ public class Controller {
         dataTab.setAvailableModels(model.getAvailableModels());
         dataTab.addSelectedModelListener(e -> onSelectModel(e));
         dataTab.addSelectFilesButtonListener(e -> onSelectFiles());
+    }
+
+    private void initializeSetsTab() {
+        setsTab = new SetsTab();
+        view.addTab("Sets", setsTab.getMainPanel());
     }
 
     private void onSelectModel(ActionEvent event) {
