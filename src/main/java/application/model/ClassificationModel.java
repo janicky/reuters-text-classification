@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class ClassificationModel {
     private IClassificationObject[] objects;
     private IClassificationObject[] filteredObjects;
     private String[] labels;
+    private String[] selectedLabels;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -97,10 +99,6 @@ public class ClassificationModel {
         };
     }
 
-    public void setLabels(String[] labels) {
-        this.labels = labels;
-    }
-
     public String[] getLabels() {
         return labels;
     }
@@ -112,5 +110,13 @@ public class ClassificationModel {
             output[i++] = labels[index];
         }
         return output;
+    }
+
+    public String[] getSelectedLabels() {
+        return selectedLabels;
+    }
+
+    public void setSelectedLabels(String[] selectedLabels) {
+        this.selectedLabels = selectedLabels;
     }
 }
