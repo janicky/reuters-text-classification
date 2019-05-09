@@ -12,6 +12,7 @@ public class DataTab extends JPanel {
     private JButton selectFilesButton;
     private JComboBox selectedModel;
     private JTable objectsInfo;
+    private JList labelsList;
     private DefaultTableModel tableModel;
 
     public DataTab() {
@@ -37,11 +38,19 @@ public class DataTab extends JPanel {
     }
 
     public void setObjects(IClassificationObject[] objects) {
-        DefaultListModel list_model = new DefaultListModel();
+        DefaultListModel listModel = new DefaultListModel();
         for (IClassificationObject o : objects) {
-            list_model.addElement(o);
+            listModel.addElement(o);
         }
-        objectsList.setModel(list_model);
+        objectsList.setModel(listModel);
+    }
+
+    public void setLabels(String[] labels) {
+        DefaultListModel listModel = new DefaultListModel();
+        for (String label : labels) {
+            listModel.addElement(label);
+        }
+        labelsList.setModel(listModel);
     }
 
     public void updateInfo(Object[][] info) {

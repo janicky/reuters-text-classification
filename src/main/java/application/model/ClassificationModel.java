@@ -17,6 +17,7 @@ public class ClassificationModel {
     private final String[] availableModels = { "Article" };
     private int selectedModel = 0;
     private IClassificationObject[] objects;
+    private String[] labels;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -60,16 +61,10 @@ public class ClassificationModel {
         }
 
         objects = objectsList.toArray(new IClassificationObject[objectsList.size()]);
+        loadLabels();
     }
 
-    public Object[][] getObjectsInfo() {
-        return new Object[][] {
-                { "Objects count", objects.length },
-                { "Labels", getLabels().length }
-        };
-    }
-
-    public String[] getLabels() {
+    private void loadLabels() {
         HashMap<String, Integer> labels = new HashMap<>();
         for (IClassificationObject object : objects) {
             for (String label : object.getLabels()) {
@@ -83,6 +78,17 @@ public class ClassificationModel {
             output[i++] = key;
         }
 
-        return output;
+        this.labels = output;
+    }
+
+    public Object[][] getObjectsInfo() {
+        return new Object[][] {
+                { "Objects count", objects.length },
+                { "Labels", getLabels().length }
+        };
+    }
+
+    public String[] getLabels() {
+        return labels;
     }
 }
