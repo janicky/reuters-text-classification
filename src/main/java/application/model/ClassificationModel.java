@@ -22,6 +22,7 @@ public class ClassificationModel {
     private String[] labels;
     private final String[] defaultLabels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
     private String[] selectedLabels;
+    private int filterOption = 2;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -123,5 +124,13 @@ public class ClassificationModel {
 
     public String[] getDefaultLabels() {
         return defaultLabels;
+    }
+
+    public int getFilterOption() {
+        return filterOption;
+    }
+
+    public void setFilterOption(int filterOption) {
+        this.filterOption = filterOption;
     }
 }

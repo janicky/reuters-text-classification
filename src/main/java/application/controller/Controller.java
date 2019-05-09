@@ -48,6 +48,7 @@ public class Controller {
         filterTab.addLabelsListSelectionListener(e -> onLabelsSelect(e));
         filterTab.setSelectedLabels(model.getDefaultLabels());
         model.setSelectedLabels(model.getDefaultLabels());
+        filterTab.addFilterOptionSelectListener(e -> onFilterOptionSelect(e));
     }
 
     private void initializeSetsTab() {
@@ -89,6 +90,18 @@ public class Controller {
             String[] selectedLabels = model.getLabels(selectedIndices);
             filterTab.setSelectedLabels(selectedLabels);
             model.setSelectedLabels(selectedLabels);
+        }
+    }
+
+    private void onFilterOptionSelect(ActionEvent event) {
+        JRadioButton radioButton = (JRadioButton) event.getSource();
+        String name = radioButton.getActionCommand();
+        if (name.equals("Match any")) {
+            model.setFilterOption(0);
+        } else if (name.equals("Match only")) {
+            model.setFilterOption(1);
+        } else {
+            model.setFilterOption(2);
         }
     }
 }

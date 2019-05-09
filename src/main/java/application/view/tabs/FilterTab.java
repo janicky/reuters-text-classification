@@ -4,6 +4,7 @@ import classification.data_models.IClassificationObject;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionListener;
 
 public class FilterTab {
     private JPanel mainPanel;
@@ -43,5 +44,11 @@ public class FilterTab {
 
     public void addLabelsListSelectionListener(ListSelectionListener listener) {
         labelsList.addListSelectionListener(listener);
+    }
+
+    public void addFilterOptionSelectListener(ActionListener listener) {
+        matchAnyRadioButton.addActionListener(listener);
+        matchOnlyRadioButton.addActionListener(listener);
+        matchOnlyOneRadioButton.addActionListener(listener);
     }
 }
