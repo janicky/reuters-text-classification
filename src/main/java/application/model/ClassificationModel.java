@@ -23,6 +23,7 @@ public class ClassificationModel {
     private final String[] defaultLabels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
     private String[] selectedLabels;
     private int filterOption = 2;
+    private double splitRatio = 0.6;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -132,5 +133,13 @@ public class ClassificationModel {
 
     public void setFilterOption(int filterOption) {
         this.filterOption = filterOption;
+    }
+
+    public double getLearningRatio() {
+        return splitRatio;
+    }
+
+    public double getTestingRatio() {
+        return 1 - splitRatio;
     }
 }

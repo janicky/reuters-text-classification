@@ -56,6 +56,8 @@ public class Controller {
     private void initializeSetsTab() {
         setsTab = new SetsTab();
         view.addTab("Create sets", setsTab.getMainPanel());
+        setsTab.setLearningPercent(model.getLearningRatio());
+        setsTab.setTestingPercent(model.getTestingRatio());
     }
 
     private void onSelectModel(ActionEvent event) {
