@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +18,8 @@ public class ClassificationModel {
     private int selectedModel = 0;
     private IClassificationObject[] objects;
     private IClassificationObject[] filteredObjects;
+    private IClassificationObject[] learningObjects;
+    private IClassificationObject[] testingObjects;
     private String[] labels;
     private final String[] defaultLabels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
     private String[] selectedLabels;
@@ -149,5 +150,13 @@ public class ClassificationModel {
 
     public int getTestingRatio() {
         return (int)((1 - splitRatio) * 100);
+    }
+
+    public void setLearningObjects(IClassificationObject[] learningObjects) {
+        this.learningObjects = learningObjects;
+    }
+
+    public void setTestingObjects(IClassificationObject[] testingObjects) {
+        this.testingObjects = testingObjects;
     }
 }

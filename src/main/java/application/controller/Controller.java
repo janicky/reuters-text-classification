@@ -61,6 +61,7 @@ public class Controller {
         setsTab.setLearningPercent(model.getLearningRatio());
         setsTab.setTestingPercent(model.getTestingRatio());
         setsTab.addSplitRatioSliderListener(e -> onSplitRatioChange(e));
+        setsTab.addSplitDataButtonListener(e -> onSplitDataButtonClick());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -148,5 +149,22 @@ public class Controller {
         model.setSplitRatio(value / 100.0);
         setsTab.setLearningPercent(model.getLearningRatio());
         setsTab.setTestingPercent(model.getTestingRatio());
+    }
+
+    private void onSplitDataButtonClick() {
+        try {
+            IClassificationObject[] objects = model.getFilteredObjects();
+            if (objects == null || objects.length == 0) {
+                throw new Exception("No filtered objects were found.");
+            }
+            double splitRatio = model.getSplitRatio();
+            IClassificationObject[][] sets = Operations.splitSets(objects, splitRatio);
+            model.setLearningObjects(sets[0]);
+            model.setTestingObjects(sets[1]);
+            setsTab.setLearningObjects(sets[0]);
+            setsTab.setTestingObjects(sets[1]);
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
+        }
     }
 }
