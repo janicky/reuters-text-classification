@@ -3,6 +3,7 @@ package application.view.tabs;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 
 public class ClassificationTab {
@@ -16,7 +17,7 @@ public class ClassificationTab {
     private JCheckBox testingSetCheckBox;
     private JCheckBox keywordsCheckBox;
     private JList extractorsList;
-    private JCheckBox extractorsCheckButton;
+    private JCheckBox extractorsCheckBox;
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -48,6 +49,9 @@ public class ClassificationTab {
     public void setKeywordsCheckBoxSelected(boolean enabled) {
         keywordsCheckBox.setSelected(enabled);
     }
+    public void setExtractorsCheckBoxSelected(boolean enabled) {
+        extractorsCheckBox.setSelected(enabled);
+    }
 
     public void addMetricComboBoxListener(ActionListener listener) {
         metricComboBox.addActionListener(listener);
@@ -71,5 +75,9 @@ public class ClassificationTab {
             listModel.addElement(extractor);
         }
         extractorsList.setModel(listModel);
+    }
+
+    public void addExtractorsListListener(ListSelectionListener listener) {
+        extractorsList.addListSelectionListener(listener);
     }
 }

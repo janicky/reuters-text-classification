@@ -56,6 +56,7 @@ public class ClassificationModel {
     private IMetric metric = new Euclidean();
     private ISimilarityMeter similarityMeter = new NGram(3);
     private int k = 5;
+    private String[] extractors;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -307,5 +308,13 @@ public class ClassificationModel {
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    public String[] getExtractors() {
+        return extractors;
+    }
+
+    public void setExtractors(String[] extractors) {
+        this.extractors = extractors;
     }
 }

@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
@@ -97,6 +99,7 @@ public class Controller {
         classificationTab.addSimilarityComboBoxListener(e -> onSimilarityChange(e));
         classificationTab.addKSliderListener(e -> onKParameterChange(e));
         classificationTab.setExtractors(model.getAvailableExtractors());
+        classificationTab.addExtractorsListListener(e -> onExtractorsSelect(e));
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -327,6 +330,7 @@ public class Controller {
         classificationTab.setLearningSetCheckBoxSelected(model.getLearningObjects() != null && model.getLearningObjects().length > 0);
         classificationTab.setTestingSetCheckBoxSelected(model.getTestingObjects() != null && model.getTestingObjects().length > 0);
         classificationTab.setKeywordsCheckBoxSelected(model.getKeywords() != null && model.getKeywords().length > 0);
+        classificationTab.setExtractorsCheckBoxSelected(model.getExtractors() != null && model.getExtractors().length > 0);
     }
 
     private void onMetricChange(ActionEvent event) {
@@ -344,5 +348,20 @@ public class Controller {
     private void onKParameterChange(ChangeEvent event) {
         JSlider source = (JSlider) event.getSource();
         model.setK(source.getValue());
+    }
+
+    private void onExtractorsSelect(ListSelectionEvent event) {
+        JList source = (JList) event.getSource();
+        int[] selectedItems = source.getSelectedIndices();
+
+        String[] extractors = model.getAvailableExtractors();
+        List<String> selectedExtractors = new ArrayList<>();
+
+        for (int item : selectedItems) {
+            selectedExtractors.add(extractors[item]);
+        }
+
+        model.setExtractors(selectedExtractors.toArray(new String[selectedExtractors.size()]));
+        updateClassificationRequirements();
     }
 }
