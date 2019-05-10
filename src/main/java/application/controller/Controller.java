@@ -72,6 +72,7 @@ public class Controller {
         stopWordsTab.addSignificanceSpinnerListener(e -> onSignificanceChange(e));
         stopWordsTab.addLoadFromFileButtonListener(e -> onStopWordsLoadFromFile());
         stopWordsTab.addGenerateButtonListener(e -> onStopWordsGenerate());
+        stopWordsTab.addRemoveStopWordsListener(e -> onStopWordsRemove());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -197,7 +198,6 @@ public class Controller {
             try {
                 stopWords.loadFromFile(selectedFile);
                 stopWordsTab.setStopWords(stopWords.getStopWords());
-                stopWords.removeStopWords();
             } catch (FileNotFoundException e) {
                 view.displayError("Couldn't load stop words from file.");
             }
@@ -213,7 +213,22 @@ public class Controller {
             double significance = model.getSignificance();
             stopWords.generate(significance);
             stopWordsTab.setStopWords(stopWords.getStopWords());
+        }
+    }
+
+    private void onStopWordsRemove() {
+        StopWords stopWords = model.getStopWords();
+        try {
+            if (stopWords == null) {
+                throw new Exception("Filtered objects not found.");
+            }
+            if (stopWords.getStopWords().length == 0) {
+                throw new Exception("First load or generate stop words.");
+            }
             stopWords.removeStopWords();
+            view.displayInfo("Stop words have been removed from existing objects.");
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
         }
     }
 }

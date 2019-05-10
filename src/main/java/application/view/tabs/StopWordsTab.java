@@ -11,6 +11,7 @@ public class StopWordsTab {
     private JButton generateButton;
     private JSpinner significanceSpinner;
     private JProgressBar progressBar;
+    private JButton removeStopWordsButton;
 
     public StopWordsTab() {
         significanceSpinner.setModel(new SpinnerNumberModel(0.5, 0.0, 999999.0, 0.1));
@@ -29,6 +30,9 @@ public class StopWordsTab {
     }
     public void addGenerateButtonListener(ActionListener listener) {
         generateButton.addActionListener(listener);
+    }
+    public void addRemoveStopWordsListener(ActionListener listener) {
+        removeStopWordsButton.addActionListener(listener);
     }
 
     public void setStopWords(String[] stopWords) {
