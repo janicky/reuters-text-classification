@@ -306,14 +306,13 @@ public class ClassificationModel {
         try {
             Class c = Class.forName("classification.features.Extraction");
             Method[] methods = c.getDeclaredMethods();
-            String[] output = new String[methods.length];
-            int i = 0;
+            List<String> output = new ArrayList<>();
             for (Method method : methods) {
                 if (method.isAnnotationPresent(FeatureAnnotation.class)) {
-                    output[i++] = method.getName();
+                    output.add(method.getName());
                 }
             }
-            return output;
+            return output.toArray(new String[output.size()]);
         } catch (ClassNotFoundException e) {
             return null;
         }
@@ -337,5 +336,13 @@ public class ClassificationModel {
 
     public void setFeaturesExtracted(boolean featuresExtracted) {
         this.featuresExtracted = featuresExtracted;
+    }
+
+    public IMetric getMetric() {
+        return metric;
+    }
+
+    public ISimilarityMeter getSimilarityMeter() {
+        return similarityMeter;
     }
 }

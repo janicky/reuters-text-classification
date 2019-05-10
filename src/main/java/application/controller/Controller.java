@@ -102,6 +102,7 @@ public class Controller {
         classificationTab.setExtractors(model.getAvailableExtractors());
         classificationTab.addExtractorsListListener(e -> onExtractorsSelect(e));
         classificationTab.addExtractFeaturesButtonListener(e -> onExtractFeatures());
+        classificationTab.addStartClassificationButtonListener(e -> onStartClassification());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -134,6 +135,7 @@ public class Controller {
                     model.setFilteredObjects(loaded_objects);
                 }
                 onSplitDataButtonClick();
+                classificationTab.setFeaturesExtractedCheckBoxSelected(false);
 
             } catch (InvalidParserException e) {
                 view.displayError("Invalid parser. Selected model hasn`t parser.");
@@ -383,7 +385,35 @@ public class Controller {
             }
             classification.extractFeatures(extractors, keywords);
             model.setFeaturesExtracted(true);
+            classificationTab.setFeaturesExtractedCheckBoxSelected(true);
             view.displayInfo("Features have been extracted!");
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
+        }
+    }
+
+    private void onStartClassification() {
+        try {
+            Classification classification = model.getClassification();
+            IClassificationObject[] learningObjects = model.getLearningObjects();
+            IClassificationObject[] testingObjects = model.getTestingObjects();
+
+            if (classification == null) {
+                throw new Exception("First load objects.");
+            }
+            if (learningObjects == null || learningObjects.length == 0) {
+                throw new Exception("Learning objects not found.");
+            }
+            if (testingObjects == null || testingObjects.length == 0) {
+                throw new Exception("Testing objects not found.");
+            }
+            if (!model.isFeaturesExtracted()) {
+                throw new Exception("First extract features.");
+            }
+            classification.setK(model.getK());
+            classification.perform(model.getMetric());
+            classificationTab.setAccuracy(classification.getAccuracy());
+            view.displayInfo("Classification finished!");
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }

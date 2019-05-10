@@ -19,6 +19,8 @@ public class ClassificationTab {
     private JList extractorsList;
     private JCheckBox extractorsCheckBox;
     private JButton extractFeaturesButton;
+    private JLabel accuracy;
+    private JCheckBox featuresExtractedCheckBox;
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -53,6 +55,9 @@ public class ClassificationTab {
     public void setExtractorsCheckBoxSelected(boolean enabled) {
         extractorsCheckBox.setSelected(enabled);
     }
+    public void setFeaturesExtractedCheckBoxSelected(boolean enabled) {
+        featuresExtractedCheckBox.setSelected(enabled);
+    }
 
     public void addMetricComboBoxListener(ActionListener listener) {
         metricComboBox.addActionListener(listener);
@@ -67,6 +72,9 @@ public class ClassificationTab {
 
     public void addExtractFeaturesButtonListener(ActionListener listener) {
         extractFeaturesButton.addActionListener(listener);
+    }
+    public void addStartClassificationButtonListener(ActionListener listener) {
+        startClassificationButton.addActionListener(listener);
     }
 
     private void updateKLabel(ChangeEvent event) {
@@ -84,5 +92,10 @@ public class ClassificationTab {
 
     public void addExtractorsListListener(ListSelectionListener listener) {
         extractorsList.addListSelectionListener(listener);
+    }
+
+    public void setAccuracy(double accuracy) {
+        double percents = Math.round(accuracy * 100d);
+        this.accuracy.setText(Double.toString(percents) + "%");
     }
 }
