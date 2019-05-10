@@ -25,6 +25,7 @@ public class Controller {
     private SetsTab setsTab;
     private StopWordsTab stopWordsTab;
     private KeywordsTab keywordsTab;
+    private ClassificationTab classificationTab;
     private ClassificationModel model;
     private JFileChooser chooser;
 
@@ -37,6 +38,7 @@ public class Controller {
         initializeSetsTab();
         initializeStopWordsTab();
         initializeKeywordsTab();
+        initializeClassificationTab();
     }
 
     private void initializeDataTab() {
@@ -83,6 +85,11 @@ public class Controller {
         keywordsTab.addAddKeywordButtonListener(e -> onAddKeyword());
         keywordsTab.addKeywordsListListener(e -> onKeywordsListSelection(e));
         keywordsTab.addRemoveSelectedKeywordButtonListener(e -> onRemoveSelectedKeyword());
+    }
+
+    private void initializeClassificationTab() {
+        classificationTab = new ClassificationTab();
+        view.addTab("Classification", classificationTab.getMainPanel());
     }
 
     private void onSelectModel(ActionEvent event) {
