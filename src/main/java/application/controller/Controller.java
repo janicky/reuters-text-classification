@@ -271,6 +271,9 @@ public class Controller {
             if (!model.isValidKeyword(keywordInput)) {
                throw new Exception("Invalid keyword.");
             }
+            if (model.keywordsContains(keywordInput)) {
+                throw new Exception("Keyword `" + keywordInput + "` already exists.");
+            }
             model.addKeyword(keywordInput);
             keywordsTab.addKeyword(keywordInput);
         } catch (Exception e) {

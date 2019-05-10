@@ -206,6 +206,10 @@ public class ClassificationModel {
         return keywords.toArray(new String[keywords.size()]);
     }
 
+    public boolean keywordsContains(String keyword) {
+        return keywords.contains(keyword);
+    }
+
     public boolean isValidKeyword(String keyword) {
         return keyword.matches("^([A-Za-z0-9]+){3,}$");
     }
