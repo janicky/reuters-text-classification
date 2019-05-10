@@ -82,6 +82,7 @@ public class Controller {
         keywordsTab.addGenerateKeywordsButtonListener(e -> onKeywordsGenerate());
         keywordsTab.addAddKeywordButtonListener(e -> onAddKeyword());
         keywordsTab.addKeywordsListListener(e -> onKeywordsListSelection(e));
+        keywordsTab.addRemoveSelectedKeywordButtonListener(e -> onRemoveSelectedKeyword());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -287,6 +288,19 @@ public class Controller {
             int selectedIndex = source.getSelectedIndex();
             model.setSelectedKeyword(selectedIndex);
             keywordsTab.setRemoveSelectedButtonEnabled(selectedIndex != -1);
+        }
+    }
+
+    public void onRemoveSelectedKeyword() {
+        try {
+            int index = model.getSelectedKeyword();
+            if (index == -1) {
+                throw new Exception("Keyword not selected.");
+            }
+            model.removeKeyword(index);
+            keywordsTab.removeKeyword(index);
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
         }
     }
 }

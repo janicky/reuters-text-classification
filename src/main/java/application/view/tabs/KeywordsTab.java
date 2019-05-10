@@ -66,4 +66,9 @@ public class KeywordsTab {
     public void setRemoveSelectedButtonEnabled(boolean state) {
         removeSelectedKeywordButton.setEnabled(state);
     }
+
+    public void removeKeyword(int index) {
+        listModel.remove(index);
+        keywordsList.setModel(listModel);
+    }
 }

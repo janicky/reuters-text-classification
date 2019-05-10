@@ -32,7 +32,7 @@ public class ClassificationModel {
     private double significance = 0.5;
     private double keywordsSignificance = 0.5;
     private List<String> keywords = new ArrayList<>();
-    private int selectedKeyword;
+    private int selectedKeyword = -1;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -231,5 +231,9 @@ public class ClassificationModel {
 
     public void setSelectedKeyword(int selectedKeyword) {
         this.selectedKeyword = selectedKeyword;
+    }
+
+    public void removeKeyword(int index) {
+        keywords.remove(index);
     }
 }
