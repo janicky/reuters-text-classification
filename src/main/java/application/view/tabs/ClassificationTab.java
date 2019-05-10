@@ -15,6 +15,8 @@ public class ClassificationTab {
     private JButton startClassificationButton;
     private JCheckBox testingSetCheckBox;
     private JCheckBox keywordsCheckBox;
+    private JList extractorsList;
+    private JCheckBox extractorsCheckButton;
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -61,5 +63,13 @@ public class ClassificationTab {
     private void updateKLabel(ChangeEvent event) {
         JSlider source = (JSlider) event.getSource();
         kLabel.setText(Integer.toString(source.getValue()));
+    }
+
+    public void setExtractors(String[] extractors) {
+        DefaultListModel listModel = new DefaultListModel();
+        for (String extractor : extractors) {
+            listModel.addElement(extractor);
+        }
+        extractorsList.setModel(listModel);
     }
 }

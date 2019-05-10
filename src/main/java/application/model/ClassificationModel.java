@@ -3,6 +3,7 @@ package application.model;
 import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
+import classification.features.Extraction;
 import classification.metrics.Chebyshev;
 import classification.metrics.Euclidean;
 import classification.metrics.IMetric;
@@ -17,6 +18,7 @@ import classification.utils.StopWords;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -288,5 +290,20 @@ public class ClassificationModel {
 
     public void setK(int k) {
         this.k = k;
+    }
+
+    public String[] getAvailableExtractors() {
+        try {
+            Class c = Class.forName("classification.features.Extraction");
+            Method[] methods = c.getDeclaredMethods();
+            String[] output = new String[methods.length];
+            int i = 0;
+            for (Method method : methods) {
+                output[i++] = method.getName();
+            }
+            return output;
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
     }
 }

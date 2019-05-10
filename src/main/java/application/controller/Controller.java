@@ -96,6 +96,7 @@ public class Controller {
         classificationTab.addMetricComboBoxListener(e -> onMetricChange(e));
         classificationTab.addSimilarityComboBoxListener(e -> onSimilarityChange(e));
         classificationTab.addKSliderListener(e -> onKParameterChange(e));
+        classificationTab.setExtractors(model.getAvailableExtractors());
     }
 
     private void onSelectModel(ActionEvent event) {
