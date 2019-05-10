@@ -5,6 +5,7 @@ import application.model.exceptions.InvalidParserException;
 import application.view.MainView;
 import application.view.tabs.*;
 import classification.data_models.IClassificationObject;
+import classification.utils.Keywords;
 import classification.utils.Operations;
 import classification.utils.StopWords;
 
@@ -77,6 +78,9 @@ public class Controller {
     private void initializeKeywordsTab() {
         keywordsTab = new KeywordsTab();
         view.addTab("Keywords", keywordsTab.getMainPanel());
+        keywordsTab.addKeywordsSignificanceSpinnerListener(e -> onKeywordsSignificanceChange(e));
+        keywordsTab.addGenerateKeywordsButtonListener(e -> onKeywordsGenerate());
+        keywordsTab.addAddKeywordButtonListener(e -> onAddKeyword());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -231,6 +235,43 @@ public class Controller {
             }
             stopWords.removeStopWords();
             view.displayInfo("Stop words have been removed from existing objects.");
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
+        }
+    }
+
+    private void onKeywordsSignificanceChange(ChangeEvent event) {
+        JSpinner source = (JSpinner) event.getSource();
+        double value = (double) source.getValue();
+        model.setKeywordsSignificance(value);
+    }
+
+    private void onKeywordsGenerate() {
+        IClassificationObject[] learningObjects = model.getLearningObjects();
+        Keywords keywords = model.getKeywordsUtil();
+        try {
+            if (learningObjects == null || learningObjects.length == 0) {
+                throw new Exception("Learning objects not found.");
+            }
+            if (keywords == null) {
+                throw new Exception("Keywords not initialized.");
+            }
+            keywords.generate(model.getKeywordsSignificance());
+            model.setKeywords(keywords.getKeywords());
+            keywordsTab.setKeywords(keywords.getKeywords());
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
+        }
+    }
+
+    private void onAddKeyword() {
+        String keywordInput = keywordsTab.getKeywordInput().getText();
+        try {
+            if (!model.isValidKeyword(keywordInput)) {
+               throw new Exception("Invalid keyword.");
+            }
+            model.addKeyword(keywordInput);
+            keywordsTab.addKeyword(keywordInput);
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }

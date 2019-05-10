@@ -23,7 +23,7 @@ public class ClassificationModel {
     private IClassificationObject[] learningObjects;
     private IClassificationObject[] testingObjects;
     private StopWords stopWords;
-    private Keywords keywords;
+    private Keywords keywordsUtil;
     private String[] labels;
     private final String[] defaultLabels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
     private String[] selectedLabels;
@@ -31,6 +31,7 @@ public class ClassificationModel {
     private double splitRatio = 0.6;
     private double significance = 0.5;
     private double keywordsSignificance = 0.5;
+    private List<String> keywords = new ArrayList<>();
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -161,7 +162,7 @@ public class ClassificationModel {
 
     public void setLearningObjects(IClassificationObject[] learningObjects) {
         this.learningObjects = learningObjects;
-        keywords = new Keywords(learningObjects);
+        keywordsUtil = new Keywords(learningObjects);
     }
 
     public void setTestingObjects(IClassificationObject[] testingObjects) {
@@ -188,7 +189,34 @@ public class ClassificationModel {
         this.keywordsSignificance = keywordsSignificance;
     }
 
-    public Keywords getKeywords() {
-        return keywords;
+    public Keywords getKeywordsUtil() {
+        return keywordsUtil;
+    }
+
+    public IClassificationObject[] getLearningObjects() {
+        return learningObjects;
+    }
+
+    public IClassificationObject[] getTestingObjects() {
+        return testingObjects;
+    }
+
+    public String[] getKeywords() {
+        return keywords.toArray(new String[keywords.size()]);
+    }
+
+    public boolean isValidKeyword(String keyword) {
+        return keyword.matches("^([A-Za-z0-9]+){3,}$");
+    }
+
+    public void setKeywords(String[] keywords) {
+        this.keywords = new ArrayList<>();
+        for (String keyword : keywords) {
+            this.keywords.add(keyword);
+        }
+    }
+
+    public void addKeyword(String keyword) {
+        keywords.add(keyword);
     }
 }

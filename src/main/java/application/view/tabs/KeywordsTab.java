@@ -8,12 +8,16 @@ public class KeywordsTab {
     private JPanel mainPanel;
     private JLabel objectsCount;
     private JList keywordsList;
-    private JFormattedTextField keywordInput;
+    private JTextField keywordInput;
     private JButton addKeywordButton;
     private JButton removeSelectedKeywordButton;
     private JSpinner keywordsSignificanceSpinner;
     private JButton generateKeywordsButton;
-    private DefaultListModel listModel;
+    private DefaultListModel listModel = new DefaultListModel();
+
+    public KeywordsTab() {
+        keywordsSignificanceSpinner.setModel(new SpinnerNumberModel(0.5, 0.0, 999999.0, 0.1));
+    }
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -23,7 +27,7 @@ public class KeywordsTab {
         generateKeywordsButton.addActionListener(listener);
     }
 
-    public void addKeywordButtonListener(ActionListener listener) {
+    public void addAddKeywordButtonListener(ActionListener listener) {
         addKeywordButton.addActionListener(listener);
     }
 
@@ -42,5 +46,14 @@ public class KeywordsTab {
         }
         keywordsList.setModel(listModel);
         objectsCount.setText(Integer.toString(keywords.length));
+    }
+
+    public JTextField getKeywordInput() {
+        return keywordInput;
+    }
+
+    public void addKeyword(String keyword) {
+        listModel.addElement(keyword);
+        keywordsList.setModel(listModel);
     }
 }
