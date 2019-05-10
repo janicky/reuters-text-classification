@@ -3,6 +3,10 @@ package application.model;
 import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
+import classification.metrics.Euclidean;
+import classification.metrics.IMetric;
+import classification.similarity.ISimilarityMeter;
+import classification.similarity.NGram;
 import classification.utils.Keywords;
 import classification.utils.Loader;
 import classification.utils.StopWords;
@@ -36,6 +40,8 @@ public class ClassificationModel {
     private double keywordsSignificance = 0.5;
     private List<String> keywords = new ArrayList<>();
     private int selectedKeyword = -1;
+    private IMetric metric = new Euclidean();
+    private ISimilarityMeter similarityMeter = new NGram(3);
 
     public String[] getAvailableModels() {
         return availableModels;

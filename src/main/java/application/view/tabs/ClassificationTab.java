@@ -5,8 +5,7 @@ import javax.swing.*;
 public class ClassificationTab {
     private JPanel mainPanel;
     private JCheckBox learningSetCheckBox;
-    private JComboBox comboBox1;
-    private JPanel metricComboBox;
+    private JComboBox metricComboBox;
     private JComboBox similarityComboBox;
     private JSlider kSlider;
     private JLabel kLabel;
@@ -16,6 +15,22 @@ public class ClassificationTab {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void setMetrics(String[] metrics) {
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+        for (String metric : metrics) {
+            comboBoxModel.addElement(metric);
+        }
+        metricComboBox.setModel(comboBoxModel);
+    }
+
+    public void setSimilarity(String[] similarity) {
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+        for (String sim : similarity) {
+            comboBoxModel.addElement(sim);
+        }
+        similarityComboBox.setModel(comboBoxModel);
     }
 
     public void setLearningSetCheckBoxSelected(boolean enabled) {

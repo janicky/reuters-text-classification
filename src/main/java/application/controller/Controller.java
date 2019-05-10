@@ -90,6 +90,8 @@ public class Controller {
     private void initializeClassificationTab() {
         classificationTab = new ClassificationTab();
         view.addTab("Classification", classificationTab.getMainPanel());
+        classificationTab.setMetrics(model.getAvailableMetrics());
+        classificationTab.setSimilarity(model.getAvailableSimilarity());
     }
 
     private void onSelectModel(ActionEvent event) {
