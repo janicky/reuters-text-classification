@@ -81,6 +81,7 @@ public class Controller {
         keywordsTab.addKeywordsSignificanceSpinnerListener(e -> onKeywordsSignificanceChange(e));
         keywordsTab.addGenerateKeywordsButtonListener(e -> onKeywordsGenerate());
         keywordsTab.addAddKeywordButtonListener(e -> onAddKeyword());
+        keywordsTab.addKeywordsListListener(e -> onKeywordsListSelection(e));
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -274,6 +275,15 @@ public class Controller {
             keywordsTab.addKeyword(keywordInput);
         } catch (Exception e) {
             view.displayError(e.getMessage());
+        }
+    }
+
+    public void onKeywordsListSelection(ListSelectionEvent event) {
+        JList source = (JList) event.getSource();
+        if (source.getValueIsAdjusting()) {
+            int selectedIndex = source.getSelectedIndex();
+            model.setSelectedKeyword(selectedIndex);
+            keywordsTab.setRemoveSelectedButtonEnabled(selectedIndex != -1);
         }
     }
 }

@@ -2,6 +2,8 @@ package application.view.tabs;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class KeywordsTab {
@@ -39,6 +41,10 @@ public class KeywordsTab {
         keywordsSignificanceSpinner.addChangeListener(listener);
     }
 
+    public void addKeywordsListListener(ListSelectionListener listener) {
+        keywordsList.addListSelectionListener(listener);
+    }
+
     public void setKeywords(String[] keywords) {
         listModel = new DefaultListModel();
         for (String keyword : keywords) {
@@ -55,5 +61,9 @@ public class KeywordsTab {
     public void addKeyword(String keyword) {
         listModel.addElement(keyword);
         keywordsList.setModel(listModel);
+    }
+
+    public void setRemoveSelectedButtonEnabled(boolean state) {
+        removeSelectedKeywordButton.setEnabled(state);
     }
 }
