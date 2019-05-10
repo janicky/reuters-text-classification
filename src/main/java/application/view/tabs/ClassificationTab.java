@@ -11,8 +11,20 @@ public class ClassificationTab {
     private JSlider kSlider;
     private JLabel kLabel;
     private JButton startClassificationButton;
+    private JCheckBox testingSetCheckBox;
+    private JCheckBox keywordsCheckBox;
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void setLearningSetCheckBoxSelected(boolean enabled) {
+        learningSetCheckBox.setSelected(enabled);
+    }
+    public void setTestingSetCheckBoxSelected(boolean enabled) {
+        testingSetCheckBox.setSelected(enabled);
+    }
+    public void setKeywordsCheckBoxSelected(boolean enabled) {
+        keywordsCheckBox.setSelected(enabled);
     }
 }

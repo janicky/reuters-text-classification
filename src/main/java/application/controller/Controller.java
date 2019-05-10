@@ -121,6 +121,7 @@ public class Controller {
                     filterTab.setObjects(loaded_objects);
                     model.setFilteredObjects(loaded_objects);
                 }
+                onSplitDataButtonClick();
 
             } catch (InvalidParserException e) {
                 view.displayError("Invalid parser. Selected model hasn`t parser.");
@@ -191,6 +192,7 @@ public class Controller {
             model.setTestingObjects(sets[1]);
             setsTab.setLearningObjects(sets[0]);
             setsTab.setTestingObjects(sets[1]);
+            updateClassificationRequirements();
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
@@ -268,6 +270,7 @@ public class Controller {
             keywords.generate(model.getKeywordsSignificance());
             model.setKeywords(keywords.getKeywords());
             keywordsTab.setKeywords(keywords.getKeywords());
+            updateClassificationRequirements();
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
@@ -284,6 +287,7 @@ public class Controller {
             }
             model.addKeyword(keywordInput);
             keywordsTab.addKeyword(keywordInput);
+            updateClassificationRequirements();
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
@@ -306,8 +310,15 @@ public class Controller {
             }
             model.removeKeyword(index);
             keywordsTab.removeKeyword(index);
+            updateClassificationRequirements();
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
+    }
+
+    private void updateClassificationRequirements() {
+        classificationTab.setLearningSetCheckBoxSelected(model.getLearningObjects() != null && model.getLearningObjects().length > 0);
+        classificationTab.setTestingSetCheckBoxSelected(model.getTestingObjects() != null && model.getTestingObjects().length > 0);
+        classificationTab.setKeywordsCheckBoxSelected(model.getKeywords() != null && model.getKeywords().length > 0);
     }
 }
