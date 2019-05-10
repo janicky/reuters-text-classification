@@ -52,7 +52,7 @@
             <properties/>
             <border type="etched" title="Significance"/>
             <children>
-              <component id="a7db7" class="javax.swing.JSpinner" binding="significanceSpinner">
+              <component id="a7db7" class="javax.swing.JSpinner" binding="keywordsSignificanceSpinner">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="30"/>
@@ -70,7 +70,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="4ac49" class="javax.swing.JButton" binding="generateButton" default-binding="true">
+              <component id="4ac49" class="javax.swing.JButton" binding="generateKeywordsButton">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>

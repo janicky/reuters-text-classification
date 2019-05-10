@@ -3,6 +3,7 @@ package application.model;
 import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
+import classification.utils.Keywords;
 import classification.utils.Loader;
 import classification.utils.StopWords;
 
@@ -22,12 +23,14 @@ public class ClassificationModel {
     private IClassificationObject[] learningObjects;
     private IClassificationObject[] testingObjects;
     private StopWords stopWords;
+    private Keywords keywords;
     private String[] labels;
     private final String[] defaultLabels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
     private String[] selectedLabels;
     private int filterOption = 2;
     private double splitRatio = 0.6;
     private double significance = 0.5;
+    private double keywordsSignificance = 0.5;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -158,6 +161,7 @@ public class ClassificationModel {
 
     public void setLearningObjects(IClassificationObject[] learningObjects) {
         this.learningObjects = learningObjects;
+        keywords = new Keywords(learningObjects);
     }
 
     public void setTestingObjects(IClassificationObject[] testingObjects) {
@@ -174,5 +178,17 @@ public class ClassificationModel {
 
     public StopWords getStopWords() {
         return stopWords;
+    }
+
+    public double getKeywordsSignificance() {
+        return keywordsSignificance;
+    }
+
+    public void setKeywordsSignificance(double keywordsSignificance) {
+        this.keywordsSignificance = keywordsSignificance;
+    }
+
+    public Keywords getKeywords() {
+        return keywords;
     }
 }

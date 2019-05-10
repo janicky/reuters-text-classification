@@ -9,8 +9,8 @@ public class KeywordsTab {
     private JFormattedTextField keywordInput;
     private JButton addKeywordButton;
     private JButton removeSelectedKeywordButton;
-    private JSpinner significanceSpinner;
-    private JButton generateButton;
+    private JSpinner keywordsSignificanceSpinner;
+    private JButton generateKeywordsButton;
 
     public JPanel getMainPanel() {
         return mainPanel;
