@@ -1,6 +1,7 @@
 package application.view.tabs;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionListener;
 
@@ -25,6 +26,7 @@ public class ClassificationTab {
             comboBoxModel.addElement(metric);
         }
         metricComboBox.setModel(comboBoxModel);
+        kSlider.addChangeListener(e -> updateKLabel(e));
     }
 
     public void setSimilarity(String[] similarity) {
@@ -50,5 +52,14 @@ public class ClassificationTab {
     }
     public void addSimilarityComboBoxListener(ActionListener listener) {
         similarityComboBox.addActionListener(listener);
+    }
+
+    public void addKSliderListener(ChangeListener listener) {
+        kSlider.addChangeListener(listener);
+    }
+
+    private void updateKLabel(ChangeEvent event) {
+        JSlider source = (JSlider) event.getSource();
+        kLabel.setText(Integer.toString(source.getValue()));
     }
 }

@@ -95,6 +95,7 @@ public class Controller {
         classificationTab.setSimilarity(model.getAvailableSimilarity());
         classificationTab.addMetricComboBoxListener(e -> onMetricChange(e));
         classificationTab.addSimilarityComboBoxListener(e -> onSimilarityChange(e));
+        classificationTab.addKSliderListener(e -> onKParameterChange(e));
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -337,5 +338,10 @@ public class Controller {
         JComboBox source = (JComboBox) event.getSource();
         int selected = source.getSelectedIndex();
         model.setSimilarityMeter(model.getSimilarityMeters()[selected]);
+    }
+
+    private void onKParameterChange(ChangeEvent event) {
+        JSlider source = (JSlider) event.getSource();
+        model.setK(source.getValue());
     }
 }

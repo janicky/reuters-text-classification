@@ -53,6 +53,7 @@ public class ClassificationModel {
     private int selectedKeyword = -1;
     private IMetric metric = new Euclidean();
     private ISimilarityMeter similarityMeter = new NGram(3);
+    private int k = 5;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -279,5 +280,13 @@ public class ClassificationModel {
 
     public void setSimilarityMeter(ISimilarityMeter similarityMeter) {
         this.similarityMeter = similarityMeter;
+    }
+
+    public int getK() {
+        return k;
+    }
+
+    public void setK(int k) {
+        this.k = k;
     }
 }
