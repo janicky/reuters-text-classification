@@ -18,6 +18,7 @@ public class ClassificationTab {
     private JCheckBox keywordsCheckBox;
     private JList extractorsList;
     private JCheckBox extractorsCheckBox;
+    private JButton extractFeaturesButton;
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -62,6 +63,10 @@ public class ClassificationTab {
 
     public void addKSliderListener(ChangeListener listener) {
         kSlider.addChangeListener(listener);
+    }
+
+    public void addExtractFeaturesButtonListener(ActionListener listener) {
+        extractFeaturesButton.addActionListener(listener);
     }
 
     private void updateKLabel(ChangeEvent event) {

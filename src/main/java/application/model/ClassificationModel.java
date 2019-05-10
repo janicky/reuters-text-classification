@@ -1,6 +1,7 @@
 package application.model;
 
 import application.model.exceptions.InvalidParserException;
+import classification.Classification;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
 import classification.features.FeatureAnnotation;
@@ -13,6 +14,7 @@ import classification.similarity.KnuthMorrisPratt;
 import classification.similarity.NGram;
 import classification.utils.Keywords;
 import classification.utils.Loader;
+import classification.utils.Operations;
 import classification.utils.StopWords;
 
 import java.io.File;
@@ -57,6 +59,8 @@ public class ClassificationModel {
     private ISimilarityMeter similarityMeter = new NGram(3);
     private int k = 5;
     private String[] extractors;
+    private Classification classification;
+    private boolean featuresExtracted = false;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -125,7 +129,10 @@ public class ClassificationModel {
         }
 
         objects = objectsList.toArray(new IClassificationObject[objectsList.size()]);
+        Operations.stem(objects);
         loadLabels();
+        classification = new Classification(objects);
+        featuresExtracted = false;
     }
 
     private void loadLabels() {
@@ -204,10 +211,12 @@ public class ClassificationModel {
     public void setLearningObjects(IClassificationObject[] learningObjects) {
         this.learningObjects = learningObjects;
         keywordsUtil = new Keywords(learningObjects);
+        classification.setLearningSet(learningObjects);
     }
 
     public void setTestingObjects(IClassificationObject[] testingObjects) {
         this.testingObjects = testingObjects;
+        classification.setTestingSet(testingObjects);
     }
 
     public double getSignificance() {
@@ -316,5 +325,17 @@ public class ClassificationModel {
 
     public void setExtractors(String[] extractors) {
         this.extractors = extractors;
+    }
+
+    public Classification getClassification() {
+        return classification;
+    }
+
+    public boolean isFeaturesExtracted() {
+        return featuresExtracted;
+    }
+
+    public void setFeaturesExtracted(boolean featuresExtracted) {
+        this.featuresExtracted = featuresExtracted;
     }
 }

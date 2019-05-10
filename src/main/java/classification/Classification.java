@@ -12,11 +12,8 @@ import java.util.*;
 
 public class Classification {
     private IClassificationObject[] objects;
-    private IClassificationObject[] filteredObjects;
     private IClassificationObject[] learningSet;
     private IClassificationObject[] testingSet;
-    private StopWords stopWords;
-    private Keywords keywords;
 
     private int truePositive = 0;
     private int k;
@@ -25,39 +22,11 @@ public class Classification {
 //    splitRatio - learning and testing sets split ratio -> learning = objectsCount * splitRatio
     public Classification(IClassificationObject[] objects) {
         this.objects = objects;
-        this.filteredObjects = objects;
-        stopWords = new StopWords(objects);
     }
 
-//    Use objects only with specified labels
-    public void filterObjects(String[] labels, int mode) {
-        filteredObjects = Operations.filterObjects(objects, labels, mode);
-    }
-
-//    Split data sets
-    public void initKeywords() {
-        keywords = new Keywords(learningSet);
-    }
-
-//     Load stop words from file
-    public void loadStopWords(String filename) throws FileNotFoundException {
-        stopWords.loadFromFile(filename);
-    }
-
-//     Stemming and remove stop words
-    public void prepareData() {
-        Operations.stem(filteredObjects);
-        stopWords.removeStopWords();
-    }
-
-//     Generate keywords
-    public void generateKeywords(double significance) {
-        keywords.generate(significance);
-    }
-
-    public void extractFeatures(String[] extractors) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        for (IClassificationObject object : filteredObjects) {
-            Extraction extraction = new Extraction(object.getVectorizedText(), keywords.getKeywords());
+    public void extractFeatures(String[] extractors, String[] keywords) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        for (IClassificationObject object : objects) {
+            Extraction extraction = new Extraction(object.getVectorizedText(), keywords);
             for (String extractor : extractors) {
                 Method method = extraction.getClass().getDeclaredMethod(extractor);
                 method.invoke(extraction);

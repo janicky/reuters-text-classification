@@ -4,6 +4,7 @@ import application.model.ClassificationModel;
 import application.model.exceptions.InvalidParserException;
 import application.view.MainView;
 import application.view.tabs.*;
+import classification.Classification;
 import classification.data_models.IClassificationObject;
 import classification.metrics.IMetric;
 import classification.utils.Keywords;
@@ -100,6 +101,7 @@ public class Controller {
         classificationTab.addKSliderListener(e -> onKParameterChange(e));
         classificationTab.setExtractors(model.getAvailableExtractors());
         classificationTab.addExtractorsListListener(e -> onExtractorsSelect(e));
+        classificationTab.addExtractFeaturesButtonListener(e -> onExtractFeatures());
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -363,5 +365,27 @@ public class Controller {
 
         model.setExtractors(selectedExtractors.toArray(new String[selectedExtractors.size()]));
         updateClassificationRequirements();
+    }
+
+    private void onExtractFeatures() {
+        try {
+            Classification classification = model.getClassification();
+            String[] keywords = model.getKeywords();
+            String[] extractors = model.getExtractors();
+            if (classification == null || model.getObjects().length == 0) {
+                throw new Exception("First load objects.");
+            }
+            if (keywords == null || keywords.length == 0) {
+                throw new Exception("Keywords not found.");
+            }
+            if (extractors == null || extractors.length == 0) {
+                throw new Exception("Please select extractors.");
+            }
+            classification.extractFeatures(extractors, keywords);
+            model.setFeaturesExtracted(true);
+            view.displayInfo("Features have been extracted!");
+        } catch (Exception e) {
+            view.displayError(e.getMessage());
+        }
     }
 }

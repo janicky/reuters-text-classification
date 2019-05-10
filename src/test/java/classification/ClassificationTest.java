@@ -44,36 +44,36 @@ class ClassificationTest {
     void getAccuracy() {
         assertEquals(0, classification.getAccuracy());
     }
-
-    @Test
-    void perform() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, FileNotFoundException {
-        String[] extractors = new String[] {
-                "keywordOccurrencesCount",
-                "keywordsAveragePosition",
-                "mostFrequentKeyword",
-                "keywordsDensity",
-                "wordsCount"
-        };
-
-        classification.setK(5);
-        String[] labels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
-        System.out.println("Filtering objects... " + Arrays.toString(labels));
-        classification.filterObjects(labels, 2);
-        System.out.println("Splitting objects...");
-//        classification.splitSets(0.6);
-        System.out.println("Loading stopwords... ");
-        classification.loadStopWords("data/stopwords.txt");
-        System.out.println("Preparing data...");
-        classification.prepareData();
-        System.out.println("Generating keywords...");
-        classification.generateKeywords(0.5);
-        System.out.println("Features extraction...");
-        classification.extractFeatures(extractors);
-        System.out.println("Starting classification...");
-        classification.perform(new Euclidean());
-
-        System.out.println("Accuracy: " + classification.getAccuracy());
-    }
+//
+//    @Test
+//    void perform() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, FileNotFoundException {
+//        String[] extractors = new String[] {
+//                "keywordOccurrencesCount",
+//                "keywordsAveragePosition",
+//                "mostFrequentKeyword",
+//                "keywordsDensity",
+//                "wordsCount"
+//        };
+//
+//        classification.setK(5);
+//        String[] labels = { "west-germany", "usa", "france", "uk", "canada", "japan" };
+//        System.out.println("Filtering objects... " + Arrays.toString(labels));
+//        classification.filterObjects(labels, 2);
+//        System.out.println("Splitting objects...");
+////        classification.splitSets(0.6);
+//        System.out.println("Loading stopwords... ");
+//        classification.loadStopWords("data/stopwords.txt");
+//        System.out.println("Preparing data...");
+//        classification.prepareData();
+//        System.out.println("Generating keywords...");
+//        classification.generateKeywords(0.5);
+//        System.out.println("Features extraction...");
+//        classification.extractFeatures(extractors);
+//        System.out.println("Starting classification...");
+//        classification.perform(new Euclidean());
+//
+//        System.out.println("Accuracy: " + classification.getAccuracy());
+//    }
 
     @Test
     void prepareData() {
