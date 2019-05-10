@@ -3,10 +3,7 @@ package application.controller;
 import application.model.ClassificationModel;
 import application.model.exceptions.InvalidParserException;
 import application.view.MainView;
-import application.view.tabs.DataTab;
-import application.view.tabs.FilterTab;
-import application.view.tabs.SetsTab;
-import application.view.tabs.StopWordsTab;
+import application.view.tabs.*;
 import classification.data_models.IClassificationObject;
 import classification.utils.Operations;
 import classification.utils.StopWords;
@@ -26,6 +23,7 @@ public class Controller {
     private FilterTab filterTab;
     private SetsTab setsTab;
     private StopWordsTab stopWordsTab;
+    private KeywordsTab keywordsTab;
     private ClassificationModel model;
     private JFileChooser chooser;
 
@@ -37,6 +35,7 @@ public class Controller {
         initializeFilterTab();
         initializeSetsTab();
         initializeStopWordsTab();
+        initializeKeywordsTab();
     }
 
     private void initializeDataTab() {
@@ -73,6 +72,11 @@ public class Controller {
         stopWordsTab.addLoadFromFileButtonListener(e -> onStopWordsLoadFromFile());
         stopWordsTab.addGenerateButtonListener(e -> onStopWordsGenerate());
         stopWordsTab.addRemoveStopWordsListener(e -> onStopWordsRemove());
+    }
+
+    private void initializeKeywordsTab() {
+        keywordsTab = new KeywordsTab();
+        view.addTab("Keywords", keywordsTab.getMainPanel());
     }
 
     private void onSelectModel(ActionEvent event) {
