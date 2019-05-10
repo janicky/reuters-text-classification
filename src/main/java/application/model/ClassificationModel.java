@@ -17,6 +17,9 @@ import java.util.List;
 public class ClassificationModel {
 
     private final String[] availableModels = { "Article" };
+    private final String[] availableMetrics = { "Euclidean", "Chebyshev", "Manhattan" };
+    private final String[] availableSimilarity = { "NGram", "KnuthMorrisPratt" };
+
     private int selectedModel = 0;
     private IClassificationObject[] objects;
     private IClassificationObject[] filteredObjects;
@@ -36,6 +39,14 @@ public class ClassificationModel {
 
     public String[] getAvailableModels() {
         return availableModels;
+    }
+
+    public String[] getAvailableMetrics() {
+        return availableMetrics;
+    }
+
+    public String[] getAvailableSimilarity() {
+        return availableSimilarity;
     }
 
     public int getSelectedModel() {
