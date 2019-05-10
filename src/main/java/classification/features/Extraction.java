@@ -16,6 +16,7 @@ public class Extraction {
         this.keywords = keywords;
     }
 
+    @FeatureAnnotation
     public void keywordOccurrences() {
         Map<String, Integer> occurrences = ExtractionHelper.getKeywordsOccurrences(text, keywords);
         for (Map.Entry<String, Integer> entry : occurrences.entrySet()) {
@@ -23,12 +24,14 @@ public class Extraction {
         }
     }
 
+    @FeatureAnnotation
     public void keywordOccurrencesCount() {
         Map<String, Integer> keywordsOccurrences = ExtractionHelper.getKeywordsOccurrences(text, keywords);
         int occurrencesCount = keywordsOccurrences.values().stream().reduce(0, Integer::sum);
         features.put("keywords_occurrences_count", new NumberFeature(occurrencesCount));
     }
 
+    @FeatureAnnotation
     public void keywordsDensity() {
         if (text.length == 0) {
             features.put("keywords_density", new NumberFeature(0d));
@@ -41,6 +44,7 @@ public class Extraction {
         features.put("keywords_density", new NumberFeature(density));
     }
 
+    @FeatureAnnotation
     public void keywordsPosition() {
         for (String keyword : keywords) {
             for (int i = 0; i < text.length; i++) {
@@ -54,6 +58,7 @@ public class Extraction {
         }
     }
 
+    @FeatureAnnotation
     public void keywordsAveragePosition() {
         for (String keyword : keywords) {
             int position = 0;
@@ -68,6 +73,7 @@ public class Extraction {
         }
     }
 
+    @FeatureAnnotation
     public void firstKeyword() {
         for (String keyword : keywords) {
             for (String word : text) {
@@ -80,6 +86,7 @@ public class Extraction {
         features.put("first_keyword", new TextFeature(null));
     }
 
+    @FeatureAnnotation
     public void mostFrequentKeyword() {
         Map<String, Integer> occurrences = ExtractionHelper.getKeywordsOccurrences(text, keywords);
         String feature_keyword = null;
@@ -95,6 +102,7 @@ public class Extraction {
         features.put("most_frequent_keyword", new TextFeature(feature_keyword));
     }
 
+    @FeatureAnnotation
     public void wordsCount() {
         features.put("wordsCount", new NumberFeature(text.length));
     }

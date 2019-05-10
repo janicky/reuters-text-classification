@@ -3,7 +3,7 @@ package application.model;
 import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
-import classification.features.Extraction;
+import classification.features.FeatureAnnotation;
 import classification.metrics.Chebyshev;
 import classification.metrics.Euclidean;
 import classification.metrics.IMetric;
@@ -299,7 +299,9 @@ public class ClassificationModel {
             String[] output = new String[methods.length];
             int i = 0;
             for (Method method : methods) {
-                output[i++] = method.getName();
+                if (method.isAnnotationPresent(FeatureAnnotation.class)) {
+                    output[i++] = method.getName();
+                }
             }
             return output;
         } catch (ClassNotFoundException e) {
