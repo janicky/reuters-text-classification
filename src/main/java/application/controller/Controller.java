@@ -5,6 +5,7 @@ import application.model.exceptions.InvalidParserException;
 import application.view.MainView;
 import application.view.tabs.*;
 import classification.data_models.IClassificationObject;
+import classification.metrics.IMetric;
 import classification.utils.Keywords;
 import classification.utils.Operations;
 import classification.utils.StopWords;
@@ -92,6 +93,8 @@ public class Controller {
         view.addTab("Classification", classificationTab.getMainPanel());
         classificationTab.setMetrics(model.getAvailableMetrics());
         classificationTab.setSimilarity(model.getAvailableSimilarity());
+        classificationTab.addMetricComboBoxListener(e -> onMetricChange(e));
+        classificationTab.addSimilarityComboBoxListener(e -> onSimilarityChange(e));
     }
 
     private void onSelectModel(ActionEvent event) {
@@ -322,5 +325,17 @@ public class Controller {
         classificationTab.setLearningSetCheckBoxSelected(model.getLearningObjects() != null && model.getLearningObjects().length > 0);
         classificationTab.setTestingSetCheckBoxSelected(model.getTestingObjects() != null && model.getTestingObjects().length > 0);
         classificationTab.setKeywordsCheckBoxSelected(model.getKeywords() != null && model.getKeywords().length > 0);
+    }
+
+    private void onMetricChange(ActionEvent event) {
+        JComboBox source = (JComboBox) event.getSource();
+        int selected = source.getSelectedIndex();
+        model.setMetric(model.getMetrics()[selected]);
+    }
+
+    private void onSimilarityChange(ActionEvent event) {
+        JComboBox source = (JComboBox) event.getSource();
+        int selected = source.getSelectedIndex();
+        model.setSimilarityMeter(model.getSimilarityMeters()[selected]);
     }
 }

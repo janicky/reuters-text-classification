@@ -1,6 +1,8 @@
 package application.view.tabs;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionListener;
 
 public class ClassificationTab {
     private JPanel mainPanel;
@@ -41,5 +43,12 @@ public class ClassificationTab {
     }
     public void setKeywordsCheckBoxSelected(boolean enabled) {
         keywordsCheckBox.setSelected(enabled);
+    }
+
+    public void addMetricComboBoxListener(ActionListener listener) {
+        metricComboBox.addActionListener(listener);
+    }
+    public void addSimilarityComboBoxListener(ActionListener listener) {
+        similarityComboBox.addActionListener(listener);
     }
 }

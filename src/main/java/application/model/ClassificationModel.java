@@ -3,9 +3,12 @@ package application.model;
 import application.model.exceptions.InvalidParserException;
 import classification.data_models.IClassificationObject;
 import classification.data_models.IParser;
+import classification.metrics.Chebyshev;
 import classification.metrics.Euclidean;
 import classification.metrics.IMetric;
+import classification.metrics.Manhattan;
 import classification.similarity.ISimilarityMeter;
+import classification.similarity.KnuthMorrisPratt;
 import classification.similarity.NGram;
 import classification.utils.Keywords;
 import classification.utils.Loader;
@@ -23,6 +26,14 @@ public class ClassificationModel {
     private final String[] availableModels = { "Article" };
     private final String[] availableMetrics = { "Euclidean", "Chebyshev", "Manhattan" };
     private final String[] availableSimilarity = { "NGram", "KnuthMorrisPratt" };
+
+    private final IMetric[] metrics = {
+            new Euclidean(), new Chebyshev(), new Manhattan()
+    };
+
+    private final ISimilarityMeter[] similarityMeters = {
+            new NGram(3), new KnuthMorrisPratt()
+    };
 
     private int selectedModel = 0;
     private IClassificationObject[] objects;
@@ -53,6 +64,14 @@ public class ClassificationModel {
 
     public String[] getAvailableSimilarity() {
         return availableSimilarity;
+    }
+
+    public IMetric[] getMetrics() {
+        return metrics;
+    }
+
+    public ISimilarityMeter[] getSimilarityMeters() {
+        return similarityMeters;
     }
 
     public int getSelectedModel() {
@@ -252,5 +271,13 @@ public class ClassificationModel {
 
     public void removeKeyword(int index) {
         keywords.remove(index);
+    }
+
+    public void setMetric(IMetric metric) {
+        this.metric = metric;
+    }
+
+    public void setSimilarityMeter(ISimilarityMeter similarityMeter) {
+        this.similarityMeter = similarityMeter;
     }
 }
