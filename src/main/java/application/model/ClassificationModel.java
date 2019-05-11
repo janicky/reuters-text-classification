@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ClassificationModel {
 
-    private final String[] availableModels = { "Article" };
+    private final String[] availableModels = { "Article", "Article2" };
     private final String[] availableMetrics = { "Euclidean", "Chebyshev", "Manhattan" };
     private final String[] availableSimilarity = { "NGram", "KnuthMorrisPratt" };
 
@@ -104,7 +104,9 @@ public class ClassificationModel {
 
     public void setFilteredObjects(IClassificationObject[] filteredObjects) {
         this.filteredObjects = filteredObjects;
-        stopWords = new StopWords(filteredObjects);
+        if (stopWords == null) {
+            stopWords = new StopWords(filteredObjects);
+        }
     }
 
     private IParser getParserBySelectedModel() throws InvalidParserException {
@@ -210,7 +212,9 @@ public class ClassificationModel {
 
     public void setLearningObjects(IClassificationObject[] learningObjects) {
         this.learningObjects = learningObjects;
-        keywordsUtil = new Keywords(learningObjects);
+        if (keywordsUtil == null) {
+            keywordsUtil = new Keywords(learningObjects);
+        }
         classification.setLearningSet(learningObjects);
     }
 
