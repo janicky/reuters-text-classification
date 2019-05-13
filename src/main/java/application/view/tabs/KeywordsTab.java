@@ -3,7 +3,6 @@ package application.view.tabs;
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionListener;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class KeywordsTab {
@@ -15,6 +14,8 @@ public class KeywordsTab {
     private JButton removeSelectedKeywordButton;
     private JSpinner keywordsSignificanceSpinner;
     private JButton generateKeywordsButton;
+    private JButton importButton;
+    private JButton exportButton;
     private DefaultListModel listModel = new DefaultListModel();
 
     public KeywordsTab() {
@@ -41,6 +42,13 @@ public class KeywordsTab {
         keywordsSignificanceSpinner.addChangeListener(listener);
     }
 
+    public void addImportButtonListener(ActionListener listener) {
+        importButton.addActionListener(listener);
+    }
+    public void addExportButtonListener(ActionListener listener) {
+        exportButton.addActionListener(listener);
+    }
+
     public void addKeywordsListListener(ListSelectionListener listener) {
         keywordsList.addListSelectionListener(listener);
     }
@@ -52,6 +60,7 @@ public class KeywordsTab {
         }
         keywordsList.setModel(listModel);
         objectsCount.setText(Integer.toString(keywords.length));
+        updateButtons();
     }
 
     public JTextField getKeywordInput() {
@@ -61,6 +70,7 @@ public class KeywordsTab {
     public void addKeyword(String keyword) {
         listModel.addElement(keyword);
         keywordsList.setModel(listModel);
+        updateButtons();
     }
 
     public void setRemoveSelectedButtonEnabled(boolean state) {
@@ -70,5 +80,10 @@ public class KeywordsTab {
     public void removeKeyword(int index) {
         listModel.remove(index);
         keywordsList.setModel(listModel);
+        updateButtons();
+    }
+
+    private void updateButtons() {
+        exportButton.setEnabled(listModel.getSize() != 0);
     }
 }

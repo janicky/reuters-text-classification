@@ -3,13 +3,16 @@ package classification.utils;
 import classification.data_models.IClassificationObject;
 import classification.features.TermFrequency;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Keywords {
 
     IClassificationObject[] objects;
-    String[] keywords;
+    List<String> keywords = new ArrayList<>();
 
     public Keywords(IClassificationObject[] objects) {
         this.objects = objects;
@@ -34,10 +37,21 @@ public class Keywords {
                 }
             }
         }
-        keywords = newKeywords.toArray(new String[newKeywords.size()]);
+        keywords = newKeywords;
+    }
+
+    public void loadFromFile(String filename) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(filename));
+        List<String> words = new ArrayList<>();
+        while (scanner.hasNextLine()) {
+            words.add(scanner.nextLine());
+        }
+        scanner.close();
+
+        keywords = words;
     }
 
     public String[] getKeywords() {
-        return keywords;
+        return keywords.toArray(new String[keywords.size()]);
     }
 }
