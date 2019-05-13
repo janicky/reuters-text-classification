@@ -33,6 +33,7 @@
                   <minorTickSpacing value="1"/>
                   <paintTicks value="true"/>
                   <snapToTicks value="true"/>
+                  <value value="60"/>
                 </properties>
               </component>
             </children>
