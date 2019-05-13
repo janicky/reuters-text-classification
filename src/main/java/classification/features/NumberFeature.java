@@ -1,5 +1,7 @@
 package classification.features;
 
+import classification.similarity.ISimilarityMeter;
+
 public class NumberFeature implements IFeature<Double> {
 
     private double value;
@@ -12,7 +14,7 @@ public class NumberFeature implements IFeature<Double> {
         return value;
     }
 
-    public double compareTo(IFeature<Double> feature) {
+    public double compareTo(IFeature<Double> feature, ISimilarityMeter similarityMeter) {
         return getValue() - feature.getValue();
     }
 }

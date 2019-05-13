@@ -457,7 +457,7 @@ public class Controller {
                 throw new Exception("First extract features.");
             }
             classification.setK(model.getK());
-            classification.perform(model.getMetric());
+            classification.perform(model.getMetric(), model.getSimilarityMeter());
             classificationTab.setAccuracy(classification.getAccuracy());
             view.displayInfo("Classification finished!");
         } catch (Exception e) {

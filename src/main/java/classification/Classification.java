@@ -3,6 +3,7 @@ package classification;
 import classification.data_models.IClassificationObject;
 import classification.features.Extraction;
 import classification.metrics.IMetric;
+import classification.similarity.ISimilarityMeter;
 import classification.utils.*;
 
 import java.io.FileNotFoundException;
@@ -35,7 +36,7 @@ public class Classification {
         }
     }
 
-    public void perform(IMetric metric) {
+    public void perform(IMetric metric, ISimilarityMeter similarityMeter) {
         List<Group> groups = new ArrayList<>();
         truePositive = 0;
 
@@ -44,7 +45,7 @@ public class Classification {
             Map<IClassificationObject, Double> distances = new HashMap<>();
 
             for (IClassificationObject learningObject : learningSet) {
-                double distance = metric.compare(testObject.getFeaturesVector(), learningObject.getFeaturesVector());
+                double distance = metric.compare(testObject.getFeaturesVector(), learningObject.getFeaturesVector(), similarityMeter);
                 distances.put(learningObject, distance);
             }
             IClassificationObject[] selectedObjects = Operations.selectObjects(distances, k);

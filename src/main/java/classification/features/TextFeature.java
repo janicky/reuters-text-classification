@@ -1,7 +1,6 @@
 package classification.features;
 
-import classification.similarity.NGram;
-
+import classification.similarity.ISimilarityMeter;
 public class TextFeature implements IFeature<String> {
 
     private String value;
@@ -13,8 +12,7 @@ public class TextFeature implements IFeature<String> {
         return value;
     }
 
-    public double compareTo(IFeature<String> feature) {
-        NGram trigram = new NGram(3);
-        return trigram.measure(getValue(), feature.getValue());
+    public double compareTo(IFeature<String> feature, ISimilarityMeter similarityMeter) {
+        return similarityMeter.measure(getValue(), feature.getValue());
     }
 }
