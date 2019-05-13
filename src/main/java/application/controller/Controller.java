@@ -459,6 +459,7 @@ public class Controller {
             classification.setK(model.getK());
             classification.perform(model.getMetric(), model.getSimilarityMeter());
             classificationTab.setAccuracy(classification.getAccuracy());
+            classificationTab.setResults(classification.getResults());
             view.displayInfo("Classification finished!");
         } catch (Exception e) {
             view.displayError(e.getMessage());

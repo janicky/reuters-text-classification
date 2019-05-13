@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
 public class ClassificationTab {
@@ -21,6 +22,14 @@ public class ClassificationTab {
     private JButton extractFeaturesButton;
     private JLabel accuracy;
     private JCheckBox featuresExtractedCheckBox;
+    private JTable resultsTable;
+    private DefaultTableModel tableModel = new DefaultTableModel();
+
+    public ClassificationTab() {
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Label");
+        tableModel.addColumn("Accuracy");
+    }
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -96,6 +105,15 @@ public class ClassificationTab {
 
     public void setAccuracy(double accuracy) {
         double percents = Math.round(accuracy * 100d);
-        this.accuracy.setText(Double.toString(percents) + "%");
+        this.accuracy.setText(percents + "%");
+    }
+
+    public void setResults(Object[][] results) {
+        tableModel.getDataVector().removeAllElements();
+        for (Object[] row : results) {
+            tableModel.addRow(row);
+        }
+        resultsTable.setModel(tableModel);
+        tableModel.fireTableDataChanged();
     }
 }

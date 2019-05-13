@@ -15,6 +15,7 @@ public class Classification {
     private IClassificationObject[] objects;
     private IClassificationObject[] learningSet;
     private IClassificationObject[] testingSet;
+    private Object[][] results;
 
     private int truePositive = 0;
     private int k;
@@ -38,9 +39,10 @@ public class Classification {
 
     public void perform(IMetric metric, ISimilarityMeter similarityMeter) {
         List<Group> groups = new ArrayList<>();
+        Map<String, Integer> truePositiveLabels = new HashMap<>();
+        Map<String, Integer> truePositiveCounts = new HashMap<>();
         truePositive = 0;
 
-        int x = 0;
         for(IClassificationObject testObject : testingSet) {
             Map<IClassificationObject, Double> distances = new HashMap<>();
 
@@ -59,17 +61,39 @@ public class Classification {
 
             if (Operations.checkLabel(selectedLabel, testObject.getLabels())) {
                 truePositive++;
+                if (truePositiveLabels.containsKey(selectedLabel)) {
+                    truePositiveLabels.put(selectedLabel, truePositiveLabels.get(selectedLabel) + 1);
+                } else {
+                    truePositiveLabels.put(selectedLabel, 1);
+                }
             }
+            if (truePositiveCounts.containsKey(selectedLabel)) {
+                truePositiveCounts.put(selectedLabel, truePositiveCounts.get(selectedLabel) + 1);
+            } else {
+                truePositiveCounts.put(selectedLabel, 1);
+            }
+
+            Object[][] results = new Object[truePositiveCounts.size()][];
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : truePositiveCounts.entrySet()) {
+                int entry_tp = (truePositiveLabels.containsKey(entry.getKey()) ? truePositiveLabels.get(entry.getKey()) : 0);
+                double acc = getAccuracy(entry_tp, entry.getValue());
+                results[i++] = new Object[] { entry.getKey(), Math.round(acc * 100d) + "%" };
+            }
+
+            this.results = results;
         }
     }
 
-
-
     public double getAccuracy() {
-        if (testingSet.length == 0) {
+        return getAccuracy(truePositive, testingSet.length);
+    }
+
+    private double getAccuracy(int tp, int count) {
+        if (count == 0) {
             return 0;
         }
-        return truePositive / (double) testingSet.length;
+        return tp / (double) count;
     }
 
     public IClassificationObject[] getLearningSet() {
@@ -102,5 +126,9 @@ public class Classification {
 
     public void setTestingSet(IClassificationObject[] testingSet) {
         this.testingSet = testingSet;
+    }
+
+    public Object[][] getResults() {
+        return results;
     }
 }
