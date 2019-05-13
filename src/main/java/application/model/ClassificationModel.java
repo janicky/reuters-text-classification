@@ -272,6 +272,7 @@ public class ClassificationModel {
 
     public void addKeyword(String keyword) {
         keywords.add(keyword);
+        keywordsUtil.setKeywords(keywords);
     }
 
     public int[] getSelectedKeywords() {
@@ -288,6 +289,7 @@ public class ClassificationModel {
             toRemove.add(keywords.get(index));
         }
         keywords.removeAll(toRemove);
+        keywordsUtil.setKeywords(keywords);
     }
 
     public void setMetric(IMetric metric) {

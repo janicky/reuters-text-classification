@@ -304,6 +304,7 @@ public class Controller {
             model.addKeyword(keywordInput);
             keywordsTab.addKeyword(keywordInput);
             updateClassificationRequirements();
+            keywordsTab.clearKeywordInput();
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
@@ -369,9 +370,8 @@ public class Controller {
             String selectedFile = chooser.getSelectedFile().getPath();
             try {
                 keywords.exportKeywords(selectedFile);
-                keywordsTab.setKeywords(keywords.getKeywords());
             } catch (IOException e) {
-                view.displayError("Couldn't load keywords from file.");
+                view.displayError("Couldn't export keywords.");
             }
         }
     }

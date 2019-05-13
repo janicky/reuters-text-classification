@@ -96,4 +96,8 @@ public class KeywordsTab {
     private void updateButtons() {
         exportButton.setEnabled(listModel.getSize() != 0);
     }
+
+    public void clearKeywordInput() {
+        keywordInput.setText("");
+    }
 }

@@ -65,4 +65,8 @@ public class Keywords {
     public String[] getKeywords() {
         return keywords.toArray(new String[keywords.size()]);
     }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
+    }
 }
