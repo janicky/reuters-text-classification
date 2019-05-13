@@ -7,6 +7,7 @@
 \usepackage[section]{placeins}
 \usepackage{listings}
 \usepackage{xparse}
+\usepackage{pgfplots}
 
 \NewDocumentCommand{\codeword}{v}{%
 \texttt{\textcolor{blue}{#1}}%
@@ -42,8 +43,7 @@ kategorii. Odbywa się to na podstawie watrości poszczególnych wyekstrachowany
 Do ekstrakcji wykorzystywany jest znormalizowany zbiór słów badanego tekstu, oznaczony przez T. Normalizacja ma na
 celu wyeliminowanie niepożądanych słów oraz sprowadzenie odmian słów o tym samym znaczeniu do jednego (określenie rdzenia słowa).
 \clearpage
-
-\subsection{Wykorzystane cechy}
+\subsection[]{Wykorzystane cechy} \label{wykorzystane_cechy}
 \subsubsection{Występowanie słowa kluczowego}
 Na podstawie dostarczonego słowa kluczowego określamy czy to słowo występuje w dokumencie (reprezentacja binarna).
 Przy użyciu tej cechy nie bierzemy pod uwagę liczności występowania tego słowa kluczowego. Cecha przyjmuje wartości $\{0; 1\}$.
@@ -244,7 +244,7 @@ Do nauki słów kluczowych wykorzystujemy algorytm TF-IDF, za pomocą którego o
 danego słowa. Kiedy dla danego słowa wartość ta jest większą od założonej, uznajemy to słowo za istotne tym samym dopisując je do
 listy słów kluczowych. Słowa kluczowe mogą zostać również określone odgórnie.
 
-\subsection{Metryki - miara odległości}
+\subsection{Metryki - miara odległości} \label{wykorzystane_metryki}
 Wykorzystane metryki służa do określenia odległości pomiędzy elementami tego samego zbioru w naszym przypadku tym
 zbiorem będzie zbiór artykułów. Do obliczenia odległości pomiędzy dwoma artykułami na potrzeby algorytmu KNN zostały
 wykorzystane metryki opisane poniżej.
@@ -287,7 +287,7 @@ gdzie:\\
 \subsection{Miary podobieństwa tekstów}
 Miara podobieństwa tesktów to miara mówiąca o tym w jakim stopniu dany tekst $A$ jest podobny do tekstu $B$.
 
-\subsubsection{Metoda n-gramów}
+\subsubsection{Metoda n-gramów} \label{n_gram}
 Metoda n-gramów określa w jakim stopniu łańcuch znaków $x$ jest podobny do łańcucha znaków $y$, na podstawie podciągów.
 \begin{equation}
     sim_{n}(x,y)=\frac{1}{N-n+1}\sum_{i=1}^{N-n+1}h(i)
@@ -315,16 +315,9 @@ gdzie:\\
 
 \subsubsection{Algorytm KMP (Knutha-Morrisa-Pratta)}
 Algorytm KMP wyszukuje podany wzorzec $x$ w tekście $y$, jeżeli podany wzorzec zostaje znaleziony zwracana jest jego
-pozycja w tekście. Wyrażony jest wzorem:
+pozycja w tekście.
 
-gdzie:\\
-\begin{description}
-    \item
-    \item
-    \item
-\end{description}
-
-\subsection{Określanie poprawności klasyfikacji}
+\subsection{Określanie poprawności klasyfikacji} \label{poprawnosc_klasyfikacji}
 Poprawność sklasyfikowanych danych określa w jakim stopniu dokumenty zostały poprawnie przyporządkowane etykietom.
 Wartość poprawności będzie oscylować w przedziale $<0;1>$. Kiedy wartość będzie będzie zbliżać się do jedynki będzie
 to oznaczać, że większość dokumentów została sklasyfikowana poprawnie.
@@ -338,15 +331,15 @@ gdzie:\\
     \item $W$ - liczba wszystkich klasyfikacji
 \end{description}
 
-{\color{blue}
-We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
-zadania (przy czym należy tu ograniczyć się wyłącznie do tego, co było
-wykorzystane) tak aby osoba, która nigdy wcześniej nie zetknęła się z tą
-tematyką, potrafiła zrozumieć dalszy opis. Część ta powinna wprowadzać
-wszystkie wykorzystywane wzory, oznaczenia itp., do których należy się
-odwoływać w dalszej części niniejszgo sprawozdania. Zamieszczony tu własny
-opis teorii (a nie skopiowany!) należy poprzeć odwołaniami bibliograficznymi
-do literatury zamieszczonej na końcu. }
+%{\color{blue}
+%We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
+%zadania (przy czym należy tu ograniczyć się wyłącznie do tego, co było
+%wykorzystane) tak aby osoba, która nigdy wcześniej nie zetknęła się z tą
+%tematyką, potrafiła zrozumieć dalszy opis. Część ta powinna wprowadzać
+%wszystkie wykorzystywane wzory, oznaczenia itp., do których należy się
+%odwoływać w dalszej części niniejszgo sprawozdania. Zamieszczony tu własny
+%opis teorii (a nie skopiowany!) należy poprzeć odwołaniami bibliograficznymi
+%do literatury zamieszczonej na końcu. }
 
 \section{Opis implementacji}
 \subsection{Struktura projektu}
@@ -386,15 +379,34 @@ stemizację, normalizację, ekstrakcję, generowanie słów kluczowych i ostatec
     \label{fig:uml}
 \end{figure}
 
-
-
-{\color{blue}
-Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
-między nimi. Powinien się tu również znaleźć diagram UML  (diagram klas)
-prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
-podać, w jakim języku programowania została stworzona aplikacja. }
+%{\color{blue}
+%Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
+%między nimi. Powinien się tu również znaleźć diagram UML  (diagram klas)
+%prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
+%podać, w jakim języku programowania została stworzona aplikacja. }
 
 \section{Materiały i metody}
+Klasyfikacja tekstów dotycząca kategorii $PLACES$ została przeprowadzna na zbiorze tekstów Reutersa, za
+pomocą wszystkich zaimplmentowanych ekstraktorów cech \ref{wykorzystane_cechy}. Badania zostały
+przeprowadzone dla wszystkich trzech metryk opisanych w punkcie \ref{wykorzystane_metryki}. Wartości
+parametru $k$ w algorytmie klasyfikującym K najbliższych sąsiadów zostały dobrane tak aby wykazać jego
+wpływ na klasyfikację. Parametr ten przyjmuje wartości ze zbioru \{2, 5, 10, 15, 20\}. Zbiór tekstów
+został podzielony odpowiednio 60\% jako dane treningowe oraz 40\% jako dane testowe. Stop lista została
+wczytana z pliku $stopwords.txt$ natomiast słowa kluczowe zostały wygenerowane ze współczynnikiem $0,6$.
+Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa została zrealizowana za
+pomocą metody N-Gramów opisanej w punkcie \ref{n_gram}.
+
+\\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, cocoa, silver oraz housing.
+Zbiór podzielono równo po 50\% dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
+jak w poprzednim badaniu jednak współczynnik generowania słów kluczowych przyjął wartość $0,03$. Badanie
+wykonano dla takich samych parametrów $k$ jak poprzednio dla lepszego porównania wyników. Porównanie odbyło
+się w oparciu o te same metryki liczenia odległości pomiędzy wektorami dokumentów jak i tę samą metodę
+obliczania odległości między cechami o wartości tekstowej.
+
+\\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
+jaki procent tekstów został sklasyfikowany poprawnie \ref{poprawnosc_klasyfikacji}.
+
+
 
 {\color{blue}
 W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
@@ -410,6 +422,92 @@ cel konkretnego testu. Najlepiej byłoby wyraźnie wyszczególnić (ponumerować
 poszczególne eksperymenty tak, aby łatwo było się do nich odwoływać dalej.}
 
 \section{Wyniki}
+Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfikacji tekstu dla danej kategorii.
+\subsection{Wyniki klasyfikacji dla kategorii $PLACES$}
+Klasyfikację przeprowadzono z wykorzystaniem każdej z wcześniej wypisanych metod ekctrakcji cech. Wektor
+klasyfikacji składa się z wartości tekstowych jak i liczbowych. Wyniki klasyfikacji przedstawiono poniżej
+na wykresie \ref{1_places}.
+
+
+\begin{figure}
+    \begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+    x tick label style={
+    /pgf/number format/1000 sep=},
+    ylabel=Poprawność klasyfikacji,
+    xlabel=Wartość parametru $k$,
+    enlargelimits=0.05,
+    legend style={at={(0.5,-0.22)},
+    anchor=north,legend columns=-1},
+    ybar interval=0.7,
+    ]
+        \addplot
+        coordinates {
+        (2,0.67)(5,0.77)(10,0.79)(15,0.8)(20,0.8)
+        };
+
+        \addplot
+        coordinates {
+        (2,0.67)(5,0.77)(10,0.8)(15,0.8)(20,0.8)
+        };
+
+        \addplot
+        coordinates {
+        (2,0.67)(5,0.77)(10,0.79)(15,0.8)(20,0.8)
+        };
+
+        \legend{Euklidesowa, Manhattan, Czebyszewa}
+    \end{axis}
+
+\end{tikzpicture}
+\end{center}
+\caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla kategorii
+$PLACES$.}
+\label{1_places}
+\end{figure}
+
+\subsection{Wyniki klasyfikacji dla kategorii $TOPICS$}
+
+
+\begin{figure}
+    \begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+        x tick label style={
+        /pgf/number format/1000 sep=},
+        ylabel=Poprawność klasyfikacji,
+        xlabel=Wartość parametru $k$,
+        enlargelimits=0.05,
+        legend style={at={(0.5,-0.22)},
+        anchor=north,legend columns=-1},
+        ybar interval=0.7,
+        ]
+            \addplot
+            coordinates {
+            (2,0.5)(5,0.58)(10,0.6)(15,0.57)(20,0.57)
+            };
+
+            \addplot
+            coordinates {
+            (2,0.47)(5,0.59)(10,0.58)(15,0.56)(20,0.57)
+            };
+
+            \addplot
+            coordinates {
+            (2,0.47)(5,0.51)(10,0.6)(15,0.58)(20,0.57)
+            };
+
+            \legend{Euklidesowa, Manhattan, Czebyszewa}
+        \end{axis}
+
+    \end{tikzpicture}
+\end{center}
+\caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
+kategorii $TOPICS$}
+\label{1_topics}
+\end{figure}
+
 {\color{blue}
 W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
 kompletny zestaw wyników w postaci tabel, wykresów itp. Powinny być one tak
@@ -421,6 +519,21 @@ wprowadzić oznaczenia (tabel, wykresów) aby móc się do nich odwoływać
 poniżej.}
 
 \section{Dyskusja}
+Klasyfikacja tekstów jest znacznie bardziej złożona niż mogło się to w pierwszej chwili wydawać.
+Aby dokonać poprawnej klasyfikacji należy uprzednio przeanalizować badane teksty między innymi w jakim
+języku zostały one napisane. Ze względu na język dokumentu należy odpowiednio dokonać stemizacji i
+lematyzacji. W zależności od typu tekstu należy dobrać odpowiednie ekstraktory cech.
+Zadajemy sobie sprawę, iż badane przez nas dokumenty mają charakter artykułów z gazet. Dla danego typu
+badanego tekstu cecha odległości słów kluczowych od początku tekstu będzie kluczowa w poprawnej
+klasyfikacji. Natomiast na przykład dla opowiadania istotność tej cechy na tle innych znacząco zmaleje.
+Użyty w badaniu wektor cech składający się zarówno z wartości metajęzykowych (czyli takich dla, których
+znaczenie mają jedynie położenie danego słowa w tekście czy liczba liter składowych) oraz wartości
+semantycznych (takich, które zwracają szczególną uwagę na budowę słowa), pozwala na dokładniejsze
+zbadanie tekstu bez względu na to jak został on zbudowany. Stwierdzenie to można smiało postawić
+zwracając uwagę na wykres \ref{1_places} na, którym tylko dla metryki $Manhattan$ przy wartości
+parametu $k=10$ poprawność klasyfikacji była nieznacznie wyższa. W pozostałych przypadkach poprawność
+klasyfikacji nie zależała od zastosowanej metryki liczenia odległości.
+
 {\color{blue}
 Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
 eksperymentów wraz ze szczegółowymi wnioskami z nich płynącymi. Najcenniejsze
