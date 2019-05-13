@@ -88,7 +88,7 @@ public class Controller {
         keywordsTab.addGenerateKeywordsButtonListener(e -> onKeywordsGenerate());
         keywordsTab.addAddKeywordButtonListener(e -> onAddKeyword());
         keywordsTab.addKeywordsListListener(e -> onKeywordsListSelection(e));
-        keywordsTab.addRemoveSelectedKeywordButtonListener(e -> onRemoveSelectedKeyword());
+        keywordsTab.addRemoveSelectedKeywordButtonListener(e -> onRemoveSelectedKeywords());
         keywordsTab.addImportButtonListener(e -> onImportKeywords());
         keywordsTab.addExportButtonListener(e -> onExportKeywords());
     }
@@ -312,22 +312,25 @@ public class Controller {
     public void onKeywordsListSelection(ListSelectionEvent event) {
         JList source = (JList) event.getSource();
         if (source.getValueIsAdjusting()) {
-            int selectedIndex = source.getSelectedIndex();
-            model.setSelectedKeyword(selectedIndex);
-            keywordsTab.setRemoveSelectedButtonEnabled(selectedIndex != -1);
+            int[] selectedIndices = source.getSelectedIndices();
+            model.setSelectedKeywords(selectedIndices);
+            keywordsTab.setRemoveSelectedButtonEnabled(selectedIndices.length != 0);
         }
     }
 
-    public void onRemoveSelectedKeyword() {
+    public void onRemoveSelectedKeywords() {
         try {
-            int index = model.getSelectedKeyword();
-            if (index == -1) {
+            int[] indices = model.getSelectedKeywords();
+            if (indices == null || indices.length == 0) {
                 throw new Exception("Keyword not selected.");
             }
-            model.removeKeyword(index);
-            keywordsTab.removeKeyword(index);
+
+            model.removeKeywords(indices);
+            keywordsTab.removeKeywords(indices);
+
             updateClassificationRequirements();
         } catch (Exception e) {
+            e.printStackTrace();
             view.displayError(e.getMessage());
         }
     }
@@ -346,6 +349,7 @@ public class Controller {
             try {
                 keywords.loadFromFile(selectedFile);
                 keywordsTab.setKeywords(keywords.getKeywords());
+                model.setKeywords(keywords.getKeywords());
             } catch (FileNotFoundException e) {
                 view.displayError("Couldn't load keywords from file.");
             }
@@ -353,7 +357,23 @@ public class Controller {
     }
 
     public void onExportKeywords() {
+        chooser = new JFileChooser();
 
+        Keywords keywords = model.getKeywordsUtil();
+        if (keywords == null) {
+            view.displayError("Learning objects not found.");
+            return;
+        }
+        int decision = chooser.showSaveDialog(view.getMainPanel());
+        if (decision == JFileChooser.APPROVE_OPTION) {
+            String selectedFile = chooser.getSelectedFile().getPath();
+            try {
+                keywords.exportKeywords(selectedFile);
+                keywordsTab.setKeywords(keywords.getKeywords());
+            } catch (IOException e) {
+                view.displayError("Couldn't load keywords from file.");
+            }
+        }
     }
 
     private void updateClassificationRequirements() {

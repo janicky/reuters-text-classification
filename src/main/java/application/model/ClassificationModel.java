@@ -54,7 +54,7 @@ public class ClassificationModel {
     private double significance = 0.5;
     private double keywordsSignificance = 0.5;
     private List<String> keywords = new ArrayList<>();
-    private int selectedKeyword = -1;
+    private int[] selectedKeywords = new int[0];
     private IMetric metric = new Euclidean();
     private ISimilarityMeter similarityMeter = new NGram(3);
     private int k = 5;
@@ -274,16 +274,20 @@ public class ClassificationModel {
         keywords.add(keyword);
     }
 
-    public int getSelectedKeyword() {
-        return selectedKeyword;
+    public int[] getSelectedKeywords() {
+        return selectedKeywords;
     }
 
-    public void setSelectedKeyword(int selectedKeyword) {
-        this.selectedKeyword = selectedKeyword;
+    public void setSelectedKeywords(int[] selectedKeywords) {
+        this.selectedKeywords = selectedKeywords;
     }
 
-    public void removeKeyword(int index) {
-        keywords.remove(index);
+    public void removeKeywords(int[] indices) {
+        List<String> toRemove = new ArrayList<>();
+        for (int index : indices) {
+            toRemove.add(keywords.get(index));
+        }
+        keywords.removeAll(toRemove);
     }
 
     public void setMetric(IMetric metric) {

@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KeywordsTab {
     private JPanel mainPanel;
@@ -77,8 +79,16 @@ public class KeywordsTab {
         removeSelectedKeywordButton.setEnabled(state);
     }
 
-    public void removeKeyword(int index) {
-        listModel.remove(index);
+    public void removeKeywords(int[] indices) {
+        List<String> toRemove = new ArrayList<>();
+        for (int index : indices) {
+            toRemove.add((String) listModel.get(index));
+        }
+
+        for (String element : toRemove) {
+            listModel.removeElement(element);
+        }
+
         keywordsList.setModel(listModel);
         updateButtons();
     }

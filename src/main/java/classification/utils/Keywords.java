@@ -3,8 +3,7 @@ package classification.utils;
 import classification.data_models.IClassificationObject;
 import classification.features.TermFrequency;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,6 +48,18 @@ public class Keywords {
         scanner.close();
 
         keywords = words;
+    }
+
+    public void exportKeywords(String filename) throws IOException {
+        FileOutputStream fos = new FileOutputStream(new File(filename));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+        for (String keyword : keywords) {
+            bw.write(keyword);
+            bw.newLine();
+        }
+
+        bw.close();
     }
 
     public String[] getKeywords() {
