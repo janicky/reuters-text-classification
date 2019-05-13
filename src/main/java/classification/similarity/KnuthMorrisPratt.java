@@ -3,6 +3,10 @@ package classification.similarity;
 public class KnuthMorrisPratt implements ISimilarityMeter {
 
     public double measure(String o1, String o2) {
+        if (o1 == null || o2 == null) {
+            return 0;
+        }
+
         int[] lsp = longestSuffixPrefix(o2);
 
         int j = 0;
