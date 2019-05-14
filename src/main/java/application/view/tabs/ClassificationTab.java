@@ -23,12 +23,13 @@ public class ClassificationTab {
     private JLabel accuracy;
     private JCheckBox featuresExtractedCheckBox;
     private JTable resultsTable;
-    private DefaultTableModel tableModel = new DefaultTableModel();
+    private DefaultTableModel tableModel;
 
     public ClassificationTab() {
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Label");
         tableModel.addColumn("Accuracy");
+        tableModel.addColumn("Ratio");
     }
 
     public JPanel getMainPanel() {

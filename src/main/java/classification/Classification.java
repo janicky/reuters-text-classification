@@ -78,7 +78,7 @@ public class Classification {
             for (Map.Entry<String, Integer> entry : truePositiveCounts.entrySet()) {
                 int entry_tp = (truePositiveLabels.containsKey(entry.getKey()) ? truePositiveLabels.get(entry.getKey()) : 0);
                 double acc = getAccuracy(entry_tp, entry.getValue());
-                results[i++] = new Object[] { entry.getKey(), Math.round(acc * 100d) + "%" };
+                results[i++] = new Object[] { entry.getKey(), Math.round(acc * 100d) + "%", entry_tp + "/" + entry.getValue() };
             }
 
             this.results = results;
