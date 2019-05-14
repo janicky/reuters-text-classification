@@ -10,6 +10,7 @@ import classification.metrics.IMetric;
 import classification.utils.Keywords;
 import classification.utils.Operations;
 import classification.utils.StopWords;
+import org.apache.commons.lang3.time.StopWatch;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -20,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
@@ -417,6 +419,8 @@ public class Controller {
 
     private void onExtractFeatures() {
         try {
+            StopWatch timer = StopWatch.createStarted();
+
             Classification classification = model.getClassification();
             String[] keywords = model.getKeywords();
             String[] extractors = model.getExtractors();
@@ -430,9 +434,10 @@ public class Controller {
                 throw new Exception("Please select extractors.");
             }
             classification.extractFeatures(extractors, keywords);
+            timer.stop();
             model.setFeaturesExtracted(true);
             classificationTab.setFeaturesExtractedCheckBoxSelected(true);
-            view.displayInfo("Features have been extracted!");
+            view.displayInfo("Features have been extracted! [" + (timer.getTime(TimeUnit.MILLISECONDS) / 1000.0) + "s]");
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
@@ -440,6 +445,7 @@ public class Controller {
 
     private void onStartClassification() {
         try {
+            StopWatch timer = StopWatch.createStarted();
             Classification classification = model.getClassification();
             IClassificationObject[] learningObjects = model.getLearningObjects();
             IClassificationObject[] testingObjects = model.getTestingObjects();
@@ -458,9 +464,10 @@ public class Controller {
             }
             classification.setK(model.getK());
             classification.perform(model.getMetric(), model.getSimilarityMeter());
+            timer.stop();
             classificationTab.setAccuracy(classification.getAccuracy());
             classificationTab.setResults(classification.getResults());
-            view.displayInfo("Classification finished!");
+            view.displayInfo("Classification finished! [" + (timer.getTime(TimeUnit.MILLISECONDS) / 1000.0) + "s]");
         } catch (Exception e) {
             view.displayError(e.getMessage());
         }
