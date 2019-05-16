@@ -14,6 +14,10 @@ public class NumberFeature implements IFeature<Double> {
         return value;
     }
 
+    public void setValue(double value) {
+        this.value = value;
+    }
+
     public double compareTo(IFeature<Double> feature, ISimilarityMeter similarityMeter) {
         return getValue() - feature.getValue();
     }

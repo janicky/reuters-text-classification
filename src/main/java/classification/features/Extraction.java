@@ -107,6 +107,43 @@ public class Extraction {
         features.put("wordsCount", new NumberFeature(text.length));
     }
 
+    public void normalize() {
+        double sum = 0, mean = 0;
+        int count = 0;
+        for (IFeature feature : features.values()) {
+            if (feature.getClass().equals(NumberFeature.class)) {
+                NumberFeature numberFeature = (NumberFeature) feature;
+                sum += numberFeature.getValue();
+                count++;
+            }
+        }
+        if (count > 0) {
+            mean = sum / (double)count;
+        }
+
+        double dev_sum = 0, deviation = 0;
+
+        for (IFeature feature : features.values()) {
+            if (feature.getClass().equals(NumberFeature.class)) {
+                NumberFeature numberFeature = (NumberFeature) feature;
+                double diff = (numberFeature.getValue() - mean);
+                dev_sum += diff * diff;
+            }
+        }
+
+        if (count > 0) {
+            deviation = Math.sqrt(dev_sum / (double) count);
+        }
+
+        for (IFeature feature : features.values()) {
+            if (feature.getClass().equals(NumberFeature.class)) {
+                NumberFeature numberFeature = (NumberFeature) feature;
+                double normalized = (numberFeature.getValue() - mean) / deviation;
+                numberFeature.setValue(normalized);
+            }
+        }
+    }
+
     public Map<String, IFeature> getFeatures() {
         return features;
     }
