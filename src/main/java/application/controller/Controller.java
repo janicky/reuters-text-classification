@@ -406,7 +406,7 @@ public class Controller {
         JList source = (JList) event.getSource();
         int[] selectedItems = source.getSelectedIndices();
 
-        String[] extractors = model.getAvailableExtractors();
+        String[] extractors = model.getExtractorsMethodNames();
         List<String> selectedExtractors = new ArrayList<>();
 
         for (int item : selectedItems) {

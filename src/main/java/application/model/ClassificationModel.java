@@ -329,6 +329,22 @@ public class ClassificationModel {
         }
     }
 
+    public String[] getExtractorsMethodNames() {
+        try {
+            Class c = Class.forName("classification.features.Extraction");
+            Method[] methods = c.getDeclaredMethods();
+            List<String> output = new ArrayList<>();
+            for (Method method : methods) {
+                if (method.isAnnotationPresent(FeatureAnnotation.class)) {
+                    output.add(method.getName());
+                }
+            }
+            return output.toArray(new String[output.size()]);
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
     public String[] getExtractors() {
         return extractors;
     }
