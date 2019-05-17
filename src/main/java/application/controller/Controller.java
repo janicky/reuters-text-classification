@@ -439,6 +439,7 @@ public class Controller {
             classificationTab.setFeaturesExtractedCheckBoxSelected(true);
             view.displayInfo("Features have been extracted! [" + (timer.getTime(TimeUnit.MILLISECONDS) / 1000.0) + "s]");
         } catch (Exception e) {
+            e.printStackTrace();
             view.displayError(e.getMessage());
         }
     }

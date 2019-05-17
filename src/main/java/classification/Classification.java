@@ -33,7 +33,7 @@ public class Classification {
                 Method method = extraction.getClass().getDeclaredMethod(extractor);
                 method.invoke(extraction);
             }
-            extraction.normalize();
+//            extraction.normalize();
             object.setFeaturesVector(extraction.getFeatures());
         }
     }

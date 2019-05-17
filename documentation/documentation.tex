@@ -317,6 +317,10 @@ gdzie:\\
 Algorytm KMP wyszukuje podany wzorzec $x$ w tekście $y$, jeżeli podany wzorzec zostaje znaleziony zwracana jest jego
 pozycja w tekście.
 
+\subsection{Normalizacja}
+Normalizacji poddawany jest każdy wektor cech. Działanie to eliminuje sutyację, w której wartość pewnej
+cechy może zdominować cały wektor przez co inne cechy nie będą aż tak istotne z punktu widzenia programu.
+
 \subsection{Określanie poprawności klasyfikacji} \label{poprawnosc_klasyfikacji}
 Poprawność sklasyfikowanych danych określa w jakim stopniu dokumenty zostały poprawnie przyporządkowane etykietom.
 Wartość poprawności będzie oscylować w przedziale $<0;1>$. Kiedy wartość będzie będzie zbliżać się do jedynki będzie
@@ -392,9 +396,10 @@ przeprowadzone dla wszystkich trzech metryk opisanych w punkcie \ref{wykorzystan
 parametru $k$ w algorytmie klasyfikującym K najbliższych sąsiadów zostały dobrane tak aby wykazać jego
 wpływ na klasyfikację. Parametr ten przyjmuje wartości ze zbioru \{2, 5, 10, 15, 20\}. Zbiór tekstów
 został podzielony odpowiednio 60\% jako dane treningowe oraz 40\% jako dane testowe. Stop lista została
-wczytana z pliku $stopwords.txt$ natomiast słowa kluczowe zostały wygenerowane ze współczynnikiem $0,6$.
-Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa została zrealizowana za
-pomocą metody N-Gramów opisanej w punkcie \ref{n_gram}.
+wczytana z pliku $stopwords.txt$ natomiast słowa kluczowe zostały wygenerowane ze współczynnikiem $0,75$.
+Współczynnik ten jest to wartość $TF-IDF$. Słowa dla, krótych ta wartość jest powyżej podanej uznawane
+są za słowa kluczowe. Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa
+została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram}.
 
 \\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, cocoa, silver oraz housing.
 Zbiór podzielono równo po 50\% dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
@@ -408,25 +413,25 @@ jaki procent tekstów został sklasyfikowany poprawnie \ref{poprawnosc_klasyfika
 
 
 
-{\color{blue}
-W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
-których wyniki i dyskusja zamieszczane są w dalszych sekcjach. Opis ten
-powinien być na tyle dokładny, aby osoba czytająca go potrafiła wszystkie
-przeprowadzone badania samodzielnie powtórzyć w celu zweryfikowania ich
-poprawności (a zatem m.in. należy zamieścić tu opis architektury sieci,
-wartości współczynników użytych w kolejnych eksperymentach, sposób
-inicjalizacji wag, metodę uczenia itp. oraz informacje o danych, na których
-prowadzone były badania). Przy opisie należy odwoływać się i stosować do
-opisanych w sekcji drugiej wzorów i oznaczeń, a także w jasny sposób opisać
-cel konkretnego testu. Najlepiej byłoby wyraźnie wyszczególnić (ponumerować)
-poszczególne eksperymenty tak, aby łatwo było się do nich odwoływać dalej.}
+%{\color{blue}
+%W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
+%których wyniki i dyskusja zamieszczane są w dalszych sekcjach. Opis ten
+%powinien być na tyle dokładny, aby osoba czytająca go potrafiła wszystkie
+%przeprowadzone badania samodzielnie powtórzyć w celu zweryfikowania ich
+%poprawności (a zatem m.in. należy zamieścić tu opis architektury sieci,
+%wartości współczynników użytych w kolejnych eksperymentach, sposób
+%inicjalizacji wag, metodę uczenia itp. oraz informacje o danych, na których
+%prowadzone były badania). Przy opisie należy odwoływać się i stosować do
+%opisanych w sekcji drugiej wzorów i oznaczeń, a także w jasny sposób opisać
+%cel konkretnego testu. Najlepiej byłoby wyraźnie wyszczególnić (ponumerować)
+%poszczególne eksperymenty tak, aby łatwo było się do nich odwoływać dalej.}
 
 \section{Wyniki}
 Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfikacji tekstu dla danej kategorii.
 \subsection{Wyniki klasyfikacji dla kategorii $PLACES$}
 Klasyfikację przeprowadzono z wykorzystaniem każdej z wcześniej wypisanych metod ekctrakcji cech. Wektor
 klasyfikacji składa się z wartości tekstowych jak i liczbowych. Wyniki klasyfikacji przedstawiono poniżej
-na wykresie \ref{1_places}.
+na wykresach.
 
 
 \begin{figure}
@@ -444,17 +449,17 @@ na wykresie \ref{1_places}.
     ]
         \addplot
         coordinates {
-        (2,0.67)(5,0.77)(10,0.79)(15,0.8)(20,0.8)
+        (2,0.64)(5,0.77)(10,0.8)(15,0.8)(20,0.8)
         };
 
         \addplot
         coordinates {
-        (2,0.67)(5,0.77)(10,0.8)(15,0.8)(20,0.8)
+        (2,0.64)(5,0.78)(10,0.8)(15,0.8)(20,0.8)
         };
 
         \addplot
         coordinates {
-        (2,0.67)(5,0.77)(10,0.79)(15,0.8)(20,0.8)
+        (2,0.64)(5,0.77)(10,0.8)(15,0.8)(20,0.8)
         };
 
         \legend{Euklidesowa, Manhattan, Czebyszewa}
@@ -467,56 +472,253 @@ $PLACES$.}
 \label{1_places}
 \end{figure}
 
-\subsection{Wyniki klasyfikacji dla kategorii $TOPICS$}
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Czas klasyfikacji ($sekundy$),
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,1033.047)(5,1033.665)(10,1017.195)(15,1056.296)(20,1072.138)
+                };
 
+                \addplot
+                coordinates {
+                (2,1030.663)(5,1269.484)(10,1174.352)(15,1039.059)(20,1089.03)
+                };
+
+                \addplot
+                coordinates {
+                (2,1058.355)(5,1169.824)(10,1180.133)(15,1229.68)(20,978.71)
+                };
+
+                \legend{Euklidesowa, Manhattan, Czebyszewa}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Czas klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla kategorii
+    $PLACES$.}
+    \label{1_places_time}
+\end{figure}
 
 \begin{figure}
     \begin{center}
-    \begin{tikzpicture}
-        \begin{axis}[
-        x tick label style={
-        /pgf/number format/1000 sep=},
-        ylabel=Poprawność klasyfikacji,
-        xlabel=Wartość parametru $k$,
-        enlargelimits=0.05,
-        legend style={at={(0.5,-0.22)},
-        anchor=north,legend columns=-1},
-        ybar interval=0.7,
-        ]
-            \addplot
-            coordinates {
-            (2,0.5)(5,0.58)(10,0.6)(15,0.57)(20,0.57)
-            };
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.81)(5,0.81)(10,0.80)(15,0.80)(20,0.80)
+                };
 
-            \addplot
-            coordinates {
-            (2,0.47)(5,0.59)(10,0.58)(15,0.56)(20,0.57)
-            };
+                \addplot
+                coordinates {
+                (2,0.07)(5,0.19)(10,0)(15,1)(20,0)
+                };
 
-            \addplot
-            coordinates {
-            (2,0.47)(5,0.51)(10,0.6)(15,0.58)(20,0.57)
-            };
+                \addplot
+                coordinates {
+                (2,0.07)(5,0.10)(10,0.03)(15,0.5)(20,0)
+                };
 
-            \legend{Euklidesowa, Manhattan, Czebyszewa}
-        \end{axis}
+                \addplot
+                coordinates {
+                (2,0.07)(5,0.11)(10,0.07)(15,0.20)(20,0)
+                };
 
-    \end{tikzpicture}
-\end{center}
-\caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
-kategorii $TOPICS$}
-\label{1_topics}
+                \addplot
+                coordinates {
+                (2,0.02)(5,0.14)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.04)(5,0.05)(10,0)(15,0.17)(20,0)
+                };
+
+                \legend{USA, Canada, Japan, UK, France, West-Germany}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ i zawartych metryk dla kategorii$PLACES$ z użyciem metryki Euklidesowej.}
+    \label{1_places_label_eucli}
 \end{figure}
 
-{\color{blue}
-W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
-kompletny zestaw wyników w postaci tabel, wykresów itp. Powinny być one tak
-ponazywane, aby było wiadomo, do czego się odnoszą. Wszystkie tabele i wykresy
-należy oczywiście opisać (opisać co jest na osiach, w kolumnach itd.) stosując
-się do przyjętych wcześniej oznaczeń. Nie należy tu komentować i interpretować
-wyników, gdyż miejsce na to jest w kolejnej sekcji. Tu również dobrze jest
-wprowadzić oznaczenia (tabel, wykresów) aby móc się do nich odwoływać
-poniżej.}
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.81)(5,0.81)(10,0.80)(15,0.80)(20,0.80)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.06)(5,0.21)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.08)(5,0.09)(10,0.04)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.08)(5,0.14)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.02)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.06)(5,0.04)(10,0)(15,0.14)(20,0.11)
+                };
+
+                \legend{USA, Canada, Japan, UK, France, West-Germany}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ i zawartych metryk dla kategorii$PLACES$ z użyciem metryki Manhattan.}
+    \label{1_places_label_man}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.82)(5,0.81)(10,0.81)(15,0.80)(20,0.80)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.08)(5,0.18)(10,0.8)(15,0.17)(20,0.5)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.08)(5,0.12)(10,0.09)(15,0.25)(20,0.25)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.10)(5,0.16)(10,0.44)(15,0.67)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.01)(5,0.04)(10,0.11)(15,0.20)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.05)(5,0.05)(10,0)(15,0.20)(20,0.20)
+                };
+
+                \legend{USA, Canada, Japan, UK, France, West-Germany}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ i zawartych metryk dla kategorii$PLACES$ z użyciem metryki Czebyszewa.}
+    \label{1_places_label_cz}
+\end{figure}
+
+\subsection{Wyniki klasyfikacji dla kategorii $TOPICS$}
+
+
+%\begin{figure}
+%    \begin{center}
+%    \begin{tikzpicture}
+%        \begin{axis}[
+%        x tick label style={
+%        /pgf/number format/1000 sep=},
+%        ylabel=Poprawność klasyfikacji,
+%        xlabel=Wartość parametru $k$,
+%        enlargelimits=0.05,
+%        legend style={at={(0.5,-0.22)},
+%        anchor=north,legend columns=-1},
+%        ybar interval=0.7,
+%        ]
+%            \addplot
+%            coordinates {
+%            (2,0.5)(5,0.58)(10,0.6)(15,0.57)(20,0.57)
+%            };
+%
+%            \addplot
+%            coordinates {
+%            (2,0.47)(5,0.59)(10,0.58)(15,0.56)(20,0.57)
+%            };
+%
+%            \addplot
+%            coordinates {
+%            (2,0.47)(5,0.51)(10,0.6)(15,0.58)(20,0.57)
+%            };
+%
+%            \legend{Euklidesowa, Manhattan, Czebyszewa}
+%        \end{axis}
+%
+%    \end{tikzpicture}
+%\end{center}
+%\caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
+%kategorii $TOPICS$}
+%\label{1_topics}
+%\end{figure}
+
+%{\color{blue}
+%W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
+%kompletny zestaw wyników w postaci tabel, wykresów itp. Powinny być one tak
+%ponazywane, aby było wiadomo, do czego się odnoszą. Wszystkie tabele i wykresy
+%należy oczywiście opisać (opisać co jest na osiach, w kolumnach itd.) stosując
+%się do przyjętych wcześniej oznaczeń. Nie należy tu komentować i interpretować
+%wyników, gdyż miejsce na to jest w kolejnej sekcji. Tu również dobrze jest
+%wprowadzić oznaczenia (tabel, wykresów) aby móc się do nich odwoływać
+%poniżej.}
 
 \section{Dyskusja}
 Klasyfikacja tekstów jest znacznie bardziej złożona niż mogło się to w pierwszej chwili wydawać.
@@ -534,15 +736,30 @@ zwracając uwagę na wykres \ref{1_places} na, którym tylko dla metryki $Manhat
 parametu $k=10$ poprawność klasyfikacji była nieznacznie wyższa. W pozostałych przypadkach poprawność
 klasyfikacji nie zależała od zastosowanej metryki liczenia odległości.
 
-{\color{blue}
-Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
-eksperymentów wraz ze szczegółowymi wnioskami z nich płynącymi. Najcenniejsze
-są, rzecz jasna, wnioski o charakterze uniwersalnym, które mogą być istotne
-przy innych, podobnych zadaniach. Należy również omówić i wyjaśnić wszystkie
-napotakane problemy (jeśli takie były). Każdy wniosek powinien mieć poparcie
-we wcześniej przeprowadzonych eksperymentach (odwołania do konkretnych
-wyników). Jest to jedna z najważniejszych sekcji tego sprawozdania, gdyż
-prezentuje poziom zrozumienia badanego problemu.}
+\\Podsumowywując wyniki czasu działania algorytmu na wykresie \ref{1_places_time} można zaobserwować
+nieznacznie różniący się czas wykonywania dla metryki Euklideswej bez względu na wartość parametru $k$.
+W przypadku metryki Czebyszewa czas wykonywania zwiększał się wraz ze wzrostem parametru.
+Z uwagi na podobny czas działania dla wszystkich przebadanych parametrów metryka Euklidesowa
+jest najbardziej uniwersalna.
+
+\\Odnośnie wykresów pokazujących poprawność klasyfikacji (wykresy \ref{1_places_label_eucli}
+\ref{1_places_label_man} \ref{1_places_label_cz}) dla poszczególnych etykiet zaobserwować można
+niepokojącą tendencję do poprawności klasyfikacji jedynie etykiety dla, której liczba artykułów
+znacząco przewyższała liczbę pozostałych. Bez względu na parametr $k$ dla etykiety $USA$ znacząca
+większość artykułów została sklasyfikowana poprawnie. Przyczyną tego jest przeważająca większość
+artykułów o tej kategorii. Aby uzyskać większą poprawność klasyfikacji
+dla pozostałych etykiet należało by znormalizować zbiór testowy tak aby znajdowały się z nim
+zbliżone ilości artykułów o tych etykietach które chcemy klasyfikować.
+
+%{\color{blue}
+%Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
+%eksperymentów wraz ze szczegółowymi wnioskami z nich płynącymi. Najcenniejsze
+%są, rzecz jasna, wnioski o charakterze uniwersalnym, które mogą być istotne
+%przy innych, podobnych zadaniach. Należy również omówić i wyjaśnić wszystkie
+%napotakane problemy (jeśli takie były). Każdy wniosek powinien mieć poparcie
+%we wcześniej przeprowadzonych eksperymentach (odwołania do konkretnych
+%wyników). Jest to jedna z najważniejszych sekcji tego sprawozdania, gdyż
+%prezentuje poziom zrozumienia badanego problemu.}
 \section{Wnioski}
 {\color{blue}W tej, przedostatniej, sekcji należy zamieścić podsumowanie
 najważniejszych wniosków z sekcji poprzedniej. Najlepiej jest je po prostu
