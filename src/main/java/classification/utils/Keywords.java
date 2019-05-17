@@ -25,16 +25,19 @@ public class Keywords {
 
         List<String> newKeywords = new ArrayList<>();
 
+        int finished = 0;
         for (IClassificationObject object : objects) {
             String[] words = object.getVectorizedText();
             for (String word : words) {
-                if (!newKeywords.contains(word)) {
+                if (!newKeywords.contains(word) && word.length() > 2) {
                     double tfidf = TermFrequency.termFrequencyInverseFrequency(documents, words, word);
                     if (tfidf > significance) {
                         newKeywords.add(word);
                     }
                 }
             }
+            finished++;
+            System.out.println(finished + " / " + objects.length);
         }
         keywords = newKeywords;
     }

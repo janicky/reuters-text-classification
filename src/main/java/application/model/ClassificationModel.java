@@ -319,7 +319,8 @@ public class ClassificationModel {
             List<String> output = new ArrayList<>();
             for (Method method : methods) {
                 if (method.isAnnotationPresent(FeatureAnnotation.class)) {
-                    output.add(method.getName());
+                    FeatureAnnotation annotation = (FeatureAnnotation) method.getAnnotations()[0];
+                    output.add(annotation.name());
                 }
             }
             return output.toArray(new String[output.size()]);

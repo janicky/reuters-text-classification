@@ -6,4 +6,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FeatureAnnotation {
     String name = "Feature";
+    String name() default "";
 }

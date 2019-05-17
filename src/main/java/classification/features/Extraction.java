@@ -16,7 +16,16 @@ public class Extraction {
         this.keywords = keywords;
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "Keywords binary representation")
+    public void keywordsBinary() {
+        Map<String, Integer> occurrences = ExtractionHelper.getKeywordsOccurrences(text, keywords);
+        for (Map.Entry<String, Integer> entry : occurrences.entrySet()) {
+            int value = entry.getValue().intValue();
+            features.put("ko_" + entry.getKey(), new NumberFeature(value > 0 ? 1 : 0));
+        }
+    }
+
+    @FeatureAnnotation(name = "Keywords occurrences")
     public void keywordOccurrences() {
         Map<String, Integer> occurrences = ExtractionHelper.getKeywordsOccurrences(text, keywords);
         for (Map.Entry<String, Integer> entry : occurrences.entrySet()) {
@@ -24,14 +33,14 @@ public class Extraction {
         }
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "Occurred keywords count")
     public void keywordOccurrencesCount() {
         Map<String, Integer> keywordsOccurrences = ExtractionHelper.getKeywordsOccurrences(text, keywords);
         int occurrencesCount = keywordsOccurrences.values().stream().reduce(0, Integer::sum);
         features.put("keywords_occurrences_count", new NumberFeature(occurrencesCount));
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "Keywords density")
     public void keywordsDensity() {
         if (text.length == 0) {
             features.put("keywords_density", new NumberFeature(0d));
@@ -44,7 +53,7 @@ public class Extraction {
         features.put("keywords_density", new NumberFeature(density));
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "Keywords position")
     public void keywordsPosition() {
         for (String keyword : keywords) {
             for (int i = 0; i < text.length; i++) {
@@ -58,7 +67,7 @@ public class Extraction {
         }
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "Keywords average position")
     public void keywordsAveragePosition() {
         for (String keyword : keywords) {
             int position = 0;
@@ -73,7 +82,7 @@ public class Extraction {
         }
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "First keyword")
     public void firstKeyword() {
         for (String keyword : keywords) {
             for (String word : text) {
@@ -86,7 +95,7 @@ public class Extraction {
         features.put("first_keyword", new TextFeature(null));
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "Most frequent keyword")
     public void mostFrequentKeyword() {
         Map<String, Integer> occurrences = ExtractionHelper.getKeywordsOccurrences(text, keywords);
         String feature_keyword = null;
@@ -102,7 +111,7 @@ public class Extraction {
         features.put("most_frequent_keyword", new TextFeature(feature_keyword));
     }
 
-    @FeatureAnnotation
+    @FeatureAnnotation(name = "Words count")
     public void wordsCount() {
         features.put("wordsCount", new NumberFeature(text.length));
     }
