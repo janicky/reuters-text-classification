@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{xparse}
 \usepackage{pgfplots}
+%\usepackage[bottom]{footmisc}
 
 \NewDocumentCommand{\codeword}{v}{%
 \texttt{\textcolor{blue}{#1}}%
@@ -30,6 +31,7 @@
 \title{Zadanie 1: Ekstrakcja cech, miary podobieństwa, klasyfikacja}
 
 \begin{document}
+    \pgfplotsset{scaled y ticks=false}
 \maketitle
 
 \section{Cel}
@@ -389,27 +391,41 @@ stemizację, normalizację, ekstrakcję, generowanie słów kluczowych i ostatec
 %prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
 %podać, w jakim języku programowania została stworzona aplikacja. }
 
-\section{Materiały i metody}
+\section{Materiały i metody} \label{mat}
 Klasyfikacja tekstów dotycząca kategorii $PLACES$ została przeprowadzna na zbiorze tekstów Reutersa, za
 pomocą wszystkich zaimplmentowanych ekstraktorów cech \ref{wykorzystane_cechy}. Badania zostały
 przeprowadzone dla wszystkich trzech metryk opisanych w punkcie \ref{wykorzystane_metryki}. Wartości
 parametru $k$ w algorytmie klasyfikującym K najbliższych sąsiadów zostały dobrane tak aby wykazać jego
 wpływ na klasyfikację. Parametr ten przyjmuje wartości ze zbioru \{2, 5, 10, 15, 20\}. Zbiór tekstów
-został podzielony odpowiednio 60\% jako dane treningowe oraz 40\% jako dane testowe. Stop lista została
-wczytana z pliku $stopwords.txt$ natomiast słowa kluczowe zostały wygenerowane ze współczynnikiem $0,75$.
-Współczynnik ten jest to wartość $TF-IDF$. Słowa dla, krótych ta wartość jest powyżej podanej uznawane
-są za słowa kluczowe. Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa
+został podzielony odpowiednio $60\%$ jako dane treningowe oraz $40\%$ jako dane testowe. Jako stop listę
+wykorzystano gotowy zbiór\footnotemark[1] słów nieznaczących dla języka angielskiego.
+\footnotetext[1]{https://gist.github.com/sebleier/554280}
+Słowa kluczowe zostały wygenerowane na podstawie algorytmu częstości słów (TF-IDF). Podczas generowania
+słów kluczowych została przyjęta wartość $0.75$ (TF-IDF) powyżej której słowo traktowane jest jako istotne i
+tym samym trafia na listę słów kluczowych. Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa
 została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram}.
 
-\\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, cocoa, silver oraz housing.
+\\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, oraz silver.
 Zbiór podzielono równo po 50\% dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
-jak w poprzednim badaniu jednak współczynnik generowania słów kluczowych przyjął wartość $0,03$. Badanie
+jak w poprzednim badaniu jednak współczynnik generowania słów kluczowych przyjął wartość $0,1$. Badanie
 wykonano dla takich samych parametrów $k$ jak poprzednio dla lepszego porównania wyników. Porównanie odbyło
 się w oparciu o te same metryki liczenia odległości pomiędzy wektorami dokumentów jak i tę samą metodę
 obliczania odległości między cechami o wartości tekstowej.
 
-\\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
-jaki procent tekstów został sklasyfikowany poprawnie \ref{poprawnosc_klasyfikacji}.
+\\Badanie dotyczące optymalnego podziału zbioru rozpoczęto od podziału $90\%$ tekstów jako zbiór uczący
+$10\%$ jako testowy, kolejno do wartości $10\%$ zbiór uczący oraz $90\%$ zbiór testowy. Skorzystano z
+etykiet: hongkong, sweeden, philipines. Etykiety dobrano tak aby ich liczebność była zbliżona.
+Stop listę wczytano z pliku jak w poprzednich badaniach. Słowa kluczowe generowano ze współczynnikiem
+TF-IDF wynoszącym $0,2$. Generowania słów kluczowych dokonywano przy każdej zmianie podziału zbioru
+ze względu na zmianę liczebności zbioru uczącego. Wykorzystano wszystkie dostępne ekstraktory cech.
+W badaniu parametr $k$ był
+stały i wynosił $20$. Jako metrykę przyjęto metrykę Euklidesową. Liczebność zbioru na którym
+przeprowadzono badanie wynosiła 206 elementów.
+
+
+
+    \\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
+jaki procent tekstów został sklasyfikowany poprawnie (opisany w punkcie \ref{poprawnosc_klasyfikacji}).
 
 
 
@@ -428,20 +444,112 @@ jaki procent tekstów został sklasyfikowany poprawnie \ref{poprawnosc_klasyfika
 
 \section{Wyniki}
 Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfikacji tekstu dla danej kategorii.
+
+\subsection{Liczebność zbioru dla kategorii $PLACES$}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/10000 sep=},
+            ylabel=Ilość etykiety,
+            xticklabels={,,,,,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.10)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,10682)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,829)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,485)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,914)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,271)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,325)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \legend{USA, Canada, Japan, UK, France, West-Germany}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Liczebność poszczególnych etykiet w kategorii $PLACES$.}
+    \label{licz_places}
+\end{figure}
+
+\subsection{Liczebność zbioru dla kategorii $TOPICS$}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Ilość etykiet,
+            xticklabels={,,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.10)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,156)(0,0)(0,0)
+                };
+                \addplot
+                coordinates {
+                (1,6)(0,0)(0,0)
+                };
+                \addplot
+                coordinates {
+                (1,11)(0,0)(0,0)
+                };
+                \legend{Ship, Tea, Silver}
+
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Liczebność poszczególnych etykiet w kategorii $TOPICS$.}
+    \label{licz_topics}
+\end{figure}
+\FloatBarrier
 \subsection{Wyniki klasyfikacji dla kategorii $PLACES$}
 Klasyfikację przeprowadzono z wykorzystaniem każdej z wcześniej wypisanych metod ekctrakcji cech. Wektor
 klasyfikacji składa się z wartości tekstowych jak i liczbowych. Wyniki klasyfikacji przedstawiono poniżej
 na wykresach.
 
 
-\begin{figure}
+\begin{figure}[h!]
     \begin{center}
 \begin{tikzpicture}
     \begin{axis}[
     x tick label style={
     /pgf/number format/1000 sep=},
-    ylabel=Poprawność klasyfikacji,
-    xlabel=Wartość parametru $k$,
+    ylabel=Ilość etykiet,
+    xlabel=Nazwa etykiety,
     enlargelimits=0.05,
     legend style={at={(0.5,-0.22)},
     anchor=north,legend columns=-1},
@@ -472,13 +580,13 @@ $PLACES$.}
 \label{1_places}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
             x tick label style={
             /pgf/number format/1000 sep=},
-            ylabel=Czas klasyfikacji ($sekundy$),
+            ylabel=Czas klasyfikacji ($s$),
             xlabel=Wartość parametru $k$,
             enlargelimits=0.05,
             legend style={at={(0.5,-0.22)},
@@ -510,7 +618,7 @@ $PLACES$.}
     \label{1_places_time}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
@@ -559,11 +667,11 @@ $PLACES$.}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii$PLACES$ z użyciem metryki Euklidesowej.}
+    $k$ i zawartych metryk dla kategorii $PLACES$ z użyciem metryki Euklidesowej.}
     \label{1_places_label_eucli}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
@@ -612,11 +720,11 @@ $PLACES$.}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii$PLACES$ z użyciem metryki Manhattan.}
+    $k$ i zawartych metryk dla kategorii $PLACES$ z użyciem metryki Manhattan.}
     \label{1_places_label_man}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
@@ -665,50 +773,296 @@ $PLACES$.}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii$PLACES$ z użyciem metryki Czebyszewa.}
+    $k$ i zawartych metryk dla kategorii $PLACES$ z użyciem metryki Czebyszewa.}
     \label{1_places_label_cz}
 \end{figure}
-
+\FloatBarrier
 \subsection{Wyniki klasyfikacji dla kategorii $TOPICS$}
+Klasyfikację przeprowadzono dla podanych w punkcie \ref{mat} danych. Zbiór danych jest znacznie mniejszy
+od poprzedniego, zawiera on jedynie 173 elementy.
+
+\begin{figure}[h!]
+    \begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+        x tick label style={
+        /pgf/number format/1000 sep=},
+        ylabel=Poprawność klasyfikacji,
+        xlabel=Wartość parametru $k$,
+        enlargelimits=0.05,
+        legend style={at={(0.5,-0.22)},
+        anchor=north,legend columns=-1},
+        ybar interval=0.7,
+        ]
+            \addplot
+            coordinates {
+            (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
+            };
+
+            \addplot
+            coordinates {
+            (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
+            };
+
+            \addplot
+            coordinates {
+            (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
+            };
+
+            \legend{Euklidesowa, Manhattan, Czebyszewa}
+        \end{axis}
+
+    \end{tikzpicture}
+\end{center}
+\caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
+kategorii $TOPICS$}
+\label{1_topics}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Czas klasyfikacji ($s$),
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.063)(5,0.06)(10,0.06)(15,0.06)(20,0.061)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.71)(5,0.61)(10,0.48)(15,0.047)(20,0.044)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.77)(5,0.49)(10,0.45)(15,0.45)(20,0.46)
+                };
+
+                \legend{Euklidesowa, Manhattan, Czebyszewa}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Czas wykonywania dla wybranych wartości parametru $k$ i zawartych metryk dla
+    kategorii $TOPICS$}
+    \label{1_topics_time}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \legend{Ship, Tea, Silver}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ i zawartych metryk dla kategorii $TOPICS$ z użyciem metryki Euklidesowej.}
+    \label{1_topics_label_euk}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \legend{Ship, Tea, Silver}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ i zawartych metryk dla kategorii $TOPICS$ z użyciem metryki Manhattan.}
+    \label{1_topics_label_man}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \legend{Ship, Tea, Silver}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ i zawartych metryk dla kategorii $TOPICS$ z użyciem metryki Czebyszewa.}
+    \label{1_topics_label_cze}
+\end{figure}
+    \FloatBarrier
+\subsection{Wpływ podziału zbioru na poprawność klasyfikacji}
 
 
-%\begin{figure}
-%    \begin{center}
-%    \begin{tikzpicture}
-%        \begin{axis}[
-%        x tick label style={
-%        /pgf/number format/1000 sep=},
-%        ylabel=Poprawność klasyfikacji,
-%        xlabel=Wartość parametru $k$,
-%        enlargelimits=0.05,
-%        legend style={at={(0.5,-0.22)},
-%        anchor=north,legend columns=-1},
-%        ybar interval=0.7,
-%        ]
-%            \addplot
-%            coordinates {
-%            (2,0.5)(5,0.58)(10,0.6)(15,0.57)(20,0.57)
-%            };
-%
-%            \addplot
-%            coordinates {
-%            (2,0.47)(5,0.59)(10,0.58)(15,0.56)(20,0.57)
-%            };
-%
-%            \addplot
-%            coordinates {
-%            (2,0.47)(5,0.51)(10,0.6)(15,0.58)(20,0.57)
-%            };
-%
-%            \legend{Euklidesowa, Manhattan, Czebyszewa}
-%        \end{axis}
-%
-%    \end{tikzpicture}
-%\end{center}
-%\caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
-%kategorii $TOPICS$}
-%\label{1_topics}
-%\end{figure}
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/10000 sep=},
+            ylabel=Ilość etykiety,
+            xticklabels={,,,,,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.10)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,0.65)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.46)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.42)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \legend{(90 na 10), (80 do 20), (70 do 30),(60 do 40),(50 do 50)}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji dla danego podziału zbioru}
+    \label{podzial_zbioru}
+\end{figure}
+
+    \begin{figure}[h!]
+        \begin{center}
+            \begin{tikzpicture}
+                \begin{axis}[
+                x tick label style={
+                /pgf/number format/10000 sep=},
+                ylabel=Ilość etykiety,
+                xticklabels={,,,,,},
+                enlargelimits=0.05,
+                legend style={at={(0.5,-0.10)},
+                anchor=north,legend columns=-1},
+                ybar interval=0.7,
+                ]
+                    \addplot
+                    coordinates {
+                    (1,0.48)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                    };
+
+                    \addplot
+                    coordinates {
+                    (1,0.4)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                    };
+
+                    \addplot
+                    coordinates {
+                    (1,0.38)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                    };
+
+                    \addplot
+                    coordinates {
+                    (1,0.27)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                    };
+
+                    \legend{(40 do 60),(30 do 70)
+                    ,(20 do 80),(10 do 90)}
+                \end{axis}
+
+            \end{tikzpicture}
+        \end{center}
+        \caption{Poprawność klasyfikacji dla danego podziału zbioru}
+        \label{podzial_zbioru2}
+    \end{figure}
 
 %{\color{blue}
 %W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
@@ -721,35 +1075,84 @@ $PLACES$.}
 %poniżej.}
 
 \section{Dyskusja}
-Klasyfikacja tekstów jest znacznie bardziej złożona niż mogło się to w pierwszej chwili wydawać.
-Aby dokonać poprawnej klasyfikacji należy uprzednio przeanalizować badane teksty między innymi w jakim
-języku zostały one napisane. Ze względu na język dokumentu należy odpowiednio dokonać stemizacji i
-lematyzacji. W zależności od typu tekstu należy dobrać odpowiednie ekstraktory cech.
-Zadajemy sobie sprawę, iż badane przez nas dokumenty mają charakter artykułów z gazet. Dla danego typu
-badanego tekstu cecha odległości słów kluczowych od początku tekstu będzie kluczowa w poprawnej
-klasyfikacji. Natomiast na przykład dla opowiadania istotność tej cechy na tle innych znacząco zmaleje.
-Użyty w badaniu wektor cech składający się zarówno z wartości metajęzykowych (czyli takich dla, których
-znaczenie mają jedynie położenie danego słowa w tekście czy liczba liter składowych) oraz wartości
-semantycznych (takich, które zwracają szczególną uwagę na budowę słowa), pozwala na dokładniejsze
-zbadanie tekstu bez względu na to jak został on zbudowany. Stwierdzenie to można smiało postawić
-zwracając uwagę na wykres \ref{1_places} na, którym tylko dla metryki $Manhattan$ przy wartości
-parametu $k=10$ poprawność klasyfikacji była nieznacznie wyższa. W pozostałych przypadkach poprawność
-klasyfikacji nie zależała od zastosowanej metryki liczenia odległości.
+Na podstawie przeprowadzonych badań klasyfikacji tekstów można stwierdzić, że klasyfikacja teskstów
+jest złożonym zagadnieniem. W związku z tym dzielimy obszary badań na kilka kategorii.
 
-\\Podsumowywując wyniki czasu działania algorytmu na wykresie \ref{1_places_time} można zaobserwować
-nieznacznie różniący się czas wykonywania dla metryki Euklideswej bez względu na wartość parametru $k$.
-W przypadku metryki Czebyszewa czas wykonywania zwiększał się wraz ze wzrostem parametru.
-Z uwagi na podobny czas działania dla wszystkich przebadanych parametrów metryka Euklidesowa
-jest najbardziej uniwersalna.
+\subsection{Wpływ parametru $k$}
+Przeprowadzone badania pozwalają stwierdzić, że wartośc parametru $k$ ma znaczy wpływ na poprawność
+klasyfikacji, lecz do pewnego momentu. Na podstawie rysunku \ref{1_places} można stwierdzić, że
+zbyt niska wartość parametru $k$ negatywnie wpływa na poprawnośc klasyfikacji. Podczas klasyfikacji
+dla kategorii $PLACES$ i $k=2$ skuteczność dla każdej metryki wyniosła $64\%$. Natomiast, jak wynika
+z rysunku \ref{1_topics}, dla
+kategorii $TOPICS$ poprawność klasyfikacji wyniosła $83\%$ i nie była użależniona od wartości $k$.
 
-\\Odnośnie wykresów pokazujących poprawność klasyfikacji (wykresy \ref{1_places_label_eucli}
-\ref{1_places_label_man} \ref{1_places_label_cz}) dla poszczególnych etykiet zaobserwować można
-niepokojącą tendencję do poprawności klasyfikacji jedynie etykiety dla, której liczba artykułów
-znacząco przewyższała liczbę pozostałych. Bez względu na parametr $k$ dla etykiety $USA$ znacząca
-większość artykułów została sklasyfikowana poprawnie. Przyczyną tego jest przeważająca większość
-artykułów o tej kategorii. Aby uzyskać większą poprawność klasyfikacji
-dla pozostałych etykiet należało by znormalizować zbiór testowy tak aby znajdowały się z nim
-zbliżone ilości artykułów o tych etykietach które chcemy klasyfikować.
+
+\subsection{Wpływ metryki}
+Pomiędzy metrykami wykorzystanymi w klasyfikacji kategorii $PLACES$ oraz $TOPICS$ nie wykazano
+różnic ze względu na
+poprawność klasyfikacji co przedstawia rysunek \ref{1_places} oraz \ref{1_topics}. Znaczące róznice
+pojawiają się z czasie klasyfikacji. Metryka Euklidesowa zarówno dla kategorii $PLACES$ jak i $TOPICS$
+wykazuje złożoność obliczeniową liniową co można zaobserwować na wykresach: \ref{1_places_time},
+\ref{1_topics_time}. Należy pamiętać że wyniki te są najmniej miarodajne ponieważ mogą się znacząco
+różnić w zależności od zasobów sprzętowych, które są dostępne w danym momencie.
+
+\subsection{Liczebność zbiorów}
+Badania wykazały, że na poprawność klasyfikacji znaczący wpływ ma liczebność zbiorów. W przypadku
+kiedy dana etykieta znacząco przeważa liczebnością pozostałe, wyniki klasyfikacji dla pozostałych
+etykiet będą niskie. Spowodowane jest to znikomą liczbą pozostałych etykiet w zbiorze uczącym.
+Liczebność zbiorów pokazują wykresy \ref{licz_places} oraz \ref{licz_topics}.
+
+\subsection{Wpływ podziału zbiorów}
+Z wykresów \ref{podzial_zbioru} oraz \ref{podzial_zbioru2} odczytać można, że dla podziału zbioru w
+    stosunku $30\%$ (zbiór uczący) do $70\%$ (zbiór testowy) oraz niższych wartości dla zbioru uczącego
+    klasyfikacja ulegała pogorszeniu. Podobnych opserwacji dokonać można zwracając uwagę na wartości $70\%$
+    tekstów jako zbiór uczący zwyłączeniem podziału w stosunku 90\% do 10\%, kiedy wyniki były zaskakująco
+    dobre.
+
+
+\subsection{}
+Badanie ma na celu sprawdzenie uniwersalnych metod ekstrakcji cech i ich
+wpływ na skuteczność klasyfikacji.
+
+
+%Klasyfikacja tekstów jest znacznie bardziej złożona niż mogło się to w pierwszej chwili wydawać.
+%Aby dokonać poprawnej klasyfikacji należy uprzednio przeanalizować badane teksty pod kątem języka
+%w, którym zostały napisane. W zależności od typu tekstu należy dobrać odpowiednie ekstraktory cech.
+%Zadajemy sobie sprawę, iż badane przez nas dokumenty mają charakter artykułów z gazet. Dla danego typu
+%badanego tekstu cecha odległości słów kluczowych od początku tekstu będzie kluczowa w poprawnej
+%klasyfikacji. Natomiast na przykład dla opowiadania istotność tej cechy na tle innych znacząco zmaleje.
+%Użyty w badaniu wektor cech składający się zarówno z wartości metajęzykowych (czyli takich dla, których
+%znaczenie mają jedynie położenie danego słowa w tekście czy liczba liter składowych) oraz wartości
+%semantycznych (takich, które zwracają szczególną uwagę na budowę słowa), pozwala na dokładniejsze
+%zbadanie tekstu bez względu na to jak został on zbudowany. Stwierdzenie to można smiało postawić
+%zwracając uwagę na wykres \ref{1_places} na, którym tylko dla metryki $Manhattan$ przy wartości
+%parametu $k=10$ poprawność klasyfikacji była nieznacznie wyższa. W pozostałych przypadkach poprawność
+%klasyfikacji nie zależała od zastosowanej metryki liczenia odległości.
+%
+%\\Podsumowywując wyniki czasu działania algorytmu na wykresie \ref{1_places_time} można zaobserwować
+%nieznacznie różniący się czas wykonywania dla metryki Euklideswej bez względu na wartość parametru $k$.
+%W przypadku metryki Czebyszewa czas wykonywania zwiększał się wraz ze wzrostem parametru.
+%Z uwagi na podobny czas działania dla wszystkich przebadanych parametrów metryka Euklidesowa
+%jest najbardziej uniwersalna.
+%
+%\\Odnośnie wykresów pokazujących poprawność klasyfikacji (wykresy \ref{1_places_label_eucli}
+%\ref{1_places_label_man} \ref{1_places_label_cz}) dla poszczególnych etykiet zaobserwować można
+%niepokojącą tendencję do poprawności klasyfikacji jedynie etykiety dla, której liczba artykułów
+%znacząco przewyższała liczbę pozostałych. Bez względu na parametr $k$ dla etykiety $USA$ znacząca
+%większość artykułów została sklasyfikowana poprawnie. Przyczyną tego jest przeważająca większość
+%artykułów o tej kategorii. Aby uzyskać większą poprawność klasyfikacji
+%dla pozostałych etykiet należało by znormalizować zbiór testowy tak aby znajdowały się z nim
+%zbliżone ilości artykułów o tych etykietach które chcemy klasyfikować.
+%
+%\\Parametr $k$ nieznacznie wpływa na poprawność klasyfikacji dla etykiet ze znaczą ilością wystąpień.
+%Jednakże im parametr $k$ jest większy tym poprawność klasyfikacji nieznacznie spada.
+%
+%\\Przyglądając się wynikom klasyfikacji dla tagu $TOPICS$ można ponownie stwierdzić, że metoda
+%Euklidesowa do liczenia odległości jest najszybsza (wykres \ref{1_topics_time}). Pomimo tego, że
+%każde badanie wykonywało się krócej niż sekundę. Szybkość metody Euklidesowej nie wpływa w żaden
+%sposób na poprawność klasyfikacji co pokazują wykresy: \ref{1_topics_label_euk},
+%\ref{1_topics_label_man}, \ref{1_topics_label_cze}. Ponownie jak w poprzednim badaniu poprawność
+%klasyfikacji dla etykiet z nieznaczącą liczbą wystąpień w zbiorze uczącym jest znikoma.
 
 %{\color{blue}
 %Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
@@ -761,10 +1164,31 @@ zbliżone ilości artykułów o tych etykietach które chcemy klasyfikować.
 %wyników). Jest to jedna z najważniejszych sekcji tego sprawozdania, gdyż
 %prezentuje poziom zrozumienia badanego problemu.}
 \section{Wnioski}
-{\color{blue}W tej, przedostatniej, sekcji należy zamieścić podsumowanie
-najważniejszych wniosków z sekcji poprzedniej. Najlepiej jest je po prostu
-wypunktować. Znów, tak jak poprzednio, najistotniejsze są wnioski o
-charakterze uniwersalnym.}
+
+
+
+
+%Stworzenie systemu klasyfikującego teksty jest zagodnieniem znacznie szerszym niż mogło się to z początku
+%wydawać. Wymaga zgłębienia tajników budowy tekstów jak i samych wyrazów. Ilość kombinacji w przypadku klasyfikacji
+%tekstów jest tak ogromna, że można posiwięcić temu zagadnieniu całe życie. W naszych badaniach staraliśmy
+%się wykorzystać cechy uniwersalne tak aby można je było w przyszłości wykorzystać w innych badaniach.
+%Najważniejszymi spostrzeżeniami sa:\\
+%\begin{itemize}
+%    \item Metryka Euklidesowa jest najszybsza oraz nie ustępuje w wynikach poprawności innym metrykom.
+%    \item Mniejszy parametr $k$ wpływa pozytywnie na poprawność klasyfikacji.
+%\end{itemize}
+%{\color{blue}W tej, przedostatniej, sekcji należy zamieścić podsumowanie
+%najważniejszych wniosków z sekcji poprzedniej. Najlepiej jest je po prostu
+%wypunktować. Znów, tak jak poprzednio, najistotniejsze są wnioski o
+%charakterze uniwersalnym.}
+
+\begin{itemize}
+    \item Liczebność etykiet w zbiorze uczącym powinna być zbliżona.
+    \item Metryka euklidesowa ze względu na jej złożoność liniową jest najszybsza, nie zmniejszając
+            tym samym poprawności klasyfikacji.
+    \item Podział zbioru z zakresu od (60 do 40) do (50 do 50) jest najbardziej optymalny.
+    \item Nie wykazano jednoznacznie przy jakim parametrze $k$ klasyfikacje daje najlepsze wyniki.
+\end{itemize}
 
 
 \begin{thebibliography}{0}
@@ -784,6 +1208,9 @@ Komputerowe Systemy Rozpoznawania}; 21 września 2009;
 
 \bibitem{art5} B.S.Charulatha, Paul Rodrigues, T.Chitralekha, Arun Rajaraman;
 \textsl{A Comparative study of different distance metrics that can be used in Fuzzy Clustering Algorithms}; 2013
+
+\bibitem{art6} Stop lista;
+\textsl{\url{https://gist.github.com/sebleier/554280}}
 
 \end{thebibliography}
 \end{document}
