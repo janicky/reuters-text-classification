@@ -319,9 +319,20 @@ gdzie:\\
 Algorytm KMP wyszukuje podany wzorzec $x$ w tekście $y$, jeżeli podany wzorzec zostaje znaleziony zwracana jest jego
 pozycja w tekście.
 
-\subsection{Normalizacja}
+\subsection{Normalizacja (Zero-Mean)}
 Normalizacji poddawany jest każdy wektor cech. Działanie to eliminuje sutyację, w której wartość pewnej
-cechy może zdominować cały wektor przez co inne cechy nie będą aż tak istotne z punktu widzenia programu.
+cechy może zdominować cały wektor cech.
+
+    \begin{equation}
+        V'=\frac{V-\bar{U}}{\sigma}
+    \end{equation}
+    gdzie:\\
+    \begin{description}
+        \item $V'$ - znormalizowana wartość cechy;
+        \item $V$ - wartość cechy;
+        \item $\bar{U}$ - średnia z wektora cech;
+        \item $\sigma$ - odchylenie standardowe z wektora cech;
+    \end{description}
 
 \subsection{Określanie poprawności klasyfikacji} \label{poprawnosc_klasyfikacji}
 Poprawność sklasyfikowanych danych określa w jakim stopniu dokumenty zostały poprawnie przyporządkowane etykietom.
@@ -333,8 +344,8 @@ to oznaczać, że większość dokumentów została sklasyfikowana poprawnie.
 \end{equation}
 gdzie:\\
 \begin{description}
-    \item $P$ - liczba poprawnie sklasyfikowanych dokumentów
-    \item $W$ - liczba wszystkich klasyfikacji
+    \item $P$ - liczba poprawnie sklasyfikowanych dokumentów;
+    \item $W$ - liczba wszystkich klasyfikacji;
 \end{description}
 
 %{\color{blue}
@@ -971,7 +982,7 @@ kategorii $TOPICS$}
     \label{1_topics_label_cze}
 \end{figure}
     \FloatBarrier
-\subsection{Wpływ podziału zbioru na poprawność klasyfikacji}
+\subsection{Wpływ rozmiaru zbioru uczącego na skuteczność klasyfikacji}
 
 
 \begin{figure}[h!]
@@ -980,10 +991,11 @@ kategorii $TOPICS$}
             \begin{axis}[
             x tick label style={
             /pgf/number format/10000 sep=},
-            ylabel=Ilość etykiety,
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Rozmiar zbioru uczącego \[\%\],
             xticklabels={,,,,,},
             enlargelimits=0.05,
-            legend style={at={(0.5,-0.10)},
+            legend style={at={(0.5,-0.25)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
             ]
@@ -1012,7 +1024,27 @@ kategorii $TOPICS$}
                 (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
-                \legend{(90 na 10), (80 do 20), (70 do 30),(60 do 40),(50 do 50)}
+                \addplot
+                coordinates {
+                (1,0.48)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.4)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.38)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.27)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                };
+
+                \legend{90, 80, 70, 60, 50, 40, 30, 20, 10}
             \end{axis}
 
         \end{tikzpicture}
@@ -1021,48 +1053,6 @@ kategorii $TOPICS$}
     \label{podzial_zbioru}
 \end{figure}
 
-    \begin{figure}[h!]
-        \begin{center}
-            \begin{tikzpicture}
-                \begin{axis}[
-                x tick label style={
-                /pgf/number format/10000 sep=},
-                ylabel=Ilość etykiety,
-                xticklabels={,,,,,},
-                enlargelimits=0.05,
-                legend style={at={(0.5,-0.10)},
-                anchor=north,legend columns=-1},
-                ybar interval=0.7,
-                ]
-                    \addplot
-                    coordinates {
-                    (1,0.48)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
-                    };
-
-                    \addplot
-                    coordinates {
-                    (1,0.4)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
-                    };
-
-                    \addplot
-                    coordinates {
-                    (1,0.38)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
-                    };
-
-                    \addplot
-                    coordinates {
-                    (1,0.27)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
-                    };
-
-                    \legend{(40 do 60),(30 do 70)
-                    ,(20 do 80),(10 do 90)}
-                \end{axis}
-
-            \end{tikzpicture}
-        \end{center}
-        \caption{Poprawność klasyfikacji dla danego podziału zbioru}
-        \label{podzial_zbioru2}
-    \end{figure}
 
 %{\color{blue}
 %W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
@@ -1103,11 +1093,10 @@ etykiet będą niskie. Spowodowane jest to znikomą liczbą pozostałych etykiet
 Liczebność zbiorów pokazują wykresy \ref{licz_places} oraz \ref{licz_topics}.
 
 \subsection{Wpływ podziału zbiorów}
-Z wykresów \ref{podzial_zbioru} oraz \ref{podzial_zbioru2} odczytać można, że dla podziału zbioru w
+Z wykresu \ref{podzial_zbioru} można odczytać, że dla podziału zbioru w
     stosunku $30\%$ (zbiór uczący) do $70\%$ (zbiór testowy) oraz niższych wartości dla zbioru uczącego
-    klasyfikacja ulegała pogorszeniu. Podobnych opserwacji dokonać można zwracając uwagę na wartości $70\%$
-    tekstów jako zbiór uczący zwyłączeniem podziału w stosunku 90\% do 10\%, kiedy wyniki były zaskakująco
-    dobre.
+    skuteczność klasyfikacji uległa pogorszeniu. Podobnych obserwacji można dokonać w przypadku, gdy zbiór uczący stanowi $70\%$
+    klasyfikowanych obiektów jako zbiór uczący, kiedy wyniki były zaskakująco dobre.
 
 
 \subsection{}
@@ -1167,7 +1156,6 @@ wpływ na skuteczność klasyfikacji.
 
 
 
-
 %Stworzenie systemu klasyfikującego teksty jest zagodnieniem znacznie szerszym niż mogło się to z początku
 %wydawać. Wymaga zgłębienia tajników budowy tekstów jak i samych wyrazów. Ilość kombinacji w przypadku klasyfikacji
 %tekstów jest tak ogromna, że można posiwięcić temu zagadnieniu całe życie. W naszych badaniach staraliśmy
@@ -1187,7 +1175,7 @@ wpływ na skuteczność klasyfikacji.
     \item Metryka euklidesowa ze względu na jej złożoność liniową jest najszybsza, nie zmniejszając
             tym samym poprawności klasyfikacji.
     \item Podział zbioru z zakresu od (60 do 40) do (50 do 50) jest najbardziej optymalny.
-    \item Nie wykazano jednoznacznie przy jakim parametrze $k$ klasyfikacje daje najlepsze wyniki.
+    \item Dla parametru $k$ z zakresu $<2;5>$ skuteczność klasyfikacji jest najwyższa.
 \end{itemize}
 
 
