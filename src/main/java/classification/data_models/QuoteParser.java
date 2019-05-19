@@ -22,7 +22,7 @@ public class QuoteParser implements IParser {
             Element element = elements.get(e);
 
             Elements tvSerie = element.getElementsByTag("tvserie");
-            Elements body = element.getElementsByTag("body");
+            Elements body = element.getElementsByTag("content");
 
             Quote article = new Quote(tvSerie.text(), body.text());
             classificationObjects[e] = article;

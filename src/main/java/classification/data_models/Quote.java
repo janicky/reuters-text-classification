@@ -24,8 +24,8 @@ public class Quote extends ClassificationObject {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("TV Series " + Arrays.toString(tvseries));
-        sb.append("Body: " + body).append('\n');
+        sb.append("TV Series: " + Arrays.toString(tvseries));
+        sb.append(" - " + body).append('\n');
 
         return StringUtils.abbreviate(sb.toString(), 60);
     }
