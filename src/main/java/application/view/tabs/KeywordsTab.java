@@ -23,6 +23,8 @@ public class KeywordsTab {
     private JRadioButton countRadioButton;
     private JPanel countPanel;
     private JPanel significancePanel;
+    private JRadioButton tfidfRadioButton;
+    private JRadioButton tfRadioButton;
     private DefaultListModel listModel = new DefaultListModel();
 
     public KeywordsTab() {
@@ -114,6 +116,10 @@ public class KeywordsTab {
     public void addKeywordsExtractionTypeListener(ActionListener listener) {
         significanceRadioButton.addActionListener(listener);
         countRadioButton.addActionListener(listener);
+    }
+    public void addKeywordsExtractorListener(ActionListener listener) {
+        tfidfRadioButton.addActionListener(listener);
+        tfRadioButton.addActionListener(listener);
     }
 
     public void updateControls(int type) {

@@ -95,6 +95,7 @@ public class Controller {
         keywordsTab.addImportButtonListener(e -> onImportKeywords());
         keywordsTab.addExportButtonListener(e -> onExportKeywords());
         keywordsTab.addKeywordsExtractionTypeListener(e -> onKeywordsExtractionTypeChange(e));
+        keywordsTab.addKeywordsExtractorListener(e -> onKeywordsExtractorChange(e));
         keywordsTab.addKeywordsCountSpinnerListener(e -> onKeywordsCountChange(e));
     }
 
@@ -403,6 +404,16 @@ public class Controller {
         }
         model.setKeywordsExtractionType(type);
         keywordsTab.updateControls(type);
+    }
+
+    private void onKeywordsExtractorChange(ActionEvent event) {
+        JRadioButton source = (JRadioButton) event.getSource();
+
+        int extractor = 0;
+        if (source.getActionCommand().equals("TF")) {
+            extractor = 1;
+        }
+        model.setKeywordsExtractor(extractor);
     }
 
     private void updateClassificationRequirements() {
