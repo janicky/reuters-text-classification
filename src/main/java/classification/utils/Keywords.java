@@ -12,6 +12,7 @@ public class Keywords {
     IClassificationObject[] objects;
     String[][] documents;
     List<String> keywords = new ArrayList<>();
+    private int extractor;
 
     public Keywords(IClassificationObject[] objects) {
         this.objects = objects;
@@ -29,8 +30,7 @@ public class Keywords {
             String[] words = object.getVectorizedText();
             for (String word : words) {
                 if (!newKeywords.contains(word) && word.length() > 2) {
-                    double tfidf = TermFrequency.termFrequencyInverseFrequency(documents, words, word);
-                    if (tfidf > significance) {
+                    if (getValue(documents, words, word) > significance) {
                         newKeywords.add(word);
                     }
                 }
@@ -54,8 +54,7 @@ public class Keywords {
             for (String word : words) {
                 Map map = labels.get(label);
                 if (!map.containsKey(word) && word.length() > 2) {
-                    double tfidf = TermFrequency.termFrequencyInverseFrequency(documents, words, word);
-                    map.put(word, tfidf);
+                    map.put(word, getValue(documents, words, word));
                 }
             }
             finished++;
@@ -106,5 +105,19 @@ public class Keywords {
 
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public void setExtractor(int extractor) {
+        this.extractor = extractor;
+    }
+
+    private double getValue(String[][] documents, String[] words, String word) {
+        double value;
+        if (extractor == 0) {
+            value = TermFrequency.termFrequencyInverseFrequency(documents, words, word);
+        } else {
+            value = TermFrequency.termFrequency(words, word);
+        }
+        return value;
     }
 }

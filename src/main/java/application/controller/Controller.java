@@ -295,6 +295,7 @@ public class Controller {
                 throw new Exception("Keywords not initialized.");
             }
 
+            keywords.setExtractor(model.getKeywordsExtractor());
 //            Generate keywords
             if (model.getKeywordsExtractionType() == 0) {
                 keywords.generate(model.getKeywordsSignificance());
