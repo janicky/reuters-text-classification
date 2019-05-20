@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ClassificationModel {
 
-    private final String[] availableModels = { "Article", "Article2" };
+    private final String[] availableModels = { "Article", "Article2", "Quote" };
     private final String[] availableMetrics = { "Euclidean", "Chebyshev", "Manhattan" };
     private final String[] availableSimilarity = { "NGram", "KnuthMorrisPratt" };
 
