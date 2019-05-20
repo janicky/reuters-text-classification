@@ -62,6 +62,7 @@ public class ClassificationModel {
     private Classification classification;
     private boolean featuresExtracted = false;
     private int keywordsExtractionType = 0;
+    private int keywordsCount = 5;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -380,5 +381,13 @@ public class ClassificationModel {
 
     public void setKeywordsExtractionType(int keywordsExtractionType) {
         this.keywordsExtractionType = keywordsExtractionType;
+    }
+
+    public int getKeywordsCount() {
+        return keywordsCount;
+    }
+
+    public void setKeywordsCount(int keywordsCount) {
+        this.keywordsCount = keywordsCount;
     }
 }

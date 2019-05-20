@@ -95,6 +95,7 @@ public class Controller {
         keywordsTab.addImportButtonListener(e -> onImportKeywords());
         keywordsTab.addExportButtonListener(e -> onExportKeywords());
         keywordsTab.addKeywordsExtractionTypeListener(e -> onKeywordsExtractionTypeChange(e));
+        keywordsTab.addKeywordsCountSpinnerListener(e -> onKeywordsCountChange(e));
     }
 
     private void initializeClassificationTab() {
@@ -275,6 +276,11 @@ public class Controller {
         JSpinner source = (JSpinner) event.getSource();
         double value = (double) source.getValue();
         model.setKeywordsSignificance(value);
+    }
+    private void onKeywordsCountChange(ChangeEvent event) {
+        JSpinner source = (JSpinner) event.getSource();
+        int value = (int) source.getValue();
+        model.setKeywordsCount(value);
     }
 
     private void onKeywordsGenerate() {

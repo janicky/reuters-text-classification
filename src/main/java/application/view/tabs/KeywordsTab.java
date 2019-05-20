@@ -50,6 +50,9 @@ public class KeywordsTab {
     public void addKeywordsSignificanceSpinnerListener(ChangeListener listener) {
         keywordsSignificanceSpinner.addChangeListener(listener);
     }
+    public void addKeywordsCountSpinnerListener(ChangeListener listener) {
+        keywordsCountSpinner.addChangeListener(listener);
+    }
 
     public void addImportButtonListener(ActionListener listener) {
         importButton.addActionListener(listener);
