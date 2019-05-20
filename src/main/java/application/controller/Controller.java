@@ -295,12 +295,17 @@ public class Controller {
             }
 
 //            Generate keywords
-            keywords.generate(model.getKeywordsSignificance());
+            if (model.getKeywordsExtractionType() == 0) {
+                keywords.generate(model.getKeywordsSignificance());
+            } else {
+                keywords.generate(model.getKeywordsCount());
+            }
 
             model.setKeywords(keywords.getKeywords());
             keywordsTab.setKeywords(keywords.getKeywords());
             updateClassificationRequirements();
         } catch (Exception e) {
+            e.printStackTrace();
             view.displayError(e.getMessage());
         }
     }
