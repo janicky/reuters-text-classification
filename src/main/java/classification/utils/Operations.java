@@ -98,6 +98,22 @@ public class Operations {
         return sortedByValues;
     }
 
+    public static <K, V extends Comparable<V>> Map<K, V> sortByValuesDesc(final Map<K, V> map) {
+        Comparator<K> valueComparator =
+                (k1, k2) -> {
+                    int compare =
+                            map.get(k2).compareTo(map.get(k1));
+                    if (compare == 0)
+                        return 1;
+                    else
+                        return compare;
+                };
+
+        Map<K, V> sortedByValues = new TreeMap<>(valueComparator);
+        sortedByValues.putAll(map);
+        return sortedByValues;
+    }
+
     public static String stem(String word) {
         SnowballStemmer stemmer = new englishStemmer();
         stemmer.setCurrent(word);
