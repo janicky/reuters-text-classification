@@ -31,7 +31,7 @@
 \title{Zadanie 1: Ekstrakcja cech, miary podobieństwa, klasyfikacja}
 
 \begin{document}
-    \pgfplotsset{scaled y ticks=false}
+\pgfplotsset{scaled y ticks=false}
 \maketitle
 
 \section{Cel}
@@ -416,6 +416,9 @@ słów kluczowych została przyjęta wartość $0.75$ (TF-IDF) powyżej której 
 tym samym trafia na listę słów kluczowych. Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa
 została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram}.
 
+\\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
+jaki procent tekstów został sklasyfikowany poprawnie (opisany w punkcie \ref{poprawnosc_klasyfikacji}).
+
 \\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, oraz silver.
 Zbiór podzielono równo po 50\% dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
 jak w poprzednim badaniu jednak współczynnik generowania słów kluczowych przyjął wartość $0,1$. Badanie
@@ -433,10 +436,16 @@ W badaniu parametr $k$ był
 stały i wynosił $20$. Jako metrykę przyjęto metrykę Euklidesową. Liczebność zbioru na którym
 przeprowadzono badanie wynosiła 206 elementów.
 
+\\Podczas badania jak miara podobieństwa słów wpływa na poprawność klasyfikacji wykorzystano ustawienia
+programu wykorzystane podczas badania podziału zbioru. Zmianie uległa jedynie miara podobieństwa słów.
+Zbiór uczący zawiarał $60\%$ wszystkich tekstów.
 
+\\Badanie wpływu danych cech na poprawność klasyfikacji oraz czas jej trwania przeprowadzono na
+etykietach: $canada$, $uk$, $west-germany$. Parametr $k$ z wartością 20, natomiast jako miarę odległości
+przyjęto metrykę Euklidesową. Zbiór podzielono w stosunku $60:40$. Słowa kluczowe zostały wygenerowane
+z parametrem TF-IDF równym $0,4$. Stop listę wczytano z pliku\footnotemark[1].
+\footnotetext[1]{https://gist.github.com/sebleier/554280}
 
-    \\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
-jaki procent tekstów został sklasyfikowany poprawnie (opisany w punkcie \ref{poprawnosc_klasyfikacji}).
 
 
 
@@ -509,7 +518,7 @@ Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfi
     \caption{Liczebność poszczególnych etykiet w kategorii $PLACES$.}
     \label{licz_places}
 \end{figure}
-
+\FloatBarrier
 \subsection{Liczebność zbioru dla kategorii $TOPICS$}
 
 \begin{figure}[h!]
@@ -1011,37 +1020,37 @@ kategorii $TOPICS$}
 
                 \addplot
                 coordinates {
-                (1,0.42)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                (1,0.42)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.48)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                (1,0.48)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.4)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                (1,0.4)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.38)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                (1,0.38)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.27)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)(0,0)
+                (1,0.27)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
                 \legend{90, 80, 70, 60, 50, 40, 30, 20, 10}
@@ -1052,6 +1061,271 @@ kategorii $TOPICS$}
     \caption{Poprawność klasyfikacji dla danego podziału zbioru}
     \label{podzial_zbioru}
 \end{figure}
+
+\FloatBarrier
+\subsection{Wpływ miary podobieństwa słów na poprawnośc klasyfikacji}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/10000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Miara podobieństwa słów,
+            xticklabels={,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.25)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,0.52)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.52)(0,0)
+                };
+
+                \legend{N-Gram, Knuth-Morris-Pratt}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji dla miar podobieństwa słów}
+    \label{popr_miara_prawdo}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Etykieta,
+            xticklabels={,,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,0.43)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.50)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.72)(0,0)(0,0)
+                };
+
+                \legend{Sweden, Hong-Kong, Philipines}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiet dla miary N-Gramów}
+    \label{ngram_popraw_ngram}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/10000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Etykieta,
+            xticklabels={,,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.25)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,0.43)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.50)(0,0)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.72)(0,0)(0,0)
+                };
+
+                \legend{Sweden, Hong-Kong, Philipines}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiet dla miary Knutta-Morrisa-Pratta}
+    \label{ngram_popraw_knutt}
+\end{figure}
+
+\FloatBarrier
+\subsection{Wpływ danej cechy na poprawność klasyfikacji oraz jej czas trwania}
+Dla lepszej czytelność wykresów wprowadziliśmy skróty odpowiadające danym cechom przedstawionym
+poniżej.
+\begin{itemize}
+    \item $GSK$ - Gęstość występowania słów kluczowych
+    \item $WSK$ - Występowanie słowa kluczowego
+    \item $LWSK$ - Liczba wystąpień słów kluczowych
+    \item $OSK$ - Odległość słowa kluczowego od początku tekstu
+    \item $LWS$ - Liczba wszystkich słów w dokumencie
+    \item $PSK$ - Pierwsze słowo kluczowe z dokumentu
+    \item $SWSK$ - Suma wyspień słów kluczowych w dokumencie
+    \item $SODK$ - Średnia odległość słów kluczowych w dokumencie
+    \item $NWSK$ - Najczęściej występujęce słowo kluczowe
+\end{itemize}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/10000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Cecha,
+            xticklabels={,,,,,,,,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.25)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,0.47)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.47)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.48)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.48)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.47)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.47)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.47)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.47)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,0.47)(0,0)
+                };
+
+                \legend{GSK, WSK, LWSK, OSK, LWS, PSK, SWSK, SODK, NWSK}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji z wyłączeniem danej cechy}
+    \label{cecha_poprawnosc}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/10000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Cecha,
+            xticklabels={,,,,,,,,},
+            enlargelimits=0.05,
+            legend style={at={(0.5,-0.25)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,15.154)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,14.175)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,14.706)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,9.905)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,14.259)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,14.093)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,14.11)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,10.203)(0,0)
+                };
+
+                \addplot
+                coordinates {
+                (1,14.232)(0,0)
+                };
+
+                \legend{GSK, WSK, LWSK, OSK, LWS, PSK, SWSK, SODK, NWSK}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Czas klasyfikacji z wyłączeniem danej cechy}
+    \label{cecha_czas}
+\end{figure}
+
 
 
 %{\color{blue}
@@ -1094,14 +1368,28 @@ Liczebność zbiorów pokazują wykresy \ref{licz_places} oraz \ref{licz_topics}
 
 \subsection{Wpływ podziału zbiorów}
 Z wykresu \ref{podzial_zbioru} można odczytać, że dla podziału zbioru w
-    stosunku $30\%$ (zbiór uczący) do $70\%$ (zbiór testowy) oraz niższych wartości dla zbioru uczącego
-    skuteczność klasyfikacji uległa pogorszeniu. Podobnych obserwacji można dokonać w przypadku, gdy zbiór uczący stanowi $70\%$
-    klasyfikowanych obiektów jako zbiór uczący, kiedy wyniki były zaskakująco dobre.
+stosunku $30\%$ (zbiór uczący) do $70\%$ (zbiór testowy) oraz niższych wartości dla zbioru uczącego
+skuteczność klasyfikacji uległa pogorszeniu. Podobnych obserwacji można dokonać w przypadku, gdy
+zbiór uczący stanowi $70\%$
+klasyfikowanych obiektów.
 
 
-\subsection{}
-Badanie ma na celu sprawdzenie uniwersalnych metod ekstrakcji cech i ich
-wpływ na skuteczność klasyfikacji.
+\subsection{Wpływ miary podobieństwa}
+Wykres \ref{popr_miara_prawdo} przedstawia takie same wartości poprawności klasyfikacji dla obydwu
+miar podobieństwa słów. Nie wykazano różnic nawet na poziomie poprawności klasyfikacji dla poszczególnych
+etykiet (wykresy \ref{ngram_popraw_ngram}, \ref{ngram_popraw_knutt}).
+
+
+\subsection{Wpływ danych cech}
+Badanie ma na celu sprawdzenie uniwersalnych metod ekstrakcji cech i ich wpływ na skuteczność
+klasyfikacji (wykresy \ref{cecha_poprawnosc}, \ref{cecha_czas}). Przeprowadzone badania jasno wskazują,
+że wyłączenie cechy liczby wysąpień słowa kluczowego lub odległości słowa kluczowego od początku tekstu
+nieznacznie wpływa na zwiększenie poprawności klasyfikacji. Ponadto wyłączając cechę odległości słowa
+kluczowego od początku tekstu oprócz lepszej klasyfikacji zyskujemy zmniejszony jej czas trwania.
+Biorąc pod uwagę cechę średniej odległości słów kluczowych od początku tekstu zyskujemy zmniejszony
+czas klasyfikacji jednocześnie nie zwiększając jej poprawności. W przypadku pozostałych cech nie można
+jednocześnie swierdzić przewagi jednej cechy nad drugą ponieważ podobnie jak w trakcie badania wpływu
+metryki występuje tu różnica zależąca od zasobów sprzętowych.
 
 
 %Klasyfikacja tekstów jest znacznie bardziej złożona niż mogło się to w pierwszej chwili wydawać.
@@ -1171,11 +1459,14 @@ wpływ na skuteczność klasyfikacji.
 %charakterze uniwersalnym.}
 
 \begin{itemize}
-    \item Liczebność etykiet w zbiorze uczącym powinna być zbliżona.
+    \item Dla parametru $k$ z zakresu $<2;5>$ skuteczność klasyfikacji jest najwyższa.
     \item Metryka euklidesowa ze względu na jej złożoność liniową jest najszybsza, nie zmniejszając
             tym samym poprawności klasyfikacji.
+    \item Liczebność etykiet w zbiorze uczącym powinna być zbliżona.
     \item Podział zbioru z zakresu od (60 do 40) do (50 do 50) jest najbardziej optymalny.
-    \item Dla parametru $k$ z zakresu $<2;5>$ skuteczność klasyfikacji jest najwyższa.
+    \item Badania nie wykazały wpływu wybranej metody podobieństwa słów na poprawność klasyfikacji.
+    \item W badaniach dotyczących poszczególnych cech wyłączenie cechy: "Odległości słowa kluczowego
+        od początku tesktu" pozytywnie wpłyneła na poprawność klasyfikacji oraz na czas jej trwania.
 \end{itemize}
 
 
