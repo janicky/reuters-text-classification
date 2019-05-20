@@ -61,6 +61,7 @@ public class ClassificationModel {
     private String[] extractors;
     private Classification classification;
     private boolean featuresExtracted = false;
+    private int keywordsExtractionType = 0;
 
     public String[] getAvailableModels() {
         return availableModels;
@@ -371,5 +372,13 @@ public class ClassificationModel {
 
     public ISimilarityMeter getSimilarityMeter() {
         return similarityMeter;
+    }
+
+    public int getKeywordsExtractionType() {
+        return keywordsExtractionType;
+    }
+
+    public void setKeywordsExtractionType(int keywordsExtractionType) {
+        this.keywordsExtractionType = keywordsExtractionType;
     }
 }

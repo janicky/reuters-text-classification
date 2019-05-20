@@ -18,10 +18,17 @@ public class KeywordsTab {
     private JButton generateKeywordsButton;
     private JButton importButton;
     private JButton exportButton;
+    private JSpinner keywordsCountSpinner;
+    private JRadioButton significanceRadioButton;
+    private JRadioButton countRadioButton;
+    private JPanel countPanel;
+    private JPanel significancePanel;
     private DefaultListModel listModel = new DefaultListModel();
 
     public KeywordsTab() {
+        keywordsCountSpinner.setModel(new SpinnerNumberModel(5, 1, Integer.MAX_VALUE, 1));
         keywordsSignificanceSpinner.setModel(new SpinnerNumberModel(0.5, 0.0, 999999.0, 0.1));
+        countPanel.setVisible(false);
     }
 
     public JPanel getMainPanel() {
@@ -99,5 +106,15 @@ public class KeywordsTab {
 
     public void clearKeywordInput() {
         keywordInput.setText("");
+    }
+
+    public void addKeywordsExtractionTypeListener(ActionListener listener) {
+        significanceRadioButton.addActionListener(listener);
+        countRadioButton.addActionListener(listener);
+    }
+
+    public void updateControls(int type) {
+        countPanel.setVisible(type == 1);
+        significancePanel.setVisible(type == 0);
     }
 }

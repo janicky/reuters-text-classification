@@ -16,6 +16,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -93,6 +94,7 @@ public class Controller {
         keywordsTab.addRemoveSelectedKeywordButtonListener(e -> onRemoveSelectedKeywords());
         keywordsTab.addImportButtonListener(e -> onImportKeywords());
         keywordsTab.addExportButtonListener(e -> onExportKeywords());
+        keywordsTab.addKeywordsExtractionTypeListener(e -> onKeywordsExtractionTypeChange(e));
     }
 
     private void initializeClassificationTab() {
@@ -285,7 +287,10 @@ public class Controller {
             if (keywords == null) {
                 throw new Exception("Keywords not initialized.");
             }
+
+//            Generate keywords
             keywords.generate(model.getKeywordsSignificance());
+
             model.setKeywords(keywords.getKeywords());
             keywordsTab.setKeywords(keywords.getKeywords());
             updateClassificationRequirements();
@@ -376,6 +381,17 @@ public class Controller {
                 view.displayError("Couldn't export keywords.");
             }
         }
+    }
+
+    private void onKeywordsExtractionTypeChange(ActionEvent event) {
+        JRadioButton source = (JRadioButton) event.getSource();
+
+        int type = 0;
+        if (source.getActionCommand().equals("Count")) {
+            type = 1;
+        }
+        model.setKeywordsExtractionType(type);
+        keywordsTab.updateControls(type);
     }
 
     private void updateClassificationRequirements() {
