@@ -8,7 +8,7 @@
 \usepackage{listings}
 \usepackage{xparse}
 \usepackage{pgfplots}
-%\usepackage[bottom]{footmisc}
+\usepackage{xcolor}
 
 \NewDocumentCommand{\codeword}{v}{%
 \texttt{\textcolor{blue}{#1}}%
@@ -40,9 +40,9 @@ Klasyfikacja tekstów ma zostać zrealizowania z wykorzystaniem algorytmu najbli
 
 \section{Wprowadzenie}
 Do wykonania tego zadania niezbędne będzie skorzystanie z uczenia maszynowego.
-Klasyfikacja tekstów, która odbywa się za pomocą algorytmu KNN. Polega ona na przypisaniu tekstu do odpowiedniej
+Klasyfikacja tekstów odbywać się będzie za pomocą algorytmu KNN. Polega ona na przypisaniu tekstu do odpowiedniej
 kategorii. Odbywa się to na podstawie watrości poszczególnych wyekstrachowanych cech, które posiada każdy z tekstów.\\
-Do ekstrakcji wykorzystywany jest znormalizowany zbiór słów badanego tekstu, oznaczony przez T. Normalizacja ma na
+Do ekstrakcji wykorzystywany jest znormalizowany zbiór słów badanego tekstu. Normalizacja ma na
 celu wyeliminowanie niepożądanych słów oraz sprowadzenie odmian słów o tym samym znaczeniu do jednego (określenie rdzenia słowa).
 \clearpage
 \subsection[]{Wykorzystane cechy} \label{wykorzystane_cechy}
@@ -244,7 +244,9 @@ nieistotne. Dodajemy do stoplisty jeśli dana wartość będzie poniżej określ
 \subsubsection{Nauka słów kluczowych}
 Do nauki słów kluczowych wykorzystujemy algorytm TF-IDF, za pomocą którego określamy istotność
 danego słowa. Kiedy dla danego słowa wartość ta jest większą od założonej, uznajemy to słowo za istotne tym samym dopisując je do
-listy słów kluczowych. Słowa kluczowe mogą zostać również określone odgórnie.
+listy słów kluczowych. Słowa kluczowe mogą zostać również określone odgórnie. Ponadto możemy również wybrać
+opcję wybrania słów kluczowych za pomocą algorytmu TF. Wtedy niezależnie od liczności danej etykiety
+zostanie wybrana tylko określona liczba słów.
 
 \subsection{Metryki - miara odległości} \label{wykorzystane_metryki}
 Wykorzystane metryki służa do określenia odległości pomiędzy elementami tego samego zbioru w naszym przypadku tym
@@ -414,17 +416,28 @@ wykorzystano gotowy zbiór\footnotemark[1] słów nieznaczących dla języka ang
 Słowa kluczowe zostały wygenerowane na podstawie algorytmu częstości słów (TF-IDF). Podczas generowania
 słów kluczowych została przyjęta wartość $0.75$ (TF-IDF) powyżej której słowo traktowane jest jako istotne i
 tym samym trafia na listę słów kluczowych. Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa
-została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram}.
+została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram} z parametrem $N=3$.
 
 \\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
 jaki procent tekstów został sklasyfikowany poprawnie (opisany w punkcie \ref{poprawnosc_klasyfikacji}).
 
 \\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, oraz silver.
-Zbiór podzielono równo po 50\% dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
+Zbiór podzielono równo po $50\%$ dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
 jak w poprzednim badaniu jednak współczynnik generowania słów kluczowych przyjął wartość $0,1$. Badanie
 wykonano dla takich samych parametrów $k$ jak poprzednio dla lepszego porównania wyników. Porównanie odbyło
 się w oparciu o te same metryki liczenia odległości pomiędzy wektorami dokumentów jak i tę samą metodę
 obliczania odległości między cechami o wartości tekstowej.
+
+\\Badanie ekstraktora słów kluczowych TF. Klasyfikację kategorii $TOPICS$ powtórzono zmieniając jedynie
+metodę generowania słów kluczowych algorytmu TF-IDF na TF z liczbą słów równą $15$ dla każdej etykiety.
+
+\\Własny zbiór tekstów zawierał sześć etykiet: siliconvalley, drwho, twinpeaks, got, friends, simpsons
+oraz składał się ze 120 obietków. Badań dokonano na wszystkich etykietach. Zbiór podzielono
+w stosunku $60:40$. Jako stop listę wykrzystano
+gotowy zbiór słów nieznaczączych wymieniony powyżej. Słowa kluczowe zostały wygenerowane za pomocą
+algorytmu TF-IDF ze współczynnikiem $0,7$. Jako miarę podobieństwa słów wybrano metodę Knutta-Morria-Pratta.
+Klasyfikacji dokonano dla każdej z wcześniej przyjętych wartości $k$ oraz dla każdej z metryk. Oraz dla
+wszystkich wcześniej przedstawionych cech.
 
 \\Badanie dotyczące optymalnego podziału zbioru rozpoczęto od podziału $90\%$ tekstów jako zbiór uczący
 $10\%$ jako testowy, kolejno do wartości $10\%$ zbiór uczący oraz $90\%$ zbiór testowy. Skorzystano z
@@ -443,8 +456,12 @@ Zbiór uczący zawiarał $60\%$ wszystkich tekstów.
 \\Badanie wpływu danych cech na poprawność klasyfikacji oraz czas jej trwania przeprowadzono na
 etykietach: $canada$, $uk$, $west-germany$. Parametr $k$ z wartością 20, natomiast jako miarę odległości
 przyjęto metrykę Euklidesową. Zbiór podzielono w stosunku $60:40$. Słowa kluczowe zostały wygenerowane
-z parametrem TF-IDF równym $0,4$. Stop listę wczytano z pliku\footnotemark[1].
-\footnotetext[1]{https://gist.github.com/sebleier/554280}
+z parametrem TF-IDF równym $0,4$. Stop listę wczytano z pliku.
+
+\\Wpływ miary podobieństwa słów w metodzie N-Gramów zbadano dla wartości $N$ równych kolejno ${1,2,3,4,5,6,7}$.
+Do badania wybrano tylko cechy: najczęściej występujące słowo kluczowe oraz pierwsze słowo kluczowe, tak
+aby inne cechy nie wpływały na wynik badania. Pozostałe ustawienia programu zostały ustawione tak jak podczas badania wpływu danych cech na
+poprawność klasyfikacji.
 
 
 
@@ -463,7 +480,8 @@ z parametrem TF-IDF równym $0,4$. Stop listę wczytano z pliku\footnotemark[1].
 %poszczególne eksperymenty tak, aby łatwo było się do nich odwoływać dalej.}
 
 \section{Wyniki}
-Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfikacji tekstu dla danej kategorii.
+Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfikacji tekstu
+dla danego badania.
 
 \subsection{Liczebność zbioru dla kategorii $PLACES$}
 
@@ -475,7 +493,7 @@ Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfi
             /pgf/number format/10000 sep=},
             ylabel=Ilość etykiety,
             xticklabels={,,,,,},
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.10)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -513,6 +531,8 @@ Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfi
                 \legend{USA, Canada, Japan, UK, France, West-Germany}
             \end{axis}
 
+
+
         \end{tikzpicture}
     \end{center}
     \caption{Liczebność poszczególnych etykiet w kategorii $PLACES$.}
@@ -529,7 +549,7 @@ Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfi
             /pgf/number format/1000 sep=},
             ylabel=Ilość etykiet,
             xticklabels={,,},
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.10)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -555,6 +575,58 @@ Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfi
     \caption{Liczebność poszczególnych etykiet w kategorii $TOPICS$.}
     \label{licz_topics}
 \end{figure}
+
+\FloatBarrier
+\subsection{Liczebność własnego zbioru}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Ilość etykiet,
+            xticklabels={,,},
+            enlargelimits=0.2,
+            legend style={at={(0.5,-0.10)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (1,17)(0,0)(0,0)
+                };
+                \addplot
+                coordinates {
+                (1,19)(0,0)(0,0)
+                };
+                \addplot
+                coordinates {
+                (1,21)(0,0)(0,0)
+                };
+                \addplot
+                coordinates {
+                (1,21)(0,0)(0,0)
+                };
+                \addplot
+                coordinates {
+                (1,26)(0,0)(0,0)
+                };
+                \addplot
+                coordinates {
+                (1,16)(0,0)(0,0)
+                };
+                \legend{Siliconvalley, Drwho, Twinpeaks, Got, Friends, Simpsons}
+
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Liczebność poszczególnych etykiet z własnego zbioru.}
+    \label{licz_wlasny}
+\end{figure}
+
+
 \FloatBarrier
 \subsection{Wyniki klasyfikacji dla kategorii $PLACES$}
 Klasyfikację przeprowadzono z wykorzystaniem każdej z wcześniej wypisanych metod ekctrakcji cech. Wektor
@@ -569,8 +641,8 @@ na wykresach.
     x tick label style={
     /pgf/number format/1000 sep=},
     ylabel=Ilość etykiet,
-    xlabel=Nazwa etykiety,
-    enlargelimits=0.05,
+    xlabel=Wartość parametru $k$,
+    enlargelimits=0.2,
     legend style={at={(0.5,-0.22)},
     anchor=north,legend columns=-1},
     ybar interval=0.7,
@@ -608,7 +680,7 @@ $PLACES$.}
             /pgf/number format/1000 sep=},
             ylabel=Czas klasyfikacji ($s$),
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -646,7 +718,7 @@ $PLACES$.}
             /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -687,7 +759,7 @@ $PLACES$.}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii $PLACES$ z użyciem metryki Euklidesowej.}
+    $k$ dla kategorii $PLACES$ z użyciem metryki Euklidesowej.}
     \label{1_places_label_eucli}
 \end{figure}
 
@@ -699,7 +771,7 @@ $PLACES$.}
             /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -740,7 +812,7 @@ $PLACES$.}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii $PLACES$ z użyciem metryki Manhattan.}
+    $k$ dla kategorii $PLACES$ z użyciem metryki Manhattan.}
     \label{1_places_label_man}
 \end{figure}
 
@@ -752,7 +824,7 @@ $PLACES$.}
             /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -793,7 +865,7 @@ $PLACES$.}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii $PLACES$ z użyciem metryki Czebyszewa.}
+    $k$ dla kategorii $PLACES$ z użyciem metryki Czebyszewa.}
     \label{1_places_label_cz}
 \end{figure}
 \FloatBarrier
@@ -809,7 +881,7 @@ od poprzedniego, zawiera on jedynie 173 elementy.
         /pgf/number format/1000 sep=},
         ylabel=Poprawność klasyfikacji,
         xlabel=Wartość parametru $k$,
-        enlargelimits=0.05,
+        enlargelimits=0.2,
         legend style={at={(0.5,-0.22)},
         anchor=north,legend columns=-1},
         ybar interval=0.7,
@@ -835,7 +907,7 @@ od poprzedniego, zawiera on jedynie 173 elementy.
     \end{tikzpicture}
 \end{center}
 \caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
-kategorii $TOPICS$}
+kategorii $TOPICS$.}
 \label{1_topics}
 \end{figure}
 
@@ -847,7 +919,7 @@ kategorii $TOPICS$}
             /pgf/number format/1000 sep=},
             ylabel=Czas klasyfikacji ($s$),
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -873,7 +945,7 @@ kategorii $TOPICS$}
         \end{tikzpicture}
     \end{center}
     \caption{Czas wykonywania dla wybranych wartości parametru $k$ i zawartych metryk dla
-    kategorii $TOPICS$}
+    kategorii $TOPICS$.}
     \label{1_topics_time}
 \end{figure}
 
@@ -885,7 +957,7 @@ kategorii $TOPICS$}
             /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -911,7 +983,7 @@ kategorii $TOPICS$}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii $TOPICS$ z użyciem metryki Euklidesowej.}
+    $k$ dla kategorii $TOPICS$ z użyciem metryki Euklidesowej.}
     \label{1_topics_label_euk}
 \end{figure}
 
@@ -923,7 +995,7 @@ kategorii $TOPICS$}
             /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -949,7 +1021,7 @@ kategorii $TOPICS$}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii $TOPICS$ z użyciem metryki Manhattan.}
+    $k$ dla kategorii $TOPICS$ z użyciem metryki Manhattan.}
     \label{1_topics_label_man}
 \end{figure}
 
@@ -961,7 +1033,7 @@ kategorii $TOPICS$}
             /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
             xlabel=Wartość parametru $k$,
-            enlargelimits=0.05,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
@@ -987,115 +1059,167 @@ kategorii $TOPICS$}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
-    $k$ i zawartych metryk dla kategorii $TOPICS$ z użyciem metryki Czebyszewa.}
+    $k$ dla kategorii $TOPICS$ z użyciem metryki Czebyszewa.}
     \label{1_topics_label_cze}
-\end{figure}
-    \FloatBarrier
-\subsection{Wpływ rozmiaru zbioru uczącego na skuteczność klasyfikacji}
-
-
-\begin{figure}[h!]
-    \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[
-            x tick label style={
-            /pgf/number format/10000 sep=},
-            ylabel=Poprawność klasyfikacji,
-            xlabel=Rozmiar zbioru uczącego \[\%\],
-            xticklabels={,,,,,},
-            enlargelimits=0.05,
-            legend style={at={(0.5,-0.25)},
-            anchor=north,legend columns=-1},
-            ybar interval=0.7,
-            ]
-                \addplot
-                coordinates {
-                (1,0.65)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.46)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.42)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.48)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.4)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.38)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.27)(0,0)(0,0)(0,0)(0,0)(0,0)
-                };
-
-                \legend{90, 80, 70, 60, 50, 40, 30, 20, 10}
-            \end{axis}
-
-        \end{tikzpicture}
-    \end{center}
-    \caption{Poprawność klasyfikacji dla danego podziału zbioru}
-    \label{podzial_zbioru}
 \end{figure}
 
 \FloatBarrier
-\subsection{Wpływ miary podobieństwa słów na poprawnośc klasyfikacji}
+\subsection{Wyniki klasyfikacji dla kategorii $TOPICS$ dla ekstraktora TF}
 
 \begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
             x tick label style={
-            /pgf/number format/10000 sep=},
+            /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
-            xlabel=Miara podobieństwa słów,
-            xticklabels={,},
-            enlargelimits=0.05,
-            legend style={at={(0.5,-0.25)},
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.2,
+            legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
             ]
                 \addplot
                 coordinates {
-                (1,0.52)(0,0)
+                (2,0.81)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.52)(0,0)
+                (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
                 };
 
-                \legend{N-Gram, Knuth-Morris-Pratt}
+                \addplot
+                coordinates {
+                (2,0.83)(5,0.83)(10,0.83)(15,0.83)(20,0.83)
+                };
+
+                \legend{Euklidesowa, Manhattan, Czebyszewa}
             \end{axis}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Poprawność klasyfikacji dla miar podobieństwa słów}
-    \label{popr_miara_prawdo}
+    \caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
+    kategorii $TOPICS$ dla ekstraktora TF.}
+    \label{1_topics_tf}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Czas klasyfikacji ($s$),
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.2,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.037)(5,0.024)(10,0.025)(15,0.025)(20,0.024)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.045)(5,0.019)(10,0.019)(15,0.019)(20,0.019)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.046)(5,0.02)(10,0.02)(15,0.02)(20,0.019)
+                };
+
+                \legend{Euklidesowa, Manhattan, Czebyszewa}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Czas wykonywania dla wybranych wartości parametru $k$ i zawartych metryk dla
+    kategorii $TOPICS$ dla ekstraktora TF.}
+    \label{1_topics__tf_time}
+\end{figure}
+
+
+\FloatBarrier
+\subsection{Wyniki klasyfikacji dla własnego zbioru}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.2,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.15)(5,0.21)(10,0.19)(15,0.13)(20,0.13)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.15)(5,0.19)(10,0.17)(15,0.15)(20,0.1)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.19)(5,0.21)(10,0.08)(15,0.08)(20,0.08)
+                };
+
+                \legend{Euklidesowa, Manhattan, Czebyszewa}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
+    własnych tekstów.}
+    \label{1_wlasny}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Czas klasyfikacji ($s$),
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.2,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.03)(5,0.014)(10,0.015)(15,0.015)(20,0.019)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.012)(5,0.012)(10,0.012)(15,0.012)(20,0.012)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.36)(5,0.11)(10,0.1)(15,0.1)(20,0.1)
+                };
+
+                \legend{Euklidesowa, Manhattan, Czebyszewa}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Czas wykonywania dla wybranych wartości parametru $k$ i zawartych metryk dla
+    własnych tekstów.}
+    \label{1_wlasny_time}
 \end{figure}
 
 \begin{figure}[h!]
@@ -1105,227 +1229,522 @@ kategorii $TOPICS$}
             x tick label style={
             /pgf/number format/1000 sep=},
             ylabel=Poprawność klasyfikacji,
-            xlabel=Etykieta,
-            xticklabels={,,},
-            enlargelimits=0.05,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.2,
             legend style={at={(0.5,-0.22)},
             anchor=north,legend columns=-1},
             ybar interval=0.7,
             ]
                 \addplot
                 coordinates {
-                (1,0.43)(0,0)(0,0)
+                (2,0)(5,0)(10,0)(15,0.09)(20,0.11)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.50)(0,0)(0,0)
+                (2,0)(5,0.50)(10,0)(15,0)(20,0)
                 };
 
                 \addplot
                 coordinates {
-                (1,0.72)(0,0)(0,0)
+                (2,0.25)(5,0.33)(10,0.33)(15,0.20)(20,0.18)
                 };
 
-                \legend{Sweden, Hong-Kong, Philipines}
+                \addplot
+                coordinates {
+                (2,0.17)(5,0.29)(10,0.20)(15,0.1)(20,0.09)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.30)(5,0.17)(10,0.30)(15,0.33)(20,0.33)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.11)(5,0.09)(10,0.08)(15,0)(20,0)
+                };
+
+                \legend{Siliconvalley, Drwho, Twinpeaks, Got, Friends, Simpsons}
             \end{axis}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Poprawność klasyfikacji etykiet dla miary N-Gramów}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ dla własnych tekstów z użyciem metryki Euklidesowej.}
+    \label{1_własny_label_euk}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.2,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0)(5,0)(10,0)(15,0.09)(20,0.11)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0.67)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.22)(5,0.30)(10,0.23)(15,0.20)(20,0.17)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.14)(5,0.25)(10,0.2)(15,0.1)(20,0.08)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.33)(5,0.29)(10,0.30)(15,0.38)(20,0.25)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.11)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \legend{Siliconvalley, Drwho, Twinpeaks, Got, Friends, Simpsons}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ dla własnych tekstów z użyciem metryki Manhattan.}
+    \label{1_wlasne_label_man}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            x tick label style={
+            /pgf/number format/1000 sep=},
+            ylabel=Poprawność klasyfikacji,
+            xlabel=Wartość parametru $k$,
+            enlargelimits=0.2,
+            legend style={at={(0.5,-0.22)},
+            anchor=north,legend columns=-1},
+            ybar interval=0.7,
+            ]
+                \addplot
+                coordinates {
+                (2,0.08)(5,0)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0.67)(10,0)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.17)(5,0.33)(10,0.12)(15,0.17)(20,0.17)
+                };
+
+                \addplot
+                coordinates {
+                (2,0)(5,0.14)(10,0.12)(15,0.09)(20,0.18)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.38)(5,0.25)(10,0.14)(15,0)(20,0)
+                };
+
+                \addplot
+                coordinates {
+                (2,0.11)(5,0.09)(10,0)(15,0)(20,0)
+                };
+
+                \legend{Siliconvalley, Drwho, Twinpeaks, Got, Friends, Simpsons}
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiety dla wybranych wartości parametru
+    $k$ dla własnych tekstów z użyciem metryki Czebyszewa.}
+    \label{1_własny_label_cze}
+\end{figure}
+
+
+\FloatBarrier
+\subsection{Wpływ rozmiaru zbioru uczącego na skuteczność klasyfikacji}
+
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+%            \begin{axis}[
+%            x tick label style={
+%            /pgf/number format/10000 sep=},
+%            ylabel=Poprawność klasyfikacji,
+%            xlabel=Rozmiar zbioru uczącego (\%),
+%            xticklabels={,,,,,},
+%            enlargelimits=0.2,
+%            legend style={at={(0.5,-0.25)},
+%            anchor=north,legend columns=-1},
+%            ybar interval=0.7,
+%            ]
+%                \addplot
+%                coordinates {
+%                (1,0.65)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.46)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.42)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.52)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.48)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.4)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.38)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.27)(0,0)(0,0)(0,0)(0,0)(0,0)
+%                };
+%
+%                \legend{90, 80, 70, 60, 50, 40, 30, 20, 10}
+%            \end{axis}
+
+            \begin{axis}[
+            ylabel=Poprawność klasyfikacji ($\%$),
+            xlabel=Rozmiar zbioru uczącego (\%),
+            symbolic x coords={90, 80, 70, 60, 50, 40, 30, 20, 10},
+            xtick=data]
+                \addplot[ybar,fill=black!30!green] coordinates {
+                (90,0.65)
+                (80,0.46)
+                (70,0.42)
+                (60,0.52)
+                (50,0.52)
+                (40,0.48)
+                (30,0.4)
+                (20,0.38)
+                (10,0.27)
+                };
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji dla danego podziału zbioru.}
+    \label{podzial_zbioru}
+\end{figure}
+
+\FloatBarrier
+\subsection{Wpływ miary podobieństwa słów na poprawnośc klasyfikacji}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+%            \begin{axis}[
+%            x tick label style={
+%            /pgf/number format/10000 sep=},
+%            ylabel=Poprawność klasyfikacji,
+%            xlabel=Miara podobieństwa słów,
+%            xticklabels={,},
+%            enlargelimits=0.2,
+%            legend style={at={(0.5,-0.25)},
+%            anchor=north,legend columns=-1},
+%            ybar interval=0.7,
+%            ]
+%                \addplot
+%                coordinates {
+%                (1,0.52)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.52)(0,0)
+%                };
+%
+%                \legend{N-Gram, Knuth-Morris-Pratt}
+%            \end{axis}
+
+            \begin{axis}[
+            ylabel=Poprawność klasyfikacji ($\%$),
+            symbolic x coords={N-Gram, Knuth-Morris-Pratt},
+            xtick=data]
+                \addplot[ybar,fill=black!30!green] coordinates {
+                (N-Gram,0.52)
+                (Knuth-Morris-Pratt,0.52)
+                };
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji dla miar podobieństwa słów.}
+    \label{popr_miara_prawdo}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+%            \begin{axis}[
+%            x tick label style={
+%            /pgf/number format/1000 sep=},
+%            ylabel=Poprawność klasyfikacji,
+%            xlabel=Etykieta,
+%            xticklabels={,,},
+%            enlargelimits=0.2,
+%            legend style={at={(0.5,-0.22)},
+%            anchor=north,legend columns=-1},
+%            ybar interval=0.7,
+%            ]
+%                \addplot
+%                coordinates {
+%                (1,0.43)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.50)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.72)(0,0)(0,0)
+%                };
+%
+%                \legend{Sweden, Hong-Kong, Philipines}
+%            \end{axis}
+
+            \begin{axis}[
+            ylabel=Poprawność klasyfikacji ($\%$),
+            symbolic x coords={Sweden, Hong-Kong, Philipines},
+            xtick=data]
+                \addplot[ybar,fill=black!30!green] coordinates {
+                (Sweden,0.43)
+                (Hong-Kong,0.50)
+                (Philipines,0.72)
+
+                };
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji etykiet dla miary N-Gramów.}
     \label{ngram_popraw_ngram}
 \end{figure}
 
 \begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
+%            \begin{axis}[
+%            x tick label style={
+%            /pgf/number format/10000 sep=},
+%            ylabel=Poprawność klasyfikacji,
+%            xlabel=Etykieta,
+%            xticklabels={,,},
+%            enlargelimits=0.2,
+%            legend style={at={(0.5,-0.25)},
+%            anchor=north,legend columns=-1},
+%            ybar interval=0.7,
+%            ]
+%                \addplot
+%                coordinates {
+%                (1,0.43)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.50)(0,0)(0,0)
+%                };
+%
+%                \addplot
+%                coordinates {
+%                (1,0.72)(0,0)(0,0)
+%                };
+%
+%                \legend{Sweden, Hong-Kong, Philipines}
+%            \end{axis}
+
             \begin{axis}[
-            x tick label style={
-            /pgf/number format/10000 sep=},
-            ylabel=Poprawność klasyfikacji,
-            xlabel=Etykieta,
-            xticklabels={,,},
-            enlargelimits=0.05,
-            legend style={at={(0.5,-0.25)},
-            anchor=north,legend columns=-1},
-            ybar interval=0.7,
-            ]
-                \addplot
-                coordinates {
-                (1,0.43)(0,0)(0,0)
-                };
+            ylabel=Poprawność klasyfikacji ($\%$),
+            symbolic x coords={Sweden, Hong-Kong, Philipines},
+            xtick=data]
+                \addplot[ybar,fill=black!30!green] coordinates {
+                (Sweden,0.43)
+                (Hong-Kong,0.50)
+                (Philipines,0.72)
 
-                \addplot
-                coordinates {
-                (1,0.50)(0,0)(0,0)
                 };
-
-                \addplot
-                coordinates {
-                (1,0.72)(0,0)(0,0)
-                };
-
-                \legend{Sweden, Hong-Kong, Philipines}
             \end{axis}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Poprawność klasyfikacji etykiet dla miary Knutta-Morrisa-Pratta}
+    \caption{Poprawność klasyfikacji etykiet dla miary Knutta-Morrisa-Pratta.}
     \label{ngram_popraw_knutt}
 \end{figure}
 
 \FloatBarrier
 \subsection{Wpływ danej cechy na poprawność klasyfikacji oraz jej czas trwania}
-Dla lepszej czytelność wykresów wprowadziliśmy skróty odpowiadające danym cechom przedstawionym
+Dla lepszej czytelności wykresów wprowadziliśmy oznaczenia odpowiadające danym cechom przedstawionym
 poniżej.
 \begin{itemize}
-    \item $GSK$ - Gęstość występowania słów kluczowych
-    \item $WSK$ - Występowanie słowa kluczowego
-    \item $LWSK$ - Liczba wystąpień słów kluczowych
-    \item $OSK$ - Odległość słowa kluczowego od początku tekstu
-    \item $LWS$ - Liczba wszystkich słów w dokumencie
-    \item $PSK$ - Pierwsze słowo kluczowe z dokumentu
-    \item $SWSK$ - Suma wyspień słów kluczowych w dokumencie
-    \item $SODK$ - Średnia odległość słów kluczowych w dokumencie
-    \item $NWSK$ - Najczęściej występujęce słowo kluczowe
+    \item $A$ - Gęstość występowania słów kluczowych
+    \item $B$ - Występowanie słowa kluczowego
+    \item $C$ - Liczba wystąpień słów kluczowych
+    \item $D$ - Odległość słowa kluczowego od początku tekstu
+    \item $E$ - Liczba wszystkich słów w dokumencie
+    \item $F$ - Pierwsze słowo kluczowe z dokumentu
+    \item $G$ - Suma wyspień słów kluczowych w dokumencie
+    \item $H$ - Średnia odległość słów kluczowych w dokumencie
+    \item $I$ - Najczęściej występujęce słowo kluczowe
+    \item $AL$ - Wszystkie cechy
 \end{itemize}
 
 \begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
-            x tick label style={
-            /pgf/number format/10000 sep=},
-            ylabel=Poprawność klasyfikacji,
-            xlabel=Cecha,
-            xticklabels={,,,,,,,,},
-            enlargelimits=0.05,
-            legend style={at={(0.5,-0.25)},
-            anchor=north,legend columns=-1},
-            ybar interval=0.7,
-            ]
-                \addplot
-                coordinates {
-                (1,0.47)(0,0)
+            ylabel=Poprawność klasyfikacji ($\%$),
+            xlabel=Pominięta cecha,
+            symbolic x coords={A,B,C,D,E,F,G,H,I,AL},
+            xtick=data]
+                \addplot[ybar,fill=black!30!green] coordinates {
+                (A,0.47)
+                (B,0.47)
+                (C,0.47)
+                (D,0.48)
+                (E,0.48)
+                (F,0.47)
+                (G,0.47)
+                (H,0.47)
+                (I,0.47)
+                (AL,0.47)
                 };
-
-                \addplot
-                coordinates {
-                (1,0.47)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.48)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.48)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.47)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.47)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.47)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.47)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,0.47)(0,0)
-                };
-
-                \legend{GSK, WSK, LWSK, OSK, LWS, PSK, SWSK, SODK, NWSK}
             \end{axis}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Poprawność klasyfikacji z wyłączeniem danej cechy}
+    \caption{Poprawność klasyfikacji z pominięciem danej cechy.}
     \label{cecha_poprawnosc}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            ylabel=Czas klasyfikacji ($s$),
+            xlabel=Pominięta cecha,
+            symbolic x coords={A,B,C,D,E,F,G,H,I,AL},
+            xtick=data]
+                \addplot[ybar,fill=black!30!green] coordinates {
+                (A,15.154)
+                (B,14.172)
+                (C,14.706)
+                (D,9.905)
+                (E,14.259)
+                (F,14.093)
+                (G,14.11)
+                (H,10.203)
+                (I,14.232)
+                (AL,14.492)
+                };
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    \caption{Czas klasyfikacji z pominięciem danej cechy.}
+    \label{cecha_czas}
+\end{figure}
+
+\FloatBarrier
+\subsection{Wpływ parametru $N$ w metodzie N-Gramów na poprawność klasyfikacji}
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            ylabel=Poprawność klasyfikacji ($\%$),
+            xlabel=Wartość parametru $N$,%
+            scatter/classes={%
+            a={mark=o,draw=black}}]
+                \addplot[scatter,only marks,%
+                scatter src=explicit symbolic]%
+                table[meta=label] {
+                x y label
+                1 0.36 a
+                2 0.41 a
+                3 0.4 a
+                4 0.41 a
+                5 0.35 a
+                6 0.36 a
+                7 0.35 a
+
+                };
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    \caption{Poprawność klasyfikacji w zależności od parametru $N$ w metodzie N-Gramów.}
+    \label{n_gramn}
 \end{figure}
 
 \begin{figure}[h!]
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
-            x tick label style={
-            /pgf/number format/10000 sep=},
-            ylabel=Poprawność klasyfikacji,
-            xlabel=Cecha,
-            xticklabels={,,,,,,,,},
-            enlargelimits=0.05,
-            legend style={at={(0.5,-0.25)},
-            anchor=north,legend columns=-1},
-            ybar interval=0.7,
-            ]
-                \addplot
-                coordinates {
-                (1,15.154)(0,0)
+            ylabel=Czas klasyfikacji ($\%$),
+            xlabel=Wartość parametru $N$,
+            symbolic x coords={1,2,3,4,5,6,7},
+            xtick=data]
+                \addplot[ybar,fill=black!30!green] coordinates {
+                (1,1.235)
+                (2,1.365)
+                (3,0.932)
+                (4,0.935)
+                (5,1.369)
+                (6,1.256)
+                (7,1.271)
                 };
-
-                \addplot
-                coordinates {
-                (1,14.175)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,14.706)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,9.905)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,14.259)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,14.093)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,14.11)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,10.203)(0,0)
-                };
-
-                \addplot
-                coordinates {
-                (1,14.232)(0,0)
-                };
-
-                \legend{GSK, WSK, LWSK, OSK, LWS, PSK, SWSK, SODK, NWSK}
             \end{axis}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Czas klasyfikacji z wyłączeniem danej cechy}
-    \label{cecha_czas}
+    \caption{Czas klasyfikacji w zależności od parametru $N$ w metodzie N-Gramów.}
+    \label{n_gramn_czas}
 \end{figure}
-
 
 
 %{\color{blue}
@@ -1349,14 +1768,19 @@ zbyt niska wartość parametru $k$ negatywnie wpływa na poprawnośc klasyfikacj
 dla kategorii $PLACES$ i $k=2$ skuteczność dla każdej metryki wyniosła $64\%$. Natomiast, jak wynika
 z rysunku \ref{1_topics}, dla
 kategorii $TOPICS$ poprawność klasyfikacji wyniosła $83\%$ i nie była użależniona od wartości $k$.
+Wyniki przedstawione na rusynku \ref{1_wlasny} wskazują na niski próg poprawności dla własnych tekstów.
+Dla parametru $k=5$ wyniki były najlepsze.
 
 
 \subsection{Wpływ metryki}
 Pomiędzy metrykami wykorzystanymi w klasyfikacji kategorii $PLACES$ oraz $TOPICS$ nie wykazano
 różnic ze względu na
-poprawność klasyfikacji co przedstawia rysunek \ref{1_places} oraz \ref{1_topics}. Znaczące róznice
+poprawność klasyfikacji co przedstawia rysunek \ref{1_places} oraz \ref{1_topics}. Badając własny
+zbiór tekstów (rysunek \ref{1_wlasny}) zaobserwowano, że wpływ metryki jest znacznie większy niż w poprzednich przypadkach.
+Metryka czebyszewa klasyfikuje obiekty w sposób mniej dokładny niż pozostałe.
+Znaczące róznice
 pojawiają się z czasie klasyfikacji. Metryka Euklidesowa zarówno dla kategorii $PLACES$ jak i $TOPICS$
-wykazuje złożoność obliczeniową liniową co można zaobserwować na wykresach: \ref{1_places_time},
+wykazuje złożoność obliczeniową liniową co można zaobserwować na rysunkach: \ref{1_places_time},
 \ref{1_topics_time}. Należy pamiętać że wyniki te są najmniej miarodajne ponieważ mogą się znacząco
 różnić w zależności od zasobów sprzętowych, które są dostępne w danym momencie.
 
@@ -1364,34 +1788,45 @@ różnić w zależności od zasobów sprzętowych, które są dostępne w danym 
 Badania wykazały, że na poprawność klasyfikacji znaczący wpływ ma liczebność zbiorów. W przypadku
 kiedy dana etykieta znacząco przeważa liczebnością pozostałe, wyniki klasyfikacji dla pozostałych
 etykiet będą niskie. Spowodowane jest to znikomą liczbą pozostałych etykiet w zbiorze uczącym.
-Liczebność zbiorów pokazują wykresy \ref{licz_places} oraz \ref{licz_topics}.
+Liczebność zbiorów pokazują rysunki \ref{licz_places}, \ref{licz_topics} oraz \ref{licz_wlasny}.
 
 \subsection{Wpływ podziału zbiorów}
-Z wykresu \ref{podzial_zbioru} można odczytać, że dla podziału zbioru w
+Z rysunku \ref{podzial_zbioru} można odczytać, że dla podziału zbioru w
 stosunku $30\%$ (zbiór uczący) do $70\%$ (zbiór testowy) oraz niższych wartości dla zbioru uczącego
 skuteczność klasyfikacji uległa pogorszeniu. Podobnych obserwacji można dokonać w przypadku, gdy
 zbiór uczący stanowi $70\%$
 klasyfikowanych obiektów.
 
-
 \subsection{Wpływ miary podobieństwa}
-Wykres \ref{popr_miara_prawdo} przedstawia takie same wartości poprawności klasyfikacji dla obydwu
-miar podobieństwa słów. Nie wykazano różnic nawet na poziomie poprawności klasyfikacji dla poszczególnych
-etykiet (wykresy \ref{ngram_popraw_ngram}, \ref{ngram_popraw_knutt}).
-
+Rysunek \ref{popr_miara_prawdo} przedstawia takie same wartości poprawności klasyfikacji dla obydwu
+miar podobieństwa słów. Nie wykazano różnic na poziomie poprawności klasyfikacji dla poszczególnych
+etykiet (rysunki \ref{ngram_popraw_ngram}, \ref{ngram_popraw_knutt}). Zróżnicowanie czasu klasyfikacji
+w przypadku obydwu miar podobieństwa było na tyle małe, że nie byliśmy w stanie określić która
+miara jest optymalna. Wynika to z odmiennego czasu wykonywania klasyfikacji przy każdym uruchomieniu.
 
 \subsection{Wpływ danych cech}
 Badanie ma na celu sprawdzenie uniwersalnych metod ekstrakcji cech i ich wpływ na skuteczność
-klasyfikacji (wykresy \ref{cecha_poprawnosc}, \ref{cecha_czas}). Przeprowadzone badania jasno wskazują,
-że wyłączenie cechy liczby wysąpień słowa kluczowego lub odległości słowa kluczowego od początku tekstu
+klasyfikacji (rysunki \ref{cecha_poprawnosc}, \ref{cecha_czas}). Przeprowadzone badania wskazują,
+że pominięcie cechy w postaci liczby wysąpień słowa kluczowego lub odległości słowa kluczowego od początku tekstu
 nieznacznie wpływa na zwiększenie poprawności klasyfikacji. Ponadto wyłączając cechę odległości słowa
 kluczowego od początku tekstu oprócz lepszej klasyfikacji zyskujemy zmniejszony jej czas trwania.
 Biorąc pod uwagę cechę średniej odległości słów kluczowych od początku tekstu zyskujemy zmniejszony
 czas klasyfikacji jednocześnie nie zwiększając jej poprawności. W przypadku pozostałych cech nie można
-jednocześnie swierdzić przewagi jednej cechy nad drugą ponieważ podobnie jak w trakcie badania wpływu
-metryki występuje tu różnica zależąca od zasobów sprzętowych.
+jednoznacznie swierdzić przewagi jednej cechy nad drugą, ponieważ podobnie jak w trakcie badania wpływu
+metryki występuje tu różnica w czasie wykonania zależna od zasobów sprzętowych dostępnych w danym momencie.
 
+\subsection{Wpływ parametru $N$}
+Z rysunku \ref{n_gramn} wynika, że dla parametrów $N$ z zakresu $<2;4>$ wyniki klasyfikacji były najlepsze.
+Wartość parametru powyżej lub poniżej podanego zakresu negatywnie wpływała na poprawność klasyfikacji.
+Nie zaobserwowano znaczących różnic w czasie działania klasyfikacji. Różnice w czasie klasyfikacji
+na poziomie 400ms nie są wystarczające aby swierdzić przewagę danej konfiguracji.
 
+\subsection{Wpływ ekstraktora TF}
+Podczas badania dotyczącego zmiany ekstraktora słów kluczowych (rysunek \ref{1_topics_tf}) z
+algorytmu TF-IDF na algorytm TF,
+nie wykazano znaczących różnic w poprawności klasyfikacji w stosunku do uprzednio
+wykorzystywanego ekstraktora. Natomiast jak wynika z rysunku \ref{1_topics__tf_time} czas klasyfikacji
+uległ nieznacznej poprawie.
 %Klasyfikacja tekstów jest znacznie bardziej złożona niż mogło się to w pierwszej chwili wydawać.
 %Aby dokonać poprawnej klasyfikacji należy uprzednio przeanalizować badane teksty pod kątem języka
 %w, którym zostały napisane. W zależności od typu tekstu należy dobrać odpowiednie ekstraktory cech.
@@ -1467,6 +1902,8 @@ metryki występuje tu różnica zależąca od zasobów sprzętowych.
     \item Badania nie wykazały wpływu wybranej metody podobieństwa słów na poprawność klasyfikacji.
     \item W badaniach dotyczących poszczególnych cech wyłączenie cechy: "Odległości słowa kluczowego
         od początku tesktu" pozytywnie wpłyneła na poprawność klasyfikacji oraz na czas jej trwania.
+    \item Dla parametru $N$ z zakresu $<2;4>$ wyniki klasyfikacji były najlepsze.
+    \item Nie wykazano znaczących różnic pomiędzy generowaniem słów kluczowych za pomocą algorytmów TF-IDF oraz TF.
 \end{itemize}
 
 
