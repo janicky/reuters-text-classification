@@ -9,6 +9,7 @@
 \usepackage{xparse}
 \usepackage{pgfplots}
 \usepackage{xcolor}
+\usepackage{indentfirst}
 
 \NewDocumentCommand{\codeword}{v}{%
 \texttt{\textcolor{blue}{#1}}%
@@ -403,7 +404,6 @@ stemizację, normalizację, ekstrakcję, generowanie słów kluczowych i ostatec
 %między nimi. Powinien się tu również znaleźć diagram UML  (diagram klas)
 %prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
 %podać, w jakim języku programowania została stworzona aplikacja. }
-
 \section{Materiały i metody} \label{mat}
 Klasyfikacja tekstów dotycząca kategorii $PLACES$ została przeprowadzna na zbiorze tekstów Reutersa, za
 pomocą wszystkich zaimplmentowanych ekstraktorów cech \ref{wykorzystane_cechy}. Badania zostały
@@ -425,7 +425,7 @@ jaki procent tekstów został sklasyfikowany poprawnie (opisany w punkcie \ref{p
 Zbiór podzielono równo po $50\%$ dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
 jak w poprzednim badaniu jednak współczynnik generowania słów kluczowych przyjął wartość $0,1$. Badanie
 wykonano dla takich samych parametrów $k$ jak poprzednio dla lepszego porównania wyników. Porównanie odbyło
-się w oparciu o te same metryki liczenia odległości pomiędzy wektorami dokumentów jak i tę samą metodę
+się w oparciu o te same metryki liczenia odległości pomiędzy wektorami cech dokumentów jak i tę samą metodę
 obliczania odległości między cechami o wartości tekstowej.
 
 \\Badanie ekstraktora słów kluczowych TF. Klasyfikację kategorii $TOPICS$ powtórzono zmieniając jedynie
@@ -450,7 +450,7 @@ stały i wynosił $20$. Jako metrykę przyjęto metrykę Euklidesową. Liczebno�
 przeprowadzono badanie wynosiła 206 elementów.
 
 \\Podczas badania jak miara podobieństwa słów wpływa na poprawność klasyfikacji wykorzystano ustawienia
-programu wykorzystane podczas badania podziału zbioru. Zmianie uległa jedynie miara podobieństwa słów.
+programu takie jak te wykorzystane podczas badania podziału zbioru. Zmianie uległa jedynie miara podobieństwa słów.
 Zbiór uczący zawiarał $60\%$ wszystkich tekstów.
 
 \\Badanie wpływu danych cech na poprawność klasyfikacji oraz czas jej trwania przeprowadzono na
@@ -482,8 +482,8 @@ poprawność klasyfikacji.
 \section{Wyniki}
 Wyniki zostały podzielone na sekcje, każda z sekcji przedstawia wyniki klasyfikacji tekstu
 dla danego badania.
-
-\subsection{Liczebność zbioru dla kategorii $PLACES$}
+\subsection{Liczebności poszczególnych badanych zbiorów}
+\subsubsection{Liczebność zbioru dla kategorii $PLACES$}
 
 \begin{figure}[h!]
     \begin{center}
@@ -535,11 +535,11 @@ dla danego badania.
 
         \end{tikzpicture}
     \end{center}
-    \caption{Liczebność poszczególnych etykiet w kategorii $PLACES$.}
+    \caption{Liczebność poszczególnych etykiet dla kategorii $PLACES$.}
     \label{licz_places}
 \end{figure}
 \FloatBarrier
-\subsection{Liczebność zbioru dla kategorii $TOPICS$}
+\subsubsection{Liczebność zbioru dla kategorii $TOPICS$}
 
 \begin{figure}[h!]
     \begin{center}
@@ -572,12 +572,12 @@ dla danego badania.
 
         \end{tikzpicture}
     \end{center}
-    \caption{Liczebność poszczególnych etykiet w kategorii $TOPICS$.}
+    \caption{Liczebność poszczególnych etykiet dla kategorii $TOPICS$.}
     \label{licz_topics}
 \end{figure}
 
 \FloatBarrier
-\subsection{Liczebność własnego zbioru}
+\subsubsection{Liczebność własnego zbioru}
 
 \begin{figure}[h!]
     \begin{center}
@@ -622,7 +622,7 @@ dla danego badania.
 
         \end{tikzpicture}
     \end{center}
-    \caption{Liczebność poszczególnych etykiet z własnego zbioru.}
+    \caption{Liczebność poszczególnych etykiet dla własnego zbioru tekstów.}
     \label{licz_wlasny}
 \end{figure}
 
@@ -640,7 +640,7 @@ na wykresach.
     \begin{axis}[
     x tick label style={
     /pgf/number format/1000 sep=},
-    ylabel=Ilość etykiet,
+    ylabel=Poprawność klasyfikacji,
     xlabel=Wartość parametru $k$,
     enlargelimits=0.2,
     legend style={at={(0.5,-0.22)},
@@ -944,7 +944,7 @@ kategorii $TOPICS$.}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Czas wykonywania dla wybranych wartości parametru $k$ i zawartych metryk dla
+    \caption{Czas klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
     kategorii $TOPICS$.}
     \label{1_topics_time}
 \end{figure}
@@ -1064,7 +1064,7 @@ kategorii $TOPICS$.}
 \end{figure}
 
 \FloatBarrier
-\subsection{Wyniki klasyfikacji dla kategorii $TOPICS$ dla ekstraktora TF}
+\subsection{Wyniki klasyfikacji dla kategorii $TOPICS$ z użyciem ekstraktora TF}
 
 \begin{figure}[h!]
     \begin{center}
@@ -1100,7 +1100,7 @@ kategorii $TOPICS$.}
         \end{tikzpicture}
     \end{center}
     \caption{Poprawność klasyfikacji dla wybranych wartości parametru $k$ i zawartych metryk dla
-    kategorii $TOPICS$ dla ekstraktora TF.}
+    kategorii $TOPICS$ z użyciem ekstraktora TF.}
     \label{1_topics_tf}
 \end{figure}
 
@@ -1138,7 +1138,7 @@ kategorii $TOPICS$.}
         \end{tikzpicture}
     \end{center}
     \caption{Czas wykonywania dla wybranych wartości parametru $k$ i zawartych metryk dla
-    kategorii $TOPICS$ dla ekstraktora TF.}
+    kategorii $TOPICS$ z użyciem ekstraktora TF.}
     \label{1_topics__tf_time}
 \end{figure}
 
