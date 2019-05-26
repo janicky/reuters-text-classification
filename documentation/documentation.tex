@@ -42,7 +42,7 @@ Klasyfikacja tekstów ma zostać zrealizowania z wykorzystaniem algorytmu najbli
 \section{Wprowadzenie}
 Do wykonania tego zadania niezbędne będzie skorzystanie z uczenia maszynowego.
 Klasyfikacja tekstów odbywać się będzie za pomocą algorytmu KNN. Polega ona na przypisaniu tekstu do odpowiedniej
-kategorii. Odbywa się to na podstawie watrości poszczególnych wyekstrachowanych cech, które posiada każdy z tekstów.\\
+kategorii. Odbywa się to na podstawie wartości poszczególnych wyekstrahowanych cech, które posiada każdy z tekstów.\\
 Do ekstrakcji wykorzystywany jest znormalizowany zbiór słów badanego tekstu. Normalizacja ma na
 celu wyeliminowanie niepożądanych słów oraz sprowadzenie odmian słów o tym samym znaczeniu do jednego (określenie rdzenia słowa).
 \clearpage
@@ -83,7 +83,7 @@ gdzie:
 
 \subsubsection{Suma wystąpień słów kluczowych}
 Wystąpienie w dokumencie wszystkich słów kluczowych z listy ma istotny wpływ na to w jakim stopniu dany tekst
-przynależy do danej etykiety. Cecha to liczba całkowita przyjmująca wartości z przedziału $<0; n>$ gdzie $n$ liczba słów w tekście.
+przynależy do danej etykiety. Cecha to liczba całkowita przyjmująca wartości z przedziału $<0; n>$, gdzie $n$ liczba słów w tekście.
 \begin{equation}
     F=S_{1} + ... + S_{n}
 \end{equation}
@@ -94,7 +94,7 @@ gdzie:\\
 
 \clearpage
 \subsubsection{Gęstość występowania słów kluczowych}
-Wyliczenie gęstości słów klyczowych pozwala na sprawdzenie czy cały dokument stanowi na dany temat czy jest to
+Wyliczenie gęstości słów kluczowych pozwala na sprawdzenie czy cały dokument stanowi na dany temat czy jest to
 jedynie wzmianka. Cecha to liczba przyjmująca wartości z zakresu $<0; 1>$.
     \begin{equation}
       F=\frac{S}{L}
@@ -106,9 +106,9 @@ gdzie:\\
 \end{description}
 
 \subsubsection{Odległość słowa kluczowego od początku tekstu}
-Odległość słowa kluczowego od początku tekstu wyrażona za pomocą sumy liczby wyrazów poprzedzających
+Odległość słowa kluczowego od początku tekstu wyrażona za pomocą liczby wyrazów poprzedzających
 dane słowo kluczowe.
-Cecha przyjmuje wartości liczbowe z zakresu $<0; n>$, gdzie $n$ - liczba wyrazów poprzedzających słowo kluczowe.
+Cecha przyjmuje wartości liczbowe z zakresu $<0; n>$.
 \begin{equation}
     F=\sum_{0}^{n}1
 \end{equation}
@@ -121,7 +121,7 @@ gdzie:\\
 \subsubsection{Średnia odległość słów kluczowych od początku tekstu}
 Średnia odległość słów kluczowych wyrażona jako iloraz sumy odległości słów kluczowych od początku tekstu i liczby
 słów kluczowych w tekście. Cecha to suma wartości liczbowych odzwierciedlających odległość danego słowa kluczowego
-od początku tekstu, gdzie pojedyncze słowo odpowiada odległości równej jeden. Cecha przyjmuje wartości $<0; n>$ gdzie n
+od początku tekstu, gdzie pojedyncze słowo odpowiada odległości równej jeden. Cecha przyjmuje wartości z przedziału $<0; n>$, gdzie n
 jest maksymalną średnią z sumy odległości słów kluczowych od początku tekstu.
 \begin{equation}
     F=\frac{S_{1} + ... + S_{n}}{L}
@@ -133,7 +133,8 @@ gdzie:\\
 \end{description}
 
 \subsubsection{Pierwsze słowo kluczowe}
-Pierwsze słowo kluczowe przyjmuje wartość pierwszego napotkanego słowa kluczowego w tekście. Cecha przyjmuje wartość
+Pierwsze słowo kluczowe to cecha, która jest reprezentowana przez pierwsze napotkane słowo w tekście należące do zbioru słów kluczowych.
+Cecha przyjmuje wartość
 tekstową odpowiadającą pierwszemu napotkanemu słowu kluczowemu.
 \begin{equation}
     F= h(i)=\left\{\begin{matrix}
@@ -196,7 +197,7 @@ gdzie:\\
 \subsection{Określanie istotności słów}
 Podczas analizy tekstu można zauważyć, że niektóre słowa są bardziej lub mniej istotne. W związku z tym zależy nam
 na eliminacji słów nieznaczących i wyodrębnieniu słów istotnych w kontekście dokumentu. Istotność słów możemy określić
-na podstawie następujących algorytmów opisanych poniżej.
+na podstawie algorytmów opisanych poniżej.
 
 
 \subsubsection{Częstość słów (ang. Term Frequency)}
@@ -243,20 +244,18 @@ Tworzenie stop listy opieramy na algorytmie IDF. Słowo które ma najmniejszą w
 nieistotne. Dodajemy do stoplisty jeśli dana wartość będzie poniżej określonego progu.
 
 \subsubsection{Nauka słów kluczowych}
-Do nauki słów kluczowych wykorzystujemy algorytm TF-IDF, za pomocą którego określamy istotność
+Do nauki słów kluczowych wykorzystujemy ekstraktory TF oraz TF-IDF, za pomocą których określamy istotność
 danego słowa. Kiedy dla danego słowa wartość ta jest większą od założonej, uznajemy to słowo za istotne tym samym dopisując je do
-listy słów kluczowych. Słowa kluczowe mogą zostać również określone odgórnie. Ponadto mogą być również wygenerowane
-za pomocą algorytmu TF.
-Wtedy niezależnie od liczności danej etykiety
-zostanie wybrana tylko określona liczba słów.
+listy słów kluczowych. Słowa kluczowe mogą zostać również określone odgórnie.
+Wtedy niezależnie od liczności danej etykiety zostanie wybrana tylko określona liczba słów.
 
 \subsection{Metryki - miara odległości} \label{wykorzystane_metryki}
 Wykorzystane metryki służa do określenia odległości pomiędzy elementami tego samego zbioru w naszym przypadku tym
 zbiorem będzie zbiór artykułów. Do obliczenia odległości pomiędzy dwoma artykułami na potrzeby algorytmu KNN zostały
 wykorzystane metryki opisane poniżej.
 
-\subsubsection{Metryka Euklidesowa}
-Odległość Euklidesowa jest to odległość między dwoma wektorami określona jako pierwiastek kwadratowy sumy różnic między
+\subsubsection{Metryka euklidesowa}
+Odległość euklidesowa jest to odległość między dwoma wektorami określona jako pierwiastek kwadratowy sumy różnic między
 wartościami podniesionymi do kwadratu, wyrażona wzorem:
 \begin{equation}
     d(x,y)=\sqrt{\sum_{i=1}^{n}((x_{i}-y_{i})^{2})}
@@ -267,8 +266,8 @@ gdzie:\\
     \item $x$, $y$ - wartości cech;
 \end{description}
 
-\subsubsection{Metryka Czebyszewa}
-Odległość Czebyszewa jest to różnica pomiędzy znormalizowanymi cechami wartości obiektów, określona wzorem:
+\subsubsection{Metryka czebyszewa}
+Odległość czebyszewa jest to różnica pomiędzy znormalizowanymi cechami wartości obiektów, określona wzorem:
 \begin{equation}
     d(x,y)=max_{i}|x_{i}-y_{i}|
 \end{equation}
@@ -278,8 +277,8 @@ gdzie:\\
     \item $x$, $y$ - wartości cech obiektów;
 \end{description}
 
-\subsubsection{Metryka Manhattana}
-Metryka Manhattana jest metryką podobną do metryki euklidesowej z tą różnicą, że odległość wyliczana jest
+\subsubsection{Metryka manhattana}
+Metryka manhattana jest metryką podobną do metryki euklidesowej z tą różnicą, że odległość wyliczana jest
 z bezwzględnych różnic pomiędzy wektorami. Odległość tę wyraża się wzorem:
 \begin{equation}
     d(x,y)=\sum_{i=1}^{n} |x_{i}-y_{i}|
@@ -291,7 +290,7 @@ gdzie:\\
 \end{description}
 
 \subsection{Miary podobieństwa tekstów}
-Miara podobieństwa tesktów to miara mówiąca o tym w jakim stopniu dany tekst $A$ jest podobny do tekstu $B$.
+Miara podobieństwa tekstów to miara określająca, w jakim stopniu dany tekst $A$ jest podobny do tekstu $B$.
 
 \subsubsection{Metoda n-gramów} \label{n_gram}
 Metoda n-gramów określa w jakim stopniu łańcuch znaków $x$ jest podobny do łańcucha znaków $y$, na podstawie podciągów.
@@ -306,25 +305,25 @@ gdzie:\\
     \item $N-n+1$ - ilość n-elementowych podciągów w łańcuchu znaków;
 \end{description}
 
-\subsubsection{Uogólniona miara n-gramów}
-Uogólniona miara n-gramów sprawdza podobieństwo słów w oparciu o podciągi o określonej długości. Wyrażona jest wzorem:
-
-\begin{equation}
-    u_{N}(x, y)=\frac{2}{N^{2}+N}\sum_{i=1}^{N(x)}\sum_{j=1}^{N(x-i+1)}h(i,j)
-\end{equation}
-gdzie:\\
-\begin{description}
-    \item $h(i,j)$ przyjmuje wartość 1 jeżeli dany podciąg ze słowa $x$ znajduje się w słowie $y$;
-    \item $N(x),N(y)$ - ilość liter w słowach $x, y$, $N=max{N(x),N(y)}$;
-    \item $\frac{N^{2}+N}{2}$ - ilość możliwych podciągów 1-elementowych do N-elementowych w słowie o długości $N$;
-\end{description}
+%\subsubsection{Uogólniona miara n-gramów}
+%Uogólniona miara n-gramów sprawdza podobieństwo słów w oparciu o podciągi o określonej długości. Wyrażona jest wzorem:
+%
+%\begin{equation}
+%    u_{N}(x, y)=\frac{2}{N^{2}+N}\sum_{i=1}^{N(x)}\sum_{j=1}^{N(x-i+1)}h(i,j)
+%\end{equation}
+%gdzie:\\
+%\begin{description}
+%    \item $h(i,j)$ przyjmuje wartość 1 jeżeli dany podciąg ze słowa $x$ znajduje się w słowie $y$;
+%    \item $N(x),N(y)$ - ilość liter w słowach $x, y$, $N=max{N(x),N(y)}$;
+%    \item $\frac{N^{2}+N}{2}$ - ilość możliwych podciągów 1-elementowych do N-elementowych w słowie o długości $N$;
+%\end{description}
 
 \subsubsection{Algorytm KMP (Knutha-Morrisa-Pratta)}
 Algorytm KMP wyszukuje podany wzorzec $x$ w tekście $y$, jeżeli podany wzorzec zostaje znaleziony zwracana jest jego
 pozycja w tekście.
 
 \subsection{Normalizacja (Zero-Mean)}
-Normalizacji poddawany jest każdy wektor cech. Działanie to eliminuje sutyację, w której wartość pewnej
+Normalizacji poddawany jest każdy wektor cech. Działanie to eliminuje sytuację, w której wartość pewnej
 cechy może zdominować cały wektor cech.
 
     \begin{equation}
@@ -349,7 +348,7 @@ to oznaczać, że większość dokumentów została sklasyfikowana poprawnie.
 gdzie:\\
 \begin{description}
     \item $P$ - liczba poprawnie sklasyfikowanych dokumentów;
-    \item $W$ - liczba wszystkich klasyfikacji;
+    \item $W$ - liczba wszystkich klasyfikowanych obiektów;
 \end{description}
 
 %{\color{blue}
@@ -407,42 +406,41 @@ stemizację, normalizację, ekstrakcję, generowanie słów kluczowych i ostatec
 %podać, w jakim języku programowania została stworzona aplikacja. }
 \section{Materiały i metody} \label{mat}
 Klasyfikacja tekstów dotycząca kategorii $PLACES$ została przeprowadzna na zbiorze tekstów Reutersa, za
-pomocą wszystkich zaimplmentowanych ekstraktorów cech \ref{wykorzystane_cechy}. Badania zostały
+pomocą wszystkich zaimplmentowanych ekstraktorów cech (\ref{wykorzystane_cechy}). Badania zostały
 przeprowadzone dla wszystkich trzech metryk opisanych w punkcie \ref{wykorzystane_metryki}. Wartości
-parametru $k$ w algorytmie klasyfikującym K najbliższych sąsiadów zostały dobrane tak aby wykazać jego
+parametru $k$ w algorytmie klasyfikującym K najbliższych sąsiadów zostały dobrane tak, aby wykazać jego
 wpływ na klasyfikację. Parametr ten przyjmuje wartości ze zbioru \{2, 5, 10, 15, 20\}. Zbiór tekstów
-został podzielony odpowiednio $60\%$ jako dane treningowe oraz $40\%$ jako dane testowe. Jako stop listę
+został podzielony odpowiednio - $60\%$ jako dane treningowe oraz $40\%$ jako dane testowe. Jako stop listę
 wykorzystano gotowy zbiór\footnotemark[1] słów nieznaczących dla języka angielskiego.
 \footnotetext[1]{https://gist.github.com/sebleier/554280}
 Słowa kluczowe zostały wygenerowane na podstawie algorytmu częstości słów (TF-IDF). Podczas generowania
-słów kluczowych została przyjęta wartość $0.75$ (TF-IDF) powyżej której słowo traktowane jest jako istotne i
-tym samym trafia na listę słów kluczowych. Miara odległości pomiędzy wekstrachowanymi wektorami cech zawierającymi słowa
-została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram} z parametrem $N=3$.
+słów kluczowych została przyjęta wartość $0.75$ (TF-IDF), powyżej której słowo traktowane jest jako istotne i
+tym samym trafia na listę słów kluczowych. Miara odległości pomiędzy wekstrahowanymi wektorami cech zawierającymi słowa
+została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram} z parametrem $N=3$ (metoda trigramów).
 
 \\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
 jaki procent tekstów został sklasyfikowany poprawnie (opisany w punkcie \ref{poprawnosc_klasyfikacji}).
 
 \\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, oraz silver.
 Zbiór podzielono równo po $50\%$ dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
-jak w poprzednim badaniu jednak współczynnik generowania słów kluczowych przyjął wartość $0,1$. Badanie
-wykonano dla takich samych parametrów $k$ jak poprzednio dla lepszego porównania wyników. Porównanie odbyło
-się w oparciu o te same metryki liczenia odległości pomiędzy wektorami cech dokumentów jak i tę samą metodę
-obliczania odległości między cechami o wartości tekstowej.
+jak w poprzednim badaniu, jednak współczynnik generowania słów kluczowych przyjął wartość $0.1$. W celu lepszego
+porównania wyników, badania wykonano dla takich samych parametrów $k$ jak w poprzednim badaniu. Porównanie odbyło
+się w oparciu o te same metryki liczenia odległości jak i te same miary podobieństwa.
 
-\\Badanie ekstraktora słów kluczowych TF. Klasyfikację kategorii $TOPICS$ powtórzono zmieniając jedynie
+\\Klasyfikację kategorii $TOPICS$ powtórzono zmieniając jedynie
 metodę generowania słów kluczowych algorytmu TF-IDF na TF z liczbą słów równą $15$ dla każdej etykiety.
 
 \\Własny zbiór tekstów zawierał sześć etykiet: siliconvalley, drwho, twinpeaks, got, friends, simpsons
 oraz składał się ze 120 obietków. Badań dokonano na wszystkich etykietach. Zbiór podzielono
-w stosunku $60:40$. Jako stop listę wykrzystano
+w stosunku $60\%:40\%$. Jako stop listę wykrzystano
 gotowy zbiór słów nieznaczączych wymieniony powyżej. Słowa kluczowe zostały wygenerowane za pomocą
-algorytmu TF-IDF ze współczynnikiem $0,7$. Jako miarę podobieństwa słów wybrano metodę Knutta-Morria-Pratta.
-Klasyfikacji dokonano dla każdej z wcześniej przyjętych wartości $k$ oraz dla każdej z metryk. Oraz dla
+algorytmu TF-IDF ze współczynnikiem $0.7$. Jako miarę podobieństwa słów wybrano metodę Knutha-Morrisa-Pratta.
+Klasyfikacji dokonano dla każdej z wcześniej przyjętych wartości $k$, dla każdej z metryk oraz dla
 wszystkich wcześniej przedstawionych cech.
 
-\\Badanie dotyczące optymalnego podziału zbioru rozpoczęto od podziału $90\%$ tekstów jako zbiór uczący
+\\Badanie dotyczące optymalnego podziału zbioru rozpoczęto od podziału $90\%$ tekstów jako zbiór uczący i
 $10\%$ jako testowy, kolejno do wartości $10\%$ zbiór uczący oraz $90\%$ zbiór testowy. Skorzystano z
-etykiet: hongkong, sweeden, philipines. Etykiety dobrano tak aby ich liczebność była zbliżona.
+etykiet: hongkong, sweeden, philipines. Etykiety dobrano tak, aby ich liczebność była zbliżona.
 Stop listę wczytano z pliku jak w poprzednich badaniach. Słowa kluczowe generowano ze współczynnikiem
 TF-IDF wynoszącym $0,2$. Generowania słów kluczowych dokonywano przy każdej zmianie podziału zbioru
 ze względu na zmianę liczebności zbioru uczącego. Wykorzystano wszystkie dostępne ekstraktory cech.
@@ -451,13 +449,13 @@ stały i wynosił $20$. Jako metrykę przyjęto metrykę Euklidesową. Liczebno�
 przeprowadzono badanie wynosiła 206 elementów.
 
 \\Podczas badania jak miara podobieństwa słów wpływa na poprawność klasyfikacji wykorzystano ustawienia
-programu takie jak te wykorzystane podczas badania podziału zbioru. Zmianie uległa jedynie miara podobieństwa słów.
+programu takie, jak te wykorzystane podczas badania podziału zbioru. Zmianie uległa jedynie miara podobieństwa słów.
 Zbiór uczący zawiarał $60\%$ wszystkich tekstów.
 
 \\Badanie wpływu danych cech na poprawność klasyfikacji oraz czas jej trwania przeprowadzono na
-etykietach: $canada$, $uk$, $west-germany$. Parametr $k$ z wartością 20, natomiast jako miarę odległości
-przyjęto metrykę Euklidesową. Zbiór podzielono w stosunku $60:40$. Słowa kluczowe zostały wygenerowane
-z parametrem TF-IDF równym $0,4$. Stop listę wczytano z pliku.
+etykietach: $canada$, $uk$, $west-germany$ z parametrem $k=20$. Natomiast jako miarę odległości
+przyjęto metrykę euklidesową. Zbiór podzielono w stosunku $60\%:40\%$. Słowa kluczowe zostały wygenerowane
+z parametrem TF-IDF równym $0.4$. Stop listę wczytano z pliku.
 
 \\Wpływ miary podobieństwa słów w metodzie N-Gramów zbadano dla wartości $N$ równych kolejno ${1,2,3,4,5,6,7}$.
 Do badania wybrano tylko cechy: najczęściej występujące słowo kluczowe oraz pierwsze słowo kluczowe, tak
@@ -1769,14 +1767,14 @@ zbyt niska wartość parametru $k$ negatywnie wpływa na poprawnośc klasyfikacj
 dla kategorii $PLACES$ i $k=2$ skuteczność dla każdej metryki wyniosła $64\%$. Natomiast, jak wynika
 z rysunku \ref{1_topics}, dla
 kategorii $TOPICS$ poprawność klasyfikacji wyniosła $83\%$ i nie była użależniona od wartości $k$.
-Wyniki przedstawione na rusynku \ref{1_wlasny} wskazują na niski próg poprawności dla własnych tekstów.
+Wyniki przedstawione na rysunku \ref{1_wlasny} wskazują na niski próg poprawności dla własnych tekstów.
 Dla parametru $k=5$ wyniki były najlepsze.
 
 
 \subsection{Wpływ metryki}
 Pomiędzy metrykami wykorzystanymi w klasyfikacji kategorii $PLACES$ oraz $TOPICS$ nie wykazano
 różnic ze względu na
-poprawność klasyfikacji co przedstawia rysunek \ref{1_places} oraz \ref{1_topics}. Badając własny
+poprawność klasyfikacji, co przedstawia rysunek \ref{1_places} oraz \ref{1_topics}. Badając własny
 zbiór tekstów (rysunek \ref{1_wlasny}) zaobserwowano, że wpływ metryki jest znacznie większy niż w poprzednich przypadkach.
 Metryka czebyszewa klasyfikuje obiekty w sposób mniej dokładny niż pozostałe.
 Znaczące róznice
