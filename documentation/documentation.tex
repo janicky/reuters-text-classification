@@ -11,6 +11,7 @@
 \usepackage{xcolor}
 \usepackage{indentfirst}
 \usepackage{array}
+\usepackage{multirow}
 
 \NewDocumentCommand{\codeword}{v}{%
 \texttt{\textcolor{blue}{#1}}%
@@ -278,8 +279,8 @@ gdzie:\\
     \item $x$, $y$ - wartości cech obiektów;
 \end{description}
 
-\subsubsection{Metryka manhattana}
-Metryka manhattana jest metryką podobną do metryki euklidesowej z tą różnicą, że odległość wyliczana jest
+\subsubsection{Metryka Manhattan}
+Metryka Manhattan jest metryką podobną do metryki euklidesowej z tą różnicą, że odległość wyliczana jest
 z bezwzględnych różnic pomiędzy wektorami. Odległość tę wyraża się wzorem:
 \begin{equation}
     d(x,y)=\sum_{i=1}^{n} |x_{i}-y_{i}|
@@ -419,19 +420,19 @@ słów kluczowych została przyjęta wartość $0.75$ (TF-IDF), powyżej której
 tym samym trafia na listę słów kluczowych. Miara odległości pomiędzy wekstrahowanymi wektorami cech zawierającymi słowa
 została zrealizowana za pomocą metody N-Gramów opisanej w punkcie \ref{n_gram} z parametrem $N=3$ (metoda trigramów).
 
-\\ Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
+Aby zbadać poprawność klasyfikacji posłużyliśmy się parameterm zgodności, którego wartość wskazuje
 jaki procent tekstów został sklasyfikowany poprawnie (opisany w punkcie \ref{poprawnosc_klasyfikacji}).
 
-\\Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, oraz silver.
+Podczas klasyfikowania kategorii $TOPICS$ przyjęto etykiety: ship, tea, oraz silver.
 Zbiór podzielono równo po $50\%$ dla zbioru uczącego jak i dla zbioru testowego. Stop listę wczytano z pliku
 jak w poprzednim badaniu, jednak współczynnik generowania słów kluczowych przyjął wartość $0.1$. W celu lepszego
 porównania wyników, badania wykonano dla takich samych parametrów $k$ jak w poprzednim badaniu. Porównanie odbyło
 się w oparciu o te same metryki liczenia odległości jak i te same miary podobieństwa.
 
-\\Klasyfikację kategorii $TOPICS$ powtórzono zmieniając jedynie
+Klasyfikację kategorii $TOPICS$ powtórzono zmieniając jedynie
 metodę generowania słów kluczowych algorytmu TF-IDF na TF z liczbą słów równą $15$ dla każdej etykiety.
 
-\\Własny zbiór tekstów zawierał sześć etykiet: siliconvalley, drwho, twinpeaks, got, friends, simpsons
+Własny zbiór tekstów zawierał sześć etykiet: siliconvalley, drwho, twinpeaks, got, friends, simpsons
 oraz składał się ze 120 obietków. Badań dokonano na wszystkich etykietach. Zbiór podzielono
 w stosunku $60\%:40\%$. Jako stop listę wykrzystano
 gotowy zbiór słów nieznaczączych wymieniony powyżej. Słowa kluczowe zostały wygenerowane za pomocą
@@ -439,7 +440,7 @@ algorytmu TF-IDF ze współczynnikiem $0.7$. Jako miarę podobieństwa słów wy
 Klasyfikacji dokonano dla każdej z wcześniej przyjętych wartości $k$, dla każdej z metryk oraz dla
 wszystkich wcześniej przedstawionych cech.
 
-\\Badanie dotyczące optymalnego podziału zbioru rozpoczęto od podziału $90\%$ tekstów jako zbiór uczący i
+Badanie dotyczące optymalnego podziału zbioru rozpoczęto od podziału $90\%$ tekstów jako zbiór uczący i
 $10\%$ jako testowy, kolejno do wartości $10\%$ zbiór uczący oraz $90\%$ zbiór testowy. Skorzystano z
 etykiet: hongkong, sweeden, philipines. Etykiety dobrano tak, aby ich liczebność była zbliżona.
 Stop listę wczytano z pliku jak w poprzednich badaniach. Słowa kluczowe generowano ze współczynnikiem
@@ -449,16 +450,16 @@ W badaniu parametr $k$ był
 stały i wynosił $20$. Jako metrykę przyjęto metrykę Euklidesową. Liczebność zbioru na którym
 przeprowadzono badanie wynosiła 206 elementów.
 
-\\Podczas badania jak miara podobieństwa słów wpływa na poprawność klasyfikacji wykorzystano ustawienia
+Podczas badania jak miara podobieństwa słów wpływa na poprawność klasyfikacji wykorzystano ustawienia
 programu takie, jak te wykorzystane podczas badania podziału zbioru. Zmianie uległa jedynie miara podobieństwa słów.
 Zbiór uczący zawiarał $60\%$ wszystkich tekstów.
 
-\\Badanie wpływu danych cech na poprawność klasyfikacji oraz czas jej trwania przeprowadzono na
+Badanie wpływu danych cech na poprawność klasyfikacji oraz czas jej trwania przeprowadzono na
 etykietach: $canada$, $uk$, $west-germany$ z parametrem $k=20$. Natomiast jako miarę odległości
 przyjęto metrykę euklidesową. Zbiór podzielono w stosunku $60\%:40\%$. Słowa kluczowe zostały wygenerowane
 z parametrem TF-IDF równym $0.4$. Stop listę wczytano z pliku.
 
-\\Wpływ miary podobieństwa słów w metodzie N-Gramów zbadano dla wartości $N$ równych kolejno ${1,2,3,4,5,6,7}$.
+Wpływ miary podobieństwa słów w metodzie N-Gramów zbadano dla wartości $N$ równych kolejno ${1,2,3,4,5,6,7}$.
 Do badania wybrano tylko cechy: najczęściej występujące słowo kluczowe oraz pierwsze słowo kluczowe, tak
 aby inne cechy nie wpływały na wynik badania. Pozostałe ustawienia programu zostały ustawione tak jak podczas badania wpływu danych cech na
 poprawność klasyfikacji.
@@ -490,7 +491,7 @@ dla danego badania.
         \begin{tikzpicture}
             \begin{axis}[
             x tick label style={
-            /pgf/number format/10000 sep=},
+            /pgf/number format/1000 sep=},
             ylabel=Ilość etykiety,
             xticklabels={,,,,,},
             enlargelimits=0.2,
@@ -528,7 +529,7 @@ dla danego badania.
                 (1,325)(0,0)(0,0)(0,0)(0,0)(0,0)
                 };
 
-                \legend{USA, Canada, Japan, UK, France, West-Germany}
+                \legend{USA, Canada, Japan, UK, France, West-Germany};
             \end{axis}
 
 
@@ -1751,24 +1752,23 @@ poniżej.
 
 \subsubsection{Liczebność poszczególnych zbiorów}
 \begin{tabular}{ |p{3cm}||p{3cm}|p{4cm}| }
+
     \hline
-    \multicolumn{3}{|c|}{Liczebność zbiorów} \\
+    Rodzaj etykiety & Nazwa etykiety & Liczebność\\
     \hline
-    Nazwa zbioru & Nazwa etykiety & Liczebność etykiety\\
-    \hline
-    $PLACES$
+    Places
     &
     USA\newline Canada\newline Japan\newline UK\newline France\newline West-Germany
     &
     10682\newline 829\newline 485\newline 914\newline 271\newline 325 \\
     \hline
-    $TOPICS$
+    Topics
     &
     Ship\newline Tea\newline Silver
     &
     156\newline 6\newline 11 \\
     \hline
-    $WLASNY$
+    TV Series
     &
     Siliconvalley\newline Drwho\newline Twinpeaks\newline Got\newline Friends\newline Simpsons
     &
@@ -1776,10 +1776,98 @@ poniżej.
     \hline
 \end{tabular}
 
-\subsubsection{}
-\subsubsection{}
-\subsubsection{}
-\subsubsection{}
+\FloatBarrier
+\subsubsection{Zestawienie badań poprawności klasyfikacji}
+
+\begin{table}[!ht]
+    \begin{tabular}{|l||l|l|l|l|l|l|l|l|l|}
+    \hline
+    \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{7}{l|}{\textbf{Poprawność klasyfikacji [\%]}}      & \multirow{2}{*}{\textbf{Czas [s]}} \\ \cline{3-9}
+                                      &                    & usa & canada & japan & uk & france & west-ger & ogółem &                                              \\ \hline
+    \multirow{5}{*}{Euklidesowa}      & 2                  & 81  & 7      & 7     & 7  & 2      & 4            & 64     & 1033,047                                     \\ \cline{2-10} 
+                                      & 5                  & 81  & 19     & 10    & 11 & 14     & 5            & 77     & 1033,665                                     \\ \cline{2-10} 
+                                      & 10                 & 80  & 0      & 3     & 7  & 0      & 0            & 80     & 1017,195                                     \\ \cline{2-10} 
+                                      & 15                 & 80  & 100    & 50    & 20 & 0      & 17           & 80     & 1056,296                                     \\ \cline{2-10} 
+                                      & 20                 & 80  & 0      & 0     & 0  & 0      & 0            & 80     & 1072,138                                     \\ \hline
+    \multirow{5}{*}{Manhattan}        & 2                  & 81  & 6      & 8     & 8  & 2      & 6            & 64     & 1030,663                                     \\ \cline{2-10} 
+                                      & 5                  & 81  & 21     & 9     & 14 & 0      & 4            & 78     & 1269,484                                     \\ \cline{2-10} 
+                                      & 10                 & 80  & 0      & 4     & 0  & 0      & 0            & 80     & 1174,352                                     \\ \cline{2-10} 
+                                      & 15                 & 80  & 0      & 0     & 0  & 0      & 14           & 80     & 1039,059                                     \\ \cline{2-10} 
+                                      & 20                 & 80  & 0      & 0     & 0  & 0      & 11           & 80     & 1089,03                                      \\ \hline
+    \multirow{5}{*}{Czebyszewa}       & 2                  & 82  & 8      & 8     & 10 & 1      & 5            & 64     & 1058,355                                     \\ \cline{2-10} 
+                                      & 5                  & 81  & 18     & 12    & 16 & 4      & 5            & 77     & 1169,824                                     \\ \cline{2-10} 
+                                      & 10                 & 81  & 8      & 9     & 44 & 11     & 0            & 80     & 1180,133                                     \\ \cline{2-10} 
+                                      & 15                 & 80  & 17     & 25    & 67 & 20     & 20           & 80     & 1229,68                                      \\ \cline{2-10} 
+                                      & 20                 & 80  & 50     & 25    & 0  & 0      & 20           & 80     & 978,71                                       \\ \hline
+    \end{tabular}
+    \caption{Podsumowanie wyników dla etykiety $PLACES$ przy podziale $60\%:40\%$}
+\end{table}
+
+\begin{table}[!ht]
+    \begin{tabular}{|l||l|l|l|l|l|l|}
+    \hline
+    \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{4}{l|}{\textbf{Poprawność klasyfikacji {[}\%{]}}} & \multirow{2}{*}{\textbf{Czas {[}s{]}}} \\ \cline{3-6}
+                                      &                             & ship          & tea          & silver         & ogółem         &                                        \\ \hline
+    \multirow{5}{*}{Euklidesowa}      & 2                           & 83            & 0            & 0              & 83             & 0,063                                  \\ \cline{2-7} 
+                                      & 5                           & 83            & 0            & 0              & 83             & 0,06                                   \\ \cline{2-7} 
+                                      & 10                          & 83            & 0            & 0              & 83             & 0,06                                   \\ \cline{2-7} 
+                                      & 15                          & 83            & 0            & 0              & 83             & 0,06                                   \\ \cline{2-7} 
+                                      & 20                          & 83            & 0            & 0              & 83             & 0,061                                  \\ \hline
+    \multirow{5}{*}{Manhattan}        & 2                           & 83            & 0            & 50             & 83             & 0,71                                   \\ \cline{2-7} 
+                                      & 5                           & 83            & 0            & 0              & 83             & 0,61                                   \\ \cline{2-7} 
+                                      & 10                          & 83            & 0            & 0              & 83             & 0,48                                   \\ \cline{2-7} 
+                                      & 15                          & 83            & 0            & 0              & 83             & 0,047                                  \\ \cline{2-7} 
+                                      & 20                          & 83            & 0            & 0              & 83             & 0,044                                  \\ \hline
+    \multirow{5}{*}{Czebyszewa}       & 2                           & 83            & 0            & 0              & 83             & 0,077                                  \\ \cline{2-7} 
+                                      & 5                           & 83            & 0            & 0              & 83             & 0,049                                  \\ \cline{2-7} 
+                                      & 10                          & 83            & 0            & 0              & 83             & 0,045                                  \\ \cline{2-7} 
+                                      & 15                          & 83            & 0            & 0              & 83             & 0,045                                  \\ \cline{2-7} 
+                                      & 20                          & 83            & 0            & 0              & 83             & 0,046                                  \\ \hline
+    \end{tabular}
+    \caption{Podsumowanie wyników dla etykiety $TOPICS$ przy podziale $50\%:50\%$}
+\end{table}
+
+\begin{table}[]
+    \begin{tabular}{|l||l|l|l|l|l|l|l|l|l|}
+    \hline
+    \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{7}{l|}{\textbf{Poprawność klasyfikacji {[}\%{]}}}         & \multirow{2}{*}{\textbf{Czas {[}s{]}}} \\ \cline{3-9}
+                                      &                             & sill. & drwho & twin. & got & friends & simp. & ogółem &                                        \\ \hline
+    \multirow{5}{*}{Euklidesowa}      & 2                           & 0              & 0     & 25        & 17  & 30      & 11       & 15     & 0,03                                   \\ \cline{2-10} 
+                                      & 5                           & 0              & 50    & 33        & 29  & 17      & 9        & 21     & 0,014                                  \\ \cline{2-10} 
+                                      & 10                          & 0              & 0     & 33        & 20  & 30      & 8        & 19     & 0,015                                  \\ \cline{2-10} 
+                                      & 15                          & 9              & 0     & 20        & 10  & 33      & 0        & 13     & 0,015                                  \\ \cline{2-10} 
+                                      & 20                          & 11             & 0     & 18        & 9   & 33      & 0        & 13     & 0,019                                  \\ \hline
+    \multirow{5}{*}{Manhattan}        & 2                           & 0              & 0     & 22        & 14  & 33      & 11       & 15     & 0,012                                  \\ \cline{2-10} 
+                                      & 5                           & 0              & 67    & 30        & 25  & 29      & 0        & 19     & 0,012                                  \\ \cline{2-10} 
+                                      & 10                          & 0              & 0     & 23        & 20  & 30      & 0        & 17     & 0,012                                  \\ \cline{2-10} 
+                                      & 15                          & 9              & 0     & 20        & 10  & 38      & 0        & 15     & 0,012                                  \\ \cline{2-10} 
+                                      & 20                          & 11             & 0     & 17        & 8   & 25      & 0        & 10     & 0,012                                  \\ \hline
+    \multirow{5}{*}{Czebyszewa}       & 2                           & 8              & 0     & 17        & 0   & 38      & 11       & 19     & 0,36                                   \\ \cline{2-10} 
+                                      & 5                           & 0              & 67    & 33        & 14  & 25      & 9        & 21     & 0,11                                   \\ \cline{2-10} 
+                                      & 10                          & 0              & 0     & 12        & 13  & 14      & 0        & 8      & 0,1                                    \\ \cline{2-10} 
+                                      & 15                          & 0              & 0     & 17        & 9   & 0       & 0        & 8      & 0,1                                    \\ \cline{2-10} 
+                                      & 20                          & 0              & 0     & 17        & 18  & 0       & 0        & 8      & 0,1                                    \\ \hline
+    \end{tabular}
+    \caption{Podsumowanie wyników dla własnych obiektów przy podziale $60\%:40\%$}
+\end{table}
+
+\begin{table}[]
+    \begin{tabular}{|l||l|l|l|l|l|}
+    \hline
+    \multirow{2}{*}{\textbf{Pominięta cecha}} & \multicolumn{4}{l|}{\textbf{Poprawność klasyfikacji {[}\%{]}}} & \multirow{2}{*}{\textbf{Czas {[}s{]}}} \\ \cline{2-5}
+                                              & canada      & uk         & west-g.          & ogółem       &                                        \\ \hline
+    Gęstość słów kluczowych                   & 63          & 44         & 32               & 47           & 14,492                                 \\ \hline
+    Występowanie słowa kluczowego             & 63          & 44         & 32               & 47           & 15,154                                 \\ \hline
+    Liczba wystąpień słowa kluczowego         & 63          & 44         & 32               & 47           & 14,172                                 \\ \hline
+    Odległość słowa kluczowego                & 64          & 44         & 32               & 48           & 14,706                                 \\ \hline
+    Liczba wszystkich słów                    & 66          & 44         & 39               & 48           & 9,905                                  \\ \hline
+    Pierwsze słowo kluczowe                   & 63          & 44         & 32               & 47           & 14,259                                 \\ \hline
+    Suma wystąpień słów kluczowych            & 63          & 44         & 32               & 47           & 14,093                                 \\ \hline
+    Średnia odległość słów kluczowych         & 64          & 44         & 31               & 47           & 14,11                                  \\ \hline
+    Najczęściej występujące słowo klucz.      & 63          & 44         & 32               & 47           & 10,203                                 \\ \hline
+    \end{tabular}
+    \caption{Podsumowanie wpływu cechy na poprawność i czas klasyfikacji}
+\end{table}
 
 %{\color{blue}
 %W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
@@ -1912,8 +2000,6 @@ uległ nieznacznej poprawie.
 %prezentuje poziom zrozumienia badanego problemu.}
 \section{Wnioski}
 
-
-
 %Stworzenie systemu klasyfikującego teksty jest zagodnieniem znacznie szerszym niż mogło się to z początku
 %wydawać. Wymaga zgłębienia tajników budowy tekstów jak i samych wyrazów. Ilość kombinacji w przypadku klasyfikacji
 %tekstów jest tak ogromna, że można posiwięcić temu zagadnieniu całe życie. W naszych badaniach staraliśmy
@@ -1928,13 +2014,14 @@ uległ nieznacznej poprawie.
 %wypunktować. Znów, tak jak poprzednio, najistotniejsze są wnioski o
 %charakterze uniwersalnym.}
 
+
 \begin{itemize}
     \item Dla parametru $k$ z zakresu $<2;5>$ skuteczność klasyfikacji jest najwyższa.
     \item Metryka euklidesowa ze względu na jej złożoność liniową jest najszybsza, nie zmniejszając
             tym samym poprawności klasyfikacji.
     \item Liczebność etykiet w zbiorze uczącym powinna być zbliżona.
     \item Podział zbioru z zakresu (90 do 10) jest najbardziej optymalny.
-    \item Badania nie wykazały wpływu wybranej metody podobieństwa słów na poprawność klasyfikacji.
+    \item Badania nie wykazały wpływu miary podobieństwa słów na poprawność klasyfikacji.
     \item W badaniach dotyczących poszczególnych cech wyłączenie cechy: "Odległości słowa kluczowego
         od początku tesktu" pozytywnie wpłyneła na poprawność klasyfikacji oraz na czas jej trwania.
     \item Dla parametru $N$ z zakresu $<2;4>$ wyniki klasyfikacji były najlepsze.
