@@ -12,6 +12,7 @@
 \usepackage{indentfirst}
 \usepackage{array}
 \usepackage{multirow}
+\usepackage{caption}
 
 \NewDocumentCommand{\codeword}{v}{%
 \texttt{\textcolor{blue}{#1}}%
@@ -1455,7 +1456,7 @@ kategorii $TOPICS$.}
             symbolic x coords={90, 80, 70, 60, 50, 40, 30, 20, 10},
             xtick=data]
                 \addplot[ybar,fill=black!30!green] coordinates {
-                (90,0.65)
+                (90,0.55)
                 (80,0.46)
                 (70,0.42)
                 (60,0.52)
@@ -1469,7 +1470,7 @@ kategorii $TOPICS$.}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Poprawność klasyfikacji dla danego podziału zbioru.}
+    \caption{Poprawność klasyfikacji dla danego podziału zbioru w kategorii $PLACES$.}
     \label{podzial_zbioru}
 \end{figure}
 
@@ -1515,7 +1516,7 @@ kategorii $TOPICS$.}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Poprawność klasyfikacji dla miar podobieństwa słów.}
+    \caption{Poprawność klasyfikacji dla miar podobieństwa słów w kategorii $PLACES$.}
     \label{popr_miara_prawdo}
 \end{figure}
 
@@ -1565,7 +1566,7 @@ kategorii $TOPICS$.}
 
         \end{tikzpicture}
     \end{center}
-    \caption{Poprawność klasyfikacji etykiet dla miary N-Gramów.}
+    \caption{Poprawność klasyfikacji etykiet dla miary N-Gramów w kategorii $PLACES$.}
     \label{ngram_popraw_ngram}
 \end{figure}
 
@@ -1726,7 +1727,7 @@ poniżej.
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
-            ylabel=Czas klasyfikacji ($\%$),
+            ylabel=Czas klasyfikacji ($s$),
             xlabel=Wartość parametru $N$,
             symbolic x coords={1,2,3,4,5,6,7},
             xtick=data]
@@ -1751,35 +1752,35 @@ poniżej.
 \subsection{Podsumowanie wyników}
 
 \subsubsection{Liczebność poszczególnych zbiorów}
-\begin{tabular}{ |p{3cm}||p{3cm}|p{4cm}| }
-
-    \hline
-    Rodzaj etykiety & Nazwa etykiety & Liczebność\\
-    \hline
-    Places
-    &
-    USA\newline Canada\newline Japan\newline UK\newline France\newline West-Germany
-    &
-    10682\newline 829\newline 485\newline 914\newline 271\newline 325 \\
-    \hline
-    Topics
-    &
-    Ship\newline Tea\newline Silver
-    &
-    156\newline 6\newline 11 \\
-    \hline
-    TV Series
-    &
-    Siliconvalley\newline Drwho\newline Twinpeaks\newline Got\newline Friends\newline Simpsons
-    &
-    17\newline 19\newline 21\newline 21\newline 26\newline 16 \\
-    \hline
-\end{tabular}
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|l|l|}
+        \hline
+        \multicolumn{1}{|l|}{\textbf{Rodzaj etykiety}} & \textbf{Nazwa etykiety} & \textbf{Liczebność} \\ \hline
+        \multirow{6}{*}{Euklidesowa} & USA & 10682 \\ \cline{2-3}
+        & Canada & 829 \\ \cline{2-3}
+        & Japan & 485 \\ \cline{2-3}
+        & UK & 914 \\ \cline{2-3}
+        & France & 271 \\ \cline{2-3}
+        & West-Germany & 325 \\ \hline
+        \multirow{3}{*}{Manhattan} & Ship & 156 \\ \cline{2-3}
+        & Tea & 6 \\ \cline{2-3}
+        & Silver & 11 \\ \hline
+        \multirow{6}{*}{Czebyszewa} & Siliconvalley & 17 \\ \cline{2-3}
+        & Drwho & 19 \\ \cline{2-3}
+        & Twinpeaks & 21 \\ \cline{2-3}
+        & Got & 21 \\ \cline{2-3}
+        & Friends & 26 \\ \cline{2-3}
+        & Simpsons & 16 \\ \hline
+    \end{tabular}
+    \caption{Podsumowanie liczebności zbiorów.}
+\end{table}
 
 \FloatBarrier
 \subsubsection{Zestawienie badań poprawności klasyfikacji}
 
 \begin{table}[!ht]
+    \centering
     \begin{tabular}{|l||l|l|l|l|l|l|l|l|l|}
     \hline
     \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{7}{l|}{\textbf{Poprawność klasyfikacji [\%]}}      & \multirow{2}{*}{\textbf{Czas [s]}} \\ \cline{3-9}
@@ -1800,13 +1801,14 @@ poniżej.
                                       & 15                 & 80  & 17     & 25    & 67 & 20     & 20           & 80     & 1229,68                                      \\ \cline{2-10} 
                                       & 20                 & 80  & 50     & 25    & 0  & 0      & 20           & 80     & 978,71                                       \\ \hline
     \end{tabular}
-    \caption{Podsumowanie wyników dla etykiety $PLACES$ przy podziale $60\%:40\%$}
+    \caption{Podsumowanie wyników dla etykiety $PLACES$ przy podziale $60\%:40\%$.}
 \end{table}
 
 \begin{table}[!ht]
+    \centering
     \begin{tabular}{|l||l|l|l|l|l|l|}
     \hline
-    \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{4}{l|}{\textbf{Poprawność klasyfikacji {[}\%{]}}} & \multirow{2}{*}{\textbf{Czas {[}s{]}}} \\ \cline{3-6}
+    \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{4}{l|}{\textbf{Poprawność klasyfikacji [\%]}} & \multirow{2}{*}{\textbf{Czas [s]}} \\ \cline{3-6}
                                       &                             & ship          & tea          & silver         & ogółem         &                                        \\ \hline
     \multirow{5}{*}{Euklidesowa}      & 2                           & 83            & 0            & 0              & 83             & 0,063                                  \\ \cline{2-7} 
                                       & 5                           & 83            & 0            & 0              & 83             & 0,06                                   \\ \cline{2-7} 
@@ -1824,13 +1826,14 @@ poniżej.
                                       & 15                          & 83            & 0            & 0              & 83             & 0,045                                  \\ \cline{2-7} 
                                       & 20                          & 83            & 0            & 0              & 83             & 0,046                                  \\ \hline
     \end{tabular}
-    \caption{Podsumowanie wyników dla etykiety $TOPICS$ przy podziale $50\%:50\%$}
+    \caption{Podsumowanie wyników dla etykiety $TOPICS$ przy podziale $50\%:50\%$.}
 \end{table}
 
-\begin{table}[]
+\begin{table}[!ht]
+    \centering
     \begin{tabular}{|l||l|l|l|l|l|l|l|l|l|}
     \hline
-    \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{7}{l|}{\textbf{Poprawność klasyfikacji {[}\%{]}}}         & \multirow{2}{*}{\textbf{Czas {[}s{]}}} \\ \cline{3-9}
+    \multirow{2}{*}{\textbf{Metryka}} & \multirow{2}{*}{\textbf{k}} & \multicolumn{7}{l|}{\textbf{Poprawność klasyfikacji [\%]}}         & \multirow{2}{*}{\textbf{Czas [s]}} \\ \cline{3-9}
                                       &                             & sill. & drwho & twin. & got & friends & simp. & ogółem &                                        \\ \hline
     \multirow{5}{*}{Euklidesowa}      & 2                           & 0              & 0     & 25        & 17  & 30      & 11       & 15     & 0,03                                   \\ \cline{2-10} 
                                       & 5                           & 0              & 50    & 33        & 29  & 17      & 9        & 21     & 0,014                                  \\ \cline{2-10} 
@@ -1851,10 +1854,11 @@ poniżej.
     \caption{Podsumowanie wyników dla własnych obiektów przy podziale $60\%:40\%$}
 \end{table}
 
-\begin{table}[]
+\begin{table}[!ht]
+    \centering
     \begin{tabular}{|l||l|l|l|l|l|}
     \hline
-    \multirow{2}{*}{\textbf{Pominięta cecha}} & \multicolumn{4}{l|}{\textbf{Poprawność klasyfikacji {[}\%{]}}} & \multirow{2}{*}{\textbf{Czas {[}s{]}}} \\ \cline{2-5}
+    \multirow{2}{*}{\textbf{Pominięta cecha}} & \multicolumn{4}{l|}{\textbf{Poprawność klasyfikacji [\%]}} & \multirow{2}{*}{\textbf{Czas [s]}} \\ \cline{2-5}
                                               & canada      & uk         & west-g.          & ogółem       &                                        \\ \hline
     Gęstość słów kluczowych                   & 63          & 44         & 32               & 47           & 14,492                                 \\ \hline
     Występowanie słowa kluczowego             & 63          & 44         & 32               & 47           & 15,154                                 \\ \hline
@@ -1866,8 +1870,27 @@ poniżej.
     Średnia odległość słów kluczowych         & 64          & 44         & 31               & 47           & 14,11                                  \\ \hline
     Najczęściej występujące słowo klucz.      & 63          & 44         & 32               & 47           & 10,203                                 \\ \hline
     \end{tabular}
-    \caption{Podsumowanie wpływu cechy na poprawność i czas klasyfikacji}
+    \caption{Podsumowanie wpływu cechy na poprawność i czas klasyfikacji w kategorii $PLACES$.}
 \end{table}
+
+\FloatBarrier
+\subsubsection{Zestawienie miar podobieństwa}
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|c|l|l|l|c|}
+\hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Miara \\ podobieństwa\end{tabular}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Nazwa \\ etykiety\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Poprawność \\ klasyfikacji [\%]\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Poprawność\\ ogółem [\%]\end{tabular}}} & \textbf{Czas [s]} \\ \hline
+\multirow{3}{*}{N-Gramów} & Sweden & 43 & \multirow{3}{*}{52} & \multirow{3}{*}{0.056} \\ \cline{2-3}
+& Hong-Kong & 50 &  &  \\ \cline{2-3}
+& Philipines & 72 &  &  \\ \hline
+\multirow{3}{*}{Knutta-Morrisa-Pratta} & Sweden & 43 & \multirow{3}{*}{52} & \multirow{3}{*}{0.038} \\ \cline{2-3}
+& Hong-Kong & 50 &  &  \\ \cline{2-3}
+& Philipines & 72 &  &  \\ \hline
+\end{tabular}
+\caption{Podsumowanie wpływu miary podobieństwa na poprawność klasyfikacji oraz jej czas trwania.}
+\end{table}
+
 
 %{\color{blue}
 %W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
@@ -2020,7 +2043,7 @@ uległ nieznacznej poprawie.
     \item Metryka euklidesowa ze względu na jej złożoność liniową jest najszybsza, nie zmniejszając
             tym samym poprawności klasyfikacji.
     \item Liczebność etykiet w zbiorze uczącym powinna być zbliżona.
-    \item Podział zbioru z zakresu (90 do 10) jest najbardziej optymalny.
+    \item Podział zbioru (90 do 10) jest najbardziej optymalny.
     \item Badania nie wykazały wpływu miary podobieństwa słów na poprawność klasyfikacji.
     \item W badaniach dotyczących poszczególnych cech wyłączenie cechy: "Odległości słowa kluczowego
         od początku tesktu" pozytywnie wpłyneła na poprawność klasyfikacji oraz na czas jej trwania.
