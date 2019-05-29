@@ -1557,8 +1557,8 @@ kategorii $TOPICS$.}
             symbolic x coords={Sweden, Hong-Kong, Philipines},
             xtick=data]
                 \addplot[ybar,fill=black!30!green] coordinates {
-                (Sweden,0.43)
-                (Hong-Kong,0.50)
+                (Sweden,0.45)
+                (Hong-Kong,0.49)
                 (Philipines,0.72)
 
                 };
@@ -1607,8 +1607,8 @@ kategorii $TOPICS$.}
             symbolic x coords={Sweden, Hong-Kong, Philipines},
             xtick=data]
                 \addplot[ybar,fill=black!30!green] coordinates {
-                (Sweden,0.43)
-                (Hong-Kong,0.50)
+                (Sweden,0.45)
+                (Hong-Kong,0.49)
                 (Philipines,0.72)
 
                 };
@@ -1706,13 +1706,13 @@ poniżej.
                 scatter src=explicit symbolic]%
                 table[meta=label] {
                 x y label
-                1 0.36 a
-                2 0.41 a
+                1 0.4 a
+                2 0.4 a
                 3 0.4 a
-                4 0.41 a
-                5 0.35 a
-                6 0.36 a
-                7 0.35 a
+                4 0.4 a
+                5 0.4 a
+                6 0.4 a
+                7 0.4 a
 
                 };
             \end{axis}
@@ -1734,8 +1734,8 @@ poniżej.
                 \addplot[ybar,fill=black!30!green] coordinates {
                 (1,1.235)
                 (2,1.365)
-                (3,0.932)
-                (4,0.935)
+                (3,1.432)
+                (4,1.335)
                 (5,1.369)
                 (6,1.256)
                 (7,1.271)
@@ -1881,11 +1881,11 @@ poniżej.
 \begin{tabular}{|c|l|l|l|c|}
 \hline
 \textbf{\begin{tabular}[c]{@{}c@{}}Miara \\ podobieństwa\end{tabular}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Nazwa \\ etykiety\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Poprawność \\ klasyfikacji [\%]\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Poprawność\\ ogółem [\%]\end{tabular}}} & \textbf{Czas [s]} \\ \hline
-\multirow{3}{*}{N-Gramów} & Sweden & 43 & \multirow{3}{*}{52} & \multirow{3}{*}{0.056} \\ \cline{2-3}
-& Hong-Kong & 50 &  &  \\ \cline{2-3}
+\multirow{3}{*}{N-Gramów} & Sweden & 45 & \multirow{3}{*}{52} & \multirow{3}{*}{0.056} \\ \cline{2-3}
+& Hong-Kong & 49 &  &  \\ \cline{2-3}
 & Philipines & 72 &  &  \\ \hline
-\multirow{3}{*}{Knutta-Morrisa-Pratta} & Sweden & 43 & \multirow{3}{*}{52} & \multirow{3}{*}{0.038} \\ \cline{2-3}
-& Hong-Kong & 50 &  &  \\ \cline{2-3}
+\multirow{3}{*}{Knutta-Morrisa-Pratta} & Sweden & 45 & \multirow{3}{*}{52} & \multirow{3}{*}{0.038} \\ \cline{2-3}
+& Hong-Kong & 49 &  &  \\ \cline{2-3}
 & Philipines & 72 &  &  \\ \hline
 \end{tabular}
 \caption{Podsumowanie wpływu miary podobieństwa na poprawność klasyfikacji oraz jej czas trwania.}
@@ -1962,9 +1962,7 @@ jednoznacznie swierdzić przewagi jednej cechy nad drugą, ponieważ podobnie ja
 metryki występuje tu różnica w czasie wykonania zależna od zasobów sprzętowych dostępnych w danym momencie.
 
 \subsection{Wpływ parametru $N$}
-Z rysunku \ref{n_gramn} wynika, że dla parametrów $N$ z zakresu $<2;4>$ wyniki klasyfikacji były najlepsze.
-Wartość parametru powyżej lub poniżej podanego zakresu negatywnie wpływała na poprawność klasyfikacji.
-Nie zaobserwowano znaczących różnic w czasie działania klasyfikacji. Różnice w czasie klasyfikacji
+Z rysunku \ref{n_gramn} wynika, że parametr $N$ nie wpływa na poprawność klasyfikacji. Różnice w czasie klasyfikacji
 na poziomie 400ms nie są wystarczające aby swierdzić przewagę danej konfiguracji.
 
 \subsection{Wpływ ekstraktora TF}
@@ -2047,7 +2045,7 @@ uległ nieznacznej poprawie.
     \item Badania nie wykazały wpływu miary podobieństwa słów na poprawność klasyfikacji.
     \item W badaniach dotyczących poszczególnych cech wyłączenie cechy: "Odległości słowa kluczowego
         od początku tesktu" pozytywnie wpłyneła na poprawność klasyfikacji oraz na czas jej trwania.
-    \item Dla parametru $N$ z zakresu $<2;4>$ wyniki klasyfikacji były najlepsze.
+    \item Dla parametru $N$ nie wpływa na wyniki klasyfikacji.
     \item Nie wykazano znaczących różnic pomiędzy generowaniem słów kluczowych za pomocą algorytmów TF-IDF oraz TF.
 \end{itemize}
 
